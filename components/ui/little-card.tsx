@@ -8,7 +8,7 @@ const LittleCard = ({
   title: string;
 }) => {
   return (
-    <div className=" bg-primary/15 border border-primary transition-all ease-in-out duration-300 hover:translate-y-[-2px] flex flex-col items-center px-4 py-3 rounded-md">
+    <div className=" bg-primary/10 border border-primary transition-all ease-in-out duration-300 hover:translate-y-[-2px] flex flex-col items-center px-4 py-3 rounded-md">
       {icon}
       <p className=" font-light text-center mt-2 md:text-base text-sm ">
         {title}
