@@ -2,7 +2,6 @@ import { CircleIcon } from "@radix-ui/react-icons";
 import React from "react";
 import {
   BiLogoGraphql,
-  BiLogoMicrosoftTeams,
   BiMouse,
   BiPlus,
   BiSelectMultiple,

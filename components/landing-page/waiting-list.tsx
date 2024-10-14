@@ -74,7 +74,7 @@ const WaitingList = () => {
     const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return re.test(String(email).toLowerCase());
   };
-
+  // @ts-ignore
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setIsSuccess(false);
@@ -109,6 +109,7 @@ const WaitingList = () => {
         const data = await response.json();
         throw new Error(data.message || "Failed to join waiting list");
       }
+      // @ts-ignore
     } catch (error: any) {
       toast.error(
         error.message || "Failed to join waiting list. Please try again."

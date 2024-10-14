@@ -4,7 +4,7 @@ import HeroSection from "@/components/landing-page/hero-section";
 import { Button } from "@/components/ui/button";
 import ThemeToggle from "@/components/ui/theme-toggle";
 import DetailsSection from "@/components/landing-page/detail-section";
-import ParagraphSection from "@/components/landing-page/paragraph-section";
+// import ParagraphSection from "@/components/landing-page/paragraph-section";
 
 const Welcome = () => {
   return (
