@@ -41,7 +41,7 @@ const HeroSection = () => {
         </div>
       </div>
       <div className=" mt-5 lg:mt-7 justify-center flex flex-col items-center ">
-        <p className="flex items-center border text-white text-sm bg-primary/20 border-primary py-2 px-3 rounded-md gap-2">
+        <p className="flex items-center border text-white  text-sm bg-primary/70 dark:bg-primary/20 border-primary py-2 px-3 rounded-md gap-2">
           <BiGift className=" w-5 h-5 " />
           Join waitlist for exlusive discounts
         </p>
