@@ -41,8 +41,8 @@ export const metadata: Metadata = {
     telephone: false,
   },
   icons: {
-    icon: "/openGraph/favicon.ico",
-    apple: "/openGraph/apple-icon.png",
+    icon: "/quampi/logo.png",
+    apple: "/quampi/logo.png",
   },
   viewport: {
     width: "device-width",
