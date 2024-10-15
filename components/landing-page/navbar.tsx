@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useUtilities } from "@/context/utility";
 import { BiMenu } from "react-icons/bi";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
-import { Cross1Icon } from "@radix-ui/react-icons";
+import { ArrowLeftIcon, Cross1Icon } from "@radix-ui/react-icons";
 import { signOut } from "firebase/auth";
 import { auth } from "@/config/firebase-config";
 
@@ -37,6 +37,18 @@ const LandingPageNavbar = () => {
           </div>
           {isMobile ? (
             <>
+              {currentPath.startsWith("/add-website-domain") && (
+                <div
+                  className="ml-auto mr-3"
+                  onClick={() => {
+                    router.push("/add-website");
+                  }}
+                >
+                  <span className="text-[12px]  transition-all ease-in-out duration-300 text-muted-foreground hover:text-foreground cursor-pointer">
+                    <ArrowLeftIcon className="w-5 h-5" />
+                  </span>
+                </div>
+              )}
               <Sheet>
                 <SheetTrigger>
                   <div className="ml-auto items-center">
@@ -130,6 +142,17 @@ const LandingPageNavbar = () => {
                 </Button>
               </div>
               <div className="flex items-center gap-2">
+                {currentPath.startsWith("/add-website-domain") && (
+                  <Button
+                    onClick={() => {
+                      router.push("/add-website");
+                    }}
+                    variant={"secondary"}
+                    className="text-[12px] aspect-square h-8 rounded-full "
+                  >
+                    <ArrowLeftIcon className="aspect-square " />
+                  </Button>
+                )}
                 <ThemeToggle variant="default" className="h-8 w-8" />
                 {!currentPath.startsWith("/sign-in") &&
                   !currentPath.startsWith("/add-website") && (

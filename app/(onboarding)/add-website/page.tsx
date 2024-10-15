@@ -1,13 +1,19 @@
 "use client";
 
 import { CircleIcon } from "@radix-ui/react-icons";
-import React from "react";
+import React, { useState } from "react";
 import { PROJECT_NAME, PROJECT_SUPPORT_EMAIL } from "@/data/quampi/metadata";
 import LandingPageNavbar from "@/components/landing-page/navbar";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
-const SignIn = () => {
+const AddWebsite = () => {
+  // ! Use State
+  const [domain, setDomain] = useState<string | undefined>();
+
+  // ! Use Context
+  const router = useRouter();
   return (
     <>
       <div className="min-h-screen flex flex-col items-center">
@@ -24,24 +30,40 @@ const SignIn = () => {
             </div>
             <div className="p-5 flex flex-col gap-3 ">
               <div className="mx-auto flex w-full flex-col  justify-center space-y-6 sm:w-[350px]">
-                <div className="flex flex-col text-center">
-                  <h1 className="text-2xl font-semibold tracking-tight">
-                    Add first website
+                <div className="flex flex-col text-center items-center">
+                  <h1 className="text-3xl font-semibold tracking-tight">
+                    Add Website Info
                   </h1>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-muted-foreground max-w-[250px]">
                     Enter naked domain name without {"'www'"} or {"'https'"}.
                   </p>
                 </div>
               </div>
               <div className="py-5 w-full flex  justify-center">
-                <div className="flex gap-2 flex-auto max-w-[300px]">
-                  <Input /> <Button className=" rounded-md">Add</Button>
+                <div className="flex  gap-2 flex-auto md:max-w-[400px]">
+                  <Input
+                    onChange={(e) => {
+                      if (e.target.value) {
+                        setDomain(e.target.value);
+                      } else {
+                        setDomain(undefined);
+                      }
+                    }}
+                    placeholder="example.com"
+                    className=" focus-visible:ring-secondary"
+                  />{" "}
+                  <Button
+                    onClick={() => {
+                      if (domain) {
+                        router.push(`/add-website-domain?domain=${domain}`);
+                      }
+                    }}
+                    disabled={!domain}
+                    className=" rounded-md"
+                  >
+                    Add
+                  </Button>
                 </div>
-              </div>
-              <div className="flex flex-auto w-full justify-center">
-                <p className="px-8 text-center md:max-w-[300px] text-sm text-muted-foreground">
-                  Touble logging in?{" - "} email {PROJECT_SUPPORT_EMAIL}
-                </p>
               </div>
             </div>
           </div>
@@ -51,4 +73,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default AddWebsite;
