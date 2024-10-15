@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import { UtilityContextProvider } from "@/context/utility";
 import { AuthProvider } from "@/context/authentication";
@@ -18,10 +18,10 @@ import { ThemeProvider } from "@/context/theme";
 import Script from "next/script";
 
 // ! Fonts
-const poppinss = Poppins({
+const poppinss = Inter({
   subsets: ["latin"],
   variable: "--font-poppins-sans",
-  weight: ["500", "400", "600", "700", "900"],
+  weight: ["500", "400", "300", "200", "600", "700", "900"],
 });
 
 export const metadata: Metadata = {

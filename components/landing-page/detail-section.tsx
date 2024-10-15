@@ -25,7 +25,7 @@ const DetailsSection = () => {
       </div>
       <div className="text-center flex flex-col items-center">
         <div className=" text-center items-center flex">
-          <h1 className="text-4xl lg:text-7xl font-medium ">Why Quampi?</h1>
+          <h1 className="text-4xl lg:text-7xl font-semibold ">Why Quampi?</h1>
         </div>
         <div className=" py-3">
           <p className=" text-sm text-center md:max-w-[600px] max-w-[300px] md:text-base font-light text-muted-foreground">

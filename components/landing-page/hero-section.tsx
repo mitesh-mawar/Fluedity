@@ -31,11 +31,13 @@ const HeroSection = () => {
     <div className="flex py-7 flex-col items-center flex-auto w-full justify-center">
       <div>
         <div className=" text-center">
-          <h1 className="text-4xl lg:text-7xl font-medium ">Your Data Has a</h1>
-          <p className="text-4xl  lg:text-7xl font-medium">Story to Tell</p>
+          <h1 className="text-4xl lg:text-7xl font-semibold ">
+            Your Data Has a
+          </h1>
+          <p className="text-4xl  lg:text-7xl font-semibold">Story to Tell</p>
         </div>
         <div className="text-center py-3">
-          <p className=" text-sm md:max-w-none max-w-[300px] md:text-base font-light text-muted-foreground">
+          <p className=" text-sm md:max-w-none max-w-[300px] md:text-base text-muted-foreground">
             Let Quampi be the storyteller that turns numbers into narratives
           </p>
         </div>
