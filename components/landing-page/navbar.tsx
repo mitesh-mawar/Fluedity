@@ -7,6 +7,8 @@ import { useUtilities } from "@/context/utility";
 import { BiMenu } from "react-icons/bi";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Cross1Icon } from "@radix-ui/react-icons";
+import { signOut } from "firebase/auth";
+import { auth } from "@/config/firebase-config";
 
 const LandingPageNavbar = () => {
   // ! Use Context
@@ -87,26 +89,28 @@ const LandingPageNavbar = () => {
                       About
                     </span>
                     <div className="flex gap-3 w-full mb-2">
-                      {!currentPath.startsWith("/sign-in") && (
-                        <Button
-                          onClick={() => {
-                            router.push("/sign-in");
-                          }}
-                          className="h-10 font-light rounded-md flex flex-auto"
-                        >
-                          Sign in
-                        </Button>
-                      )}
-                      {!currentPath.startsWith("/sign-up") && (
-                        <Button
-                          onClick={() => {
-                            router.push("/sign-up");
-                          }}
-                          className="h-10 font-light  rounded-md flex flex-auto"
-                        >
-                          Sign up
-                        </Button>
-                      )}
+                      {!currentPath.startsWith("/sign-in") &&
+                        !currentPath.startsWith("/add-website") && (
+                          <Button
+                            onClick={() => {
+                              router.push("/sign-in");
+                            }}
+                            className="h-10 font-light rounded-md flex flex-auto"
+                          >
+                            Sign in
+                          </Button>
+                        )}
+                      {!currentPath.startsWith("/sign-up") &&
+                        !currentPath.startsWith("/add-website") && (
+                          <Button
+                            onClick={() => {
+                              router.push("/sign-up");
+                            }}
+                            className="h-10 font-light  rounded-md flex flex-auto"
+                          >
+                            Sign up
+                          </Button>
+                        )}
                     </div>
                   </div>
                 </SheetContent>
@@ -127,25 +131,39 @@ const LandingPageNavbar = () => {
               </div>
               <div className="flex items-center gap-2">
                 <ThemeToggle variant="default" className="h-8 w-8" />
-                {!currentPath.startsWith("/sign-in") && (
-                  <Button
-                    onClick={() => {
-                      router.push("/sign-in");
-                    }}
-                    className="h-8 font-light rounded-full"
-                  >
-                    Sign in
-                  </Button>
-                )}
-                {!currentPath.startsWith("/sign-up") && (
-                  <Button
-                    onClick={() => {
-                      router.push("/sign-up");
-                    }}
-                    className="h-8 font-light rounded-full"
-                  >
-                    Sign up
-                  </Button>
+                {!currentPath.startsWith("/sign-in") &&
+                  !currentPath.startsWith("/add-website") && (
+                    <Button
+                      onClick={() => {
+                        router.push("/sign-in");
+                      }}
+                      className="h-8 font-light rounded-full"
+                    >
+                      Sign in
+                    </Button>
+                  )}
+                {!currentPath.startsWith("/sign-up") &&
+                  !currentPath.startsWith("/add-website") && (
+                    <Button
+                      onClick={() => {
+                        router.push("/sign-up");
+                      }}
+                      className="h-8 font-light rounded-full"
+                    >
+                      Sign up
+                    </Button>
+                  )}
+                {currentPath.startsWith("/add-website") && (
+                  <>
+                    <Button
+                      className="h-8 font-light rounded-full"
+                      onClick={async () => {
+                        await signOut(auth);
+                      }}
+                    >
+                      Log out
+                    </Button>
+                  </>
                 )}
               </div>
             </>
