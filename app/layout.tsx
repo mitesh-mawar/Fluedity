@@ -157,6 +157,12 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <Script
+          async
+          defer
+          data-domain="quampi.vercel.app"
+          src="https://quampi.vercel.app/quampi.js"
+        ></Script>
+        <Script
           strategy="afterInteractive"
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
         />

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Line, LineChart, ResponsiveContainer } from "recharts";
 import AnalyticalWindow from "../ui/mac-window";
 import WaitingList from "./waiting-list";
@@ -32,13 +32,17 @@ const HeroSection = () => {
       <div>
         <div className=" text-center">
           <h1 className="text-4xl lg:text-7xl font-semibold ">
-            Your Data Has a
+            Simple but Powerful
           </h1>
-          <p className="text-4xl  lg:text-7xl font-semibold">Story to Tell</p>
+          <p className="text-4xl  lg:text-7xl font-semibold">
+            Google Analytics Alternative
+          </p>
         </div>
-        <div className="text-center py-3">
-          <p className=" text-sm md:max-w-none max-w-[300px] md:text-base text-muted-foreground">
-            Let Quampi be the storyteller that turns numbers into narratives
+        <div className="text-center py-3 justify-center flex">
+          <p className=" text-sm md:max-w-[700px] max-w-[300px] md:text-base text-muted-foreground">
+            Quampi provide you easy integration and precise realtime analytics
+            with comparison, sharing, embedding, team onboarding, interaction
+            glow like advance features.
           </p>
         </div>
       </div>

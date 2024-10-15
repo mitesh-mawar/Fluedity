@@ -8,11 +8,22 @@ import ThemeToggle from "@/components/ui/theme-toggle";
 import DetailsSection from "@/components/landing-page/detail-section";
 import { useRouter } from "next/navigation";
 import LandingPageNavbar from "@/components/landing-page/navbar";
+import { useUser } from "@/context/authentication";
+import LoadingScreen from "@/components/loading-screens/main-loading-screen";
 // import ParagraphSection from "@/components/landing-page/paragraph-section";
 
 const Welcome = () => {
   // ! Use Context
+  const { user, loading } = useUser();
   const router = useRouter();
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
+  if (user && !loading) {
+    return router.push("/home");
+  }
 
   return (
     <div className="min-h-screen flex flex-col items-center">
