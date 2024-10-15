@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
     const ip = req.ip || 'unknown';
 
     try {
-        await limiter.check(ip, 10,);
+        await limiter.check(ip, 10);
     } catch {
         return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429 });
     }
@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
     }
 
     try {
-        await db.collection('events').add({
+        await db.collection(`Website/${domain}/Event`).add({
             eventName,
             domain,
             ...eventData,
