@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextRequest, NextResponse } from 'next/server';
 import { initializeApp, getApps, cert } from 'firebase-admin/app';
 import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { rateLimit } from '@/utils/rate-limit';
@@ -16,30 +16,29 @@ if (!getApps().length) {
 const db = getFirestore();
 
 const limiter = rateLimit({
-    interval: 60 * 1000,
+    interval: 60 * 1000, // 1 minute
     uniqueTokenPerInterval: 500,
 });
 
-export default async function POST(req: NextApiRequest, res: NextApiResponse) {
-    if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method Not Allowed' });
-    }
+export async function POST(req: NextRequest) {
+    const ip = req.ip || 'unknown';
 
     try {
-        await limiter.check(res, 10, 'CACHE_TOKEN');
+        await limiter.check(ip, 10,);
     } catch {
-        return res.status(429).json({ error: 'Rate limit exceeded' });
+        return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429 });
     }
 
-    const { n: eventName, d: domain, ...eventData } = req.body;
+    const body = await req.json();
+    const { n: eventName, d: domain, ...eventData } = body;
 
     if (!eventName || !domain) {
-        return res.status(400).json({ error: 'Missing required fields' });
+        return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    const referer = req.headers.referer || req.headers.origin;
+    const referer = req.headers.get('referer') || req.headers.get('origin');
     if (!referer || !referer.includes(domain)) {
-        return res.status(403).json({ error: 'Invalid origin' });
+        return NextResponse.json({ error: 'Invalid origin' }, { status: 403 });
     }
 
     try {
@@ -48,12 +47,12 @@ export default async function POST(req: NextApiRequest, res: NextApiResponse) {
             domain,
             ...eventData,
             timestamp: Timestamp.now(),
-            ip: req.headers['x-forwarded-for'] || req.socket.remoteAddress,
+            ip,
         });
 
-        res.status(200).json({ success: true });
+        return NextResponse.json({ success: true });
     } catch (error) {
         console.error('Error storing event:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }
