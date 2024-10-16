@@ -2,9 +2,12 @@
 
 import * as React from "react";
 import {
+  ChartArea,
+  ChartBar,
   CircleUser,
   DollarSign,
   FolderOpen,
+  GitGraph,
   Grid,
   HandCoins,
   HeartHandshake,
@@ -118,6 +121,13 @@ const MainLayout = ({
                 icon: Home,
                 variant: "default",
                 link: "/home",
+              },
+              {
+                title: "Analytics",
+                label: "",
+                icon: ChartBar,
+                variant: "default",
+                link: "/analytics",
               },
             ]}
           />

@@ -47,7 +47,7 @@ export function Nav({ links, isCollapsed }: NavProps) {
                       : buttonVariants({ variant: "ghost", size: "sm" }),
                     "h-10 w-10 p-0",
                     link.link === currentPath &&
-                      " bg-primary/20 border border-primary  "
+                      " bg-primary/20 border border-primary   "
                   )}
                 >
                   <link.icon className="h-5 w-5" strokeWidth={1.5} />
@@ -71,17 +71,16 @@ export function Nav({ links, isCollapsed }: NavProps) {
                 currentPath.startsWith(link.link)
                   ? buttonVariants({ variant: "default", size: "sm" })
                   : buttonVariants({ variant: "ghost", size: "sm" }),
-                link.link === currentPath &&
-                  "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white",
+                link.link === currentPath
+                  ? " bg-secondary border text-[14px] font-semibold"
+                  : "",
                 "justify-start",
-                link.variant == "purple" &&
-                  "bg-[#675DFF] hover:bg-[#675DFF]/90  hover:text-white text-white flex py-2 h-fit"
+                "h-10"
               )}
             >
               <link.icon
                 className={cn(
-                  "mr-2 w-4 h-4",
-
+                  "mr-2 w-5 h-5",
                   link.variant == "purple" && "mr-2 h-5 w-5"
                 )}
               />
