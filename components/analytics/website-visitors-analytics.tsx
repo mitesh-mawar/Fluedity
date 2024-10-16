@@ -21,16 +21,6 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-const chartData = [
-  { date: "2024-04-01", desktop: 222, mobile: 150 },
-  { date: "2024-04-02", desktop: 97, mobile: 180 },
-  { date: "2024-04-03", desktop: 167, mobile: 120 },
-  { date: "2024-04-10", desktop: 261, mobile: 190 },
-  { date: "2024-04-11", desktop: 327, mobile: 350 },
-  { date: "2024-04-12", desktop: 292, mobile: 210 },
-  { date: "2024-04-13", desktop: 342, mobile: 380 },
-];
-
 const chartConfig = {
   views: {
     label: "Page Views",
@@ -57,13 +47,6 @@ const WebsiteVisitorsAnalytics = ({ events }: { events: QuampiWebEvent[] }) => {
   const [filterTime, setFilterTime] = useState<number | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const total = React.useMemo(
-    () => ({
-      desktop: chartData.reduce((acc, curr) => acc + curr.desktop, 0),
-      mobile: chartData.reduce((acc, curr) => acc + curr.mobile, 0),
-    }),
-    []
-  );
   return (
     <div className=" border w-full flex flex-col flex-auto rounded-md">
       <div className="h-12 items-center flex flex-auto rounded-t-md px-5 bg-secondary border-b">
@@ -93,7 +76,7 @@ const WebsiteVisitorsAnalytics = ({ events }: { events: QuampiWebEvent[] }) => {
                   {chartConfig[chart].label}
                 </span>
                 <span className="text-lg font-bold leading-none sm:text-3xl">
-                  {total[key as keyof typeof total].toLocaleString()}
+                  {/* {total[key as keyof typeof total].toLocaleString()} */}
                 </span>
               </button>
             );
@@ -107,7 +90,7 @@ const WebsiteVisitorsAnalytics = ({ events }: { events: QuampiWebEvent[] }) => {
         >
           <LineChart
             accessibilityLayer
-            data={chartData}
+            // data={chartData}
             margin={{
               left: 12,
               right: 12,
