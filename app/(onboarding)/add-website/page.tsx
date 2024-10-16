@@ -7,13 +7,67 @@ import LandingPageNavbar from "@/components/landing-page/navbar";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  setDoc,
+  Timestamp,
+} from "firebase/firestore";
+import { DB } from "@/config/firebase-config";
+import { useUser } from "@/context/authentication";
+import { BiLoaderCircle } from "react-icons/bi";
+import { WebsiteProps } from "@/types/website";
 
 const AddWebsite = () => {
   // ! Use State
   const [domain, setDomain] = useState<string | undefined>();
+  const [isLoading, setIsLoading] = useState(false);
 
   // ! Use Context
+  const { user } = useUser();
   const router = useRouter();
+
+  // ! Function
+  const handleAddDomain = async () => {
+    if (domain && user) {
+      setIsLoading(true);
+      const checkResponse = await fetch("/api/check-domain", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ domain }),
+      });
+      const checkData = await checkResponse.json();
+      if (checkResponse.ok) {
+        if (checkData.exists) {
+          const websiteDocRef = doc(DB, `Website/${domain}`);
+          getDoc(websiteDocRef)
+            .then((success) => {
+              if (success.exists()) {
+                if (success.data()) {
+                  router.push(`/add-website-domain?domain=${domain}`);
+                  setIsLoading(false);
+                  return;
+                }
+              }
+            })
+            .catch((error) => {
+              toast.error("Website already exists.");
+            });
+        } else {
+          router.push(`/add-website-domain?domain=${domain}`);
+        }
+      } else {
+        throw new Error(checkData.message || "Failed to check website.");
+      }
+      setIsLoading(false);
+    }
+  };
+
   return (
     <>
       <div className="min-h-screen flex flex-col items-center">
@@ -53,15 +107,20 @@ const AddWebsite = () => {
                     className=" focus-visible:ring-secondary"
                   />{" "}
                   <Button
-                    onClick={() => {
-                      if (domain) {
-                        router.push(`/add-website-domain?domain=${domain}`);
-                      }
-                    }}
-                    disabled={!domain}
+                    onClick={handleAddDomain}
+                    disabled={!domain || isLoading}
                     className=" rounded-md"
                   >
-                    Add
+                    {isLoading ? (
+                      <>
+                        <div className=" flex items-center">
+                          Processing...{" "}
+                          <BiLoaderCircle className="ml-3 animate-spin w-4 h-4" />
+                        </div>
+                      </>
+                    ) : (
+                      <>Add</>
+                    )}
                   </Button>
                 </div>
               </div>

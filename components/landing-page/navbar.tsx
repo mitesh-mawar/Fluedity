@@ -9,6 +9,8 @@ import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
 import { ArrowLeftIcon, Cross1Icon } from "@radix-ui/react-icons";
 import { signOut } from "firebase/auth";
 import { auth } from "@/config/firebase-config";
+import { House } from "lucide-react";
+import { BsFillHouseAddFill, BsHouse } from "react-icons/bs";
 
 const LandingPageNavbar = () => {
   // ! Use Context
@@ -152,6 +154,18 @@ const LandingPageNavbar = () => {
                   >
                     <ArrowLeftIcon className="aspect-square " />
                   </Button>
+                )}
+                {currentPath.startsWith("/add-website") && (
+                  <>
+                    <Button
+                      className="h-8 w-8 p-0 font-light rounded-full"
+                      onClick={async () => {
+                        await router.push("/home");
+                      }}
+                    >
+                      <BsHouse />
+                    </Button>
+                  </>
                 )}
                 <ThemeToggle variant="default" className="h-8 w-8" />
                 {!currentPath.startsWith("/sign-in") &&

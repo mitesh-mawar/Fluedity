@@ -8,18 +8,56 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { PROJECT_URL } from "@/data/quampi/metadata";
 import { BiCircleThreeQuarter, BiLoader, BiLoaderCircle } from "react-icons/bi";
+import {
+  BsExclamation,
+  BsExclamationCircleFill,
+  BsExclamationDiamond,
+  BsExclamationTriangleFill,
+} from "react-icons/bs";
+import { useUser } from "@/context/authentication";
+import { doc, getDoc } from "firebase/firestore";
+import { DB } from "@/config/firebase-config";
+import { WebsiteProps } from "@/types/website";
 
 const AddWebsiteDomain = () => {
   // ! Use State
   const [domain, setDomain] = useState<string | undefined>();
   const [installed, setInstalled] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
 
   // ! Use Context
   const router = useRouter();
-  const params = useParams();
+  const { user } = useUser();
 
   // ! Use Effect
+  useEffect(() => {
+    if (domain && user) {
+      (async function run() {
+        const checkResponse = await fetch("/api/check-domain", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ domain }),
+        });
+        const checkData = await checkResponse.json();
+        if (checkResponse.ok) {
+          if (checkData.exists) {
+            const websiteDocRef = doc(DB, `Website/${domain}`);
+            const data = (await getDoc(websiteDocRef)).data() as WebsiteProps;
+            if (data.created_by == user.uid) {
+              return;
+            }
+            return router.push("/add-website");
+          }
+        } else {
+          throw new Error(checkData.message || "Failed to check website.");
+        }
+      })();
+    }
+  }, [domain]);
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       const urlParams = new URLSearchParams(window.location.search);
@@ -43,20 +81,70 @@ const AddWebsiteDomain = () => {
   }, []);
 
   useEffect(() => {
-    handleVerification();
-  }, []);
+    if (domain) {
+      handleVerification();
+    }
+  }, [domain]);
 
   // ! Function
   const handleVerification = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`https://${domain}`);
-      const html = await response.text();
-      const isInstalled = html.includes(`https://quampi.vercel.app/quampi.js`);
-      console.log(html, isInstalled);
-      setInstalled(isInstalled);
+      // ** Server Function
+      if (domain && user) {
+        try {
+          const response = await fetch("/api/add-website", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ domain, user_uid: user.uid }),
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            if (data.success) {
+              setInstalled(true);
+              setError(false);
+              router.push("/home");
+            } else {
+              const websiteDocRef = doc(DB, `Website/${domain}`);
+              const d = (await getDoc(websiteDocRef)).data() as WebsiteProps;
+              if (d) {
+                setError(false);
+                setInstalled(true);
+                return;
+              } else {
+                toast.error(data.message || "Failed to add website.");
+                setError(true);
+                setInstalled(false);
+              }
+            }
+          } else {
+            const websiteDocRef = doc(DB, `Website/${domain}`);
+            const d = (await getDoc(websiteDocRef)).data() as WebsiteProps;
+            if (d) {
+              setError(false);
+              setInstalled(true);
+              return;
+            } else {
+              toast.error(data.message || "An error occurred.");
+              setInstalled(false);
+              setError(true);
+            }
+          }
+        } catch (error) {
+          setError(true);
+          setInstalled(false);
+          console.error("Error adding domain:", error);
+          toast.error("An unexpected error occurred.");
+        } finally {
+        }
+      }
     } catch (error) {
       setInstalled(false);
+      setError(true);
     }
     setLoading(false);
   };
@@ -99,6 +187,12 @@ const AddWebsiteDomain = () => {
                 </div>
               </div>
               <div className="py-5 w-full flex flex-col items-center gap-3 justify-center">
+                {error && (
+                  <p className="flex mb-4 items-center border text-white  text-sm bg-primary/70 dark:bg-primary/20 border-primary py-2 px-3 rounded-md gap-2">
+                    <BsExclamationTriangleFill className=" w-5 h-5 " />
+                    Script is not mounted.
+                  </p>
+                )}
                 <div
                   onClick={() => {
                     window.navigator.clipboard.writeText(
