@@ -1,42 +1,57 @@
-// public/quampi.js
 (function () {
   "use strict";
 
   const COLLECT_URL = `https://quampi.vercel.app/api/event`;
   const domain = document.currentScript.getAttribute("data-domain");
-  let queue = [];
+  const scriptElement = document.currentScript;
+  let queuedEvents = [];
 
   function sendEvent(name, data = {}) {
-    if (isLocalhost() || isBot()) return;
+    if (isExcludedEnvironment() || isBot()) return;
 
     const payload = {
-      n: name,
-      u: location.href,
-      d: domain,
-      r: document.referrer || null,
-      w: window.innerWidth,
-      h: window.innerHeight,
-      tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
-      ua: navigator.userAgent,
-      lng: navigator.language,
-      hc: navigator.hardwareConcurrency,
-      dpr: window.devicePixelRatio,
+      name: name,
+      url: location.href,
+      domain: domain,
+      referrer: document.referrer || null,
+      screenWidth: window.innerWidth,
+      screenHeight: window.innerHeight,
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      userAgent: navigator.userAgent,
+      language: navigator.language,
+      cpuCores: navigator.hardwareConcurrency,
+      devicePixelRatio: window.devicePixelRatio,
       ...getBrowserInfo(),
       ...getDeviceInfo(),
       ...getNetworkInfo(),
       ...data,
     };
 
+    if (data.revenue) {
+      payload.revenue = data.revenue;
+    }
+
     const request = new XMLHttpRequest();
     request.open("POST", COLLECT_URL, true);
     request.setRequestHeader("Content-Type", "application/json");
     request.send(JSON.stringify(payload));
+
+    if (data.callback) {
+      request.onreadystatechange = function () {
+        if (request.readyState === 4) {
+          data.callback({ status: request.status });
+        }
+      };
+    }
   }
 
-  function isLocalhost() {
-    return /^localhost$|^127(?:\.[0-9]+){0,2}\.[0-9]+$|^(?:0*:)*?:?0*1$/.test(
-      location.hostname
-    );
+  function isExcludedEnvironment() {
+    const isLocalhost =
+      /^localhost$|^127(?:\.[0-9]+){0,2}\.[0-9]+$|^(?:0*:)*?:?0*1$/.test(
+        location.hostname
+      );
+    const isFileProtocol = location.protocol === "file:";
+    return isLocalhost || isFileProtocol;
   }
 
   function isBot() {
@@ -50,21 +65,21 @@
 
   function getBrowserInfo() {
     return {
-      dnt: navigator.doNotTrack,
-      cb: navigator.cookieEnabled,
-      ls: !!window.localStorage,
-      ss: !!window.sessionStorage,
-      idb: !!window.indexedDB,
+      doNotTrack: navigator.doNotTrack,
+      cookiesEnabled: navigator.cookieEnabled,
+      localStorageAvailable: !!window.localStorage,
+      sessionStorageAvailable: !!window.sessionStorage,
+      indexedDBAvailable: !!window.indexedDB,
     };
   }
 
   function getDeviceInfo() {
     return {
-      os: getOS(),
-      dt: getDeviceType(),
-      sr: `${screen.width}x${screen.height}`,
-      cd: screen.colorDepth,
-      ram: navigator.deviceMemory,
+      operatingSystem: getOS(),
+      deviceType: getDeviceType(),
+      screenResolution: `${screen.width}x${screen.height}`,
+      colorDepth: screen.colorDepth,
+      deviceMemory: navigator.deviceMemory,
     };
   }
 
@@ -75,9 +90,9 @@
       navigator.webkitConnection;
     return connection
       ? {
-          ct: connection.effectiveType,
-          rtt: connection.rtt,
-          ds: connection.downlink,
+          connectionType: connection.effectiveType,
+          roundTripTime: connection.rtt,
+          downloadSpeed: connection.downlink,
         }
       : {};
   }
@@ -125,14 +140,70 @@
 
   function trackClicks() {
     document.addEventListener("click", function (e) {
-      const target = e.target;
-      if (target.tagName === "A") {
-        sendEvent("click", {
-          url: target.href,
-          text: target.textContent,
-        });
+      const target = e.target.closest("a");
+      if (target) {
+        const outboundLink = isOutboundLink(target);
+        const fileDownload = isFileDownload(target);
+
+        if (outboundLink) {
+          sendEvent("Outbound Link: Click", {
+            props: { url: target.href },
+          });
+        } else if (fileDownload) {
+          sendEvent("File Download", {
+            props: { url: target.href },
+          });
+        }
+
+        if ((outboundLink || fileDownload) && isPlainClick(e)) {
+          e.preventDefault();
+          setTimeout(() => {
+            window.location.href = target.href;
+          }, 150);
+        }
       }
     });
+  }
+
+  function isOutboundLink(link) {
+    return link.hostname && link.hostname !== location.hostname;
+  }
+
+  function isFileDownload(link) {
+    const fileExtensions = [
+      "pdf",
+      "xlsx",
+      "docx",
+      "txt",
+      "rtf",
+      "csv",
+      "exe",
+      "key",
+      "pps",
+      "ppt",
+      "pptx",
+      "7z",
+      "pkg",
+      "rar",
+      "gz",
+      "zip",
+      "avi",
+      "mov",
+      "mp4",
+      "mpeg",
+      "wmv",
+      "midi",
+      "mp3",
+      "wav",
+      "wma",
+    ];
+    const pathname = link.pathname;
+    const extension = pathname.split(".").pop().toLowerCase();
+    return fileExtensions.indexOf(extension) !== -1;
+  }
+
+  function isPlainClick(e) {
+    return !(e.ctrlKey || e.shiftKey || e.metaKey || e.button === 1);
   }
 
   function trackScroll() {
@@ -145,27 +216,63 @@
       if (percent > maxScroll) {
         maxScroll = percent;
         if (maxScroll % 25 === 0) {
-          // Send event at 25%, 50%, 75%, 100%
-          sendEvent("scroll_depth", { depth: maxScroll });
+          sendEvent("scroll_depth", { props: { depth: maxScroll } });
         }
       }
     });
+  }
+
+  function trackHashChange() {
+    let lastPathname = location.pathname;
+    window.addEventListener("hashchange", function () {
+      if (lastPathname !== location.pathname) {
+        lastPathname = location.pathname;
+        trackPageView();
+      }
+    });
+  }
+
+  function initializeEventTracking() {
+    const eventAttributes = scriptElement
+      .getAttributeNames()
+      .filter((attr) => attr.startsWith("event-"));
+    const defaultProps = {};
+
+    eventAttributes.forEach((attr) => {
+      const propName = attr.replace("event-", "");
+      const propValue = scriptElement.getAttribute(attr);
+      defaultProps[propName] = propValue;
+    });
+
+    return defaultProps;
   }
 
   // Initialize tracking
   trackPageView();
   trackClicks();
   trackScroll();
+  trackHashChange();
+
+  const defaultEventProps = initializeEventTracking();
 
   // Public API
-  window.quampi = function (event, props) {
-    if (typeof event === "string") {
-      sendEvent(event, props);
+  window.quampi = function (eventName, eventData = {}) {
+    if (typeof eventName === "string") {
+      const combinedData = {
+        ...defaultEventProps,
+        ...eventData,
+        props: {
+          ...defaultEventProps,
+          ...(eventData.props || {}),
+        },
+      };
+      sendEvent(eventName, combinedData);
     }
   };
 
   // Process any queued events
-  for (let i = 0; i < queue.length; i++) {
-    window.quampi.apply(this, queue[i]);
+  const existingQueue = (window.quampi && window.quampi.q) || [];
+  for (let i = 0; i < existingQueue.length; i++) {
+    window.quampi.apply(this, existingQueue[i]);
   }
 })();
