@@ -30,9 +30,9 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { n: eventName, d: domain, ...eventData } = body;
+    const { n: name, d: domain, ...eventData } = body;
 
-    if (!eventName || !domain) {
+    if (!name || !domain) {
         return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
 
     try {
         await db.collection(`Website/${domain}/Event`).add({
-            eventName,
+            name,
             domain,
             ...eventData,
             timestamp: Timestamp.now(),

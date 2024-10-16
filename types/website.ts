@@ -44,3 +44,52 @@ export interface LiveWebsiteDetailsProps {
     largestContentfulPaint: number;
   };
 }
+
+export interface QuampiWebEvent {
+  // Basic event information
+  name: string;
+  url: string;
+  domain: string;
+  referrer: string | null;
+
+  // Screen and device information
+  screenWidth: number;
+  screenHeight: number;
+  screenResolution: string;
+  devicePixelRatio: number;
+
+  // User agent and system information
+  timezone: string;
+  userAgent: string;
+  language: string;
+  cpuCores: number;
+  operatingSystem: string;
+  deviceType: 'desktop' | 'mobile' | 'tablet' | string;
+
+  // Browser capabilities
+  doNotTrack: string | null;
+  cookiesEnabled: boolean;
+  localStorageAvailable: boolean;
+  sessionStorageAvailable: boolean;
+  indexedDBAvailable: boolean;
+
+  // Device capabilities
+  colorDepth: number;
+  deviceMemory?: number;
+
+  // Network information
+  connectionType?: string;
+  roundTripTime?: number;
+  downloadSpeed?: number;
+
+  // Optional event-specific data
+  revenue?: number;
+  props?: {
+    [key: string]: string | number | boolean;
+    depth: number;
+    url: string;
+  };
+
+  // Callback function (not sent in payload, but used in the script)
+  callback?: (response: { status: number }) => void;
+}
