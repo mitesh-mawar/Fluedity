@@ -47,9 +47,7 @@ export function Nav({ links, isCollapsed }: NavProps) {
                       : buttonVariants({ variant: "ghost", size: "sm" }),
                     "h-10 w-10 p-0",
                     link.link === currentPath &&
-                      "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white",
-                    link.variant == "purple" &&
-                      "bg-[#675DFF] hover:bg-[#675DFF]/90 hover:text-white text-white flex  "
+                      " bg-primary/20 border border-primary  "
                   )}
                 >
                   <link.icon className="h-5 w-5" strokeWidth={1.5} />

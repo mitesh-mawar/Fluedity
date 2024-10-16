@@ -46,12 +46,12 @@ const WebsiteView = ({ isCollapsed }: { isCollapsed: boolean }) => {
         className={cn(
           " py-1 px-2 text-sm md:text-[14px]  font-semibold flex gap-2 items-center bg-primary/20 border-primary border rounded-md my-2 flex-auto  ring-none outline-none",
           isCollapsed &&
-            " p-0 bg-transparent justify-center m-[10px] rounded-full border-2"
+            " p-0 bg-transparent justify-center border-2 m-[10px] rounded-md "
         )}
       >
-        <Avatar className="w-8 h-8 bg-transparent">
+        <Avatar className="w-9 rounded-md h-9 bg-transparent">
           <AvatarImage
-            className=""
+            className=" rounded-md"
             src={liveActiveWebsiteData?.favicon ?? undefined}
             alt="User avatar"
           />

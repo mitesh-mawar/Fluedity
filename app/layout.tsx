@@ -16,6 +16,7 @@ import {
 } from "@/data/quampi/metadata";
 import { ThemeProvider } from "@/context/theme";
 import Script from "next/script";
+import { WebsiteProvider } from "@/context/website-data";
 
 // ! Fonts
 const poppinss = Inter({
@@ -182,20 +183,22 @@ export default function RootLayout({
         />
         <Analytics />
         <AuthProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="light"
-            enableSystem
-            disableTransitionOnChange
-            storageKey={PROJECT_NAME || "theme"}
-          >
-            <Toaster position="bottom-center" />
-            <UtilityContextProvider>
-              <TooltipProvider>
-                <div className="max-w-screen w-screen">{children}</div>
-              </TooltipProvider>
-            </UtilityContextProvider>
-          </ThemeProvider>
+          <WebsiteProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="light"
+              enableSystem
+              disableTransitionOnChange
+              storageKey={PROJECT_NAME || "theme"}
+            >
+              <Toaster position="bottom-center" />
+              <UtilityContextProvider>
+                <TooltipProvider>
+                  <div className="max-w-screen w-screen">{children}</div>
+                </TooltipProvider>
+              </UtilityContextProvider>
+            </ThemeProvider>
+          </WebsiteProvider>
         </AuthProvider>
       </body>
     </html>

@@ -30,7 +30,7 @@ import { Account } from "@/components/main/account";
 import Topbar from "@/components/main/topbar";
 import { Nav } from "@/components/main/sidebar-nav";
 import WebsiteView from "@/components/main/website-view";
-import { WebsiteProvider } from "@/context/website-data";
+import { useWebsiteData, WebsiteProvider } from "@/context/website-data";
 
 const MainLayout = ({
   children,
@@ -66,95 +66,93 @@ const MainLayout = ({
   }
 
   return (
-    <WebsiteProvider>
-      <TooltipProvider delayDuration={0}>
-        <ResizablePanelGroup
-          direction="horizontal"
-          onLayout={(sizes: number[]) => {
-            document.cookie = `react-resizable-panels:layout:mail=${JSON.stringify(
-              sizes
+    <TooltipProvider delayDuration={0}>
+      <ResizablePanelGroup
+        direction="horizontal"
+        onLayout={(sizes: number[]) => {
+          document.cookie = `react-resizable-panels:layout:mail=${JSON.stringify(
+            sizes
+          )}`;
+        }}
+        className=" max-h-screen min-h-screen h-screen items-stretch"
+      >
+        <ResizablePanel
+          defaultSize={DEFAULT_LAYOUT[0]}
+          collapsedSize={NAV_COLLAPSED_SIZE}
+          collapsible={true}
+          minSize={15}
+          maxSize={18}
+          onCollapse={() => {
+            setIsCollapsed(true);
+            document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
+              true
             )}`;
           }}
-          className=" max-h-screen min-h-screen h-screen items-stretch"
+          onResize={() => {
+            setIsCollapsed(false);
+            document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
+              false
+            )}`;
+          }}
+          className={cn(
+            isCollapsed &&
+              "min-w-[50px] max-w-[50px]  transition-all duration-300 ease-in-out",
+            "h-screen flex flex-col"
+          )}
         >
-          <ResizablePanel
-            defaultSize={DEFAULT_LAYOUT[0]}
-            collapsedSize={NAV_COLLAPSED_SIZE}
-            collapsible={true}
-            minSize={15}
-            maxSize={18}
-            onCollapse={() => {
-              setIsCollapsed(true);
-              document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-                true
-              )}`;
-            }}
-            onResize={() => {
-              setIsCollapsed(false);
-              document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-                false
-              )}`;
-            }}
+          <div
             className={cn(
-              isCollapsed &&
-                "min-w-[50px] max-w-[50px]  transition-all duration-300 ease-in-out",
-              "h-screen flex flex-col"
+              "flex h-[52px] gap-2 items-center my-1 justify-center",
+              isCollapsed ? "h-[52px]" : "px-2"
             )}
           >
-            <div
-              className={cn(
-                "flex h-[52px] gap-2 items-center justify-center",
-                isCollapsed ? "h-[52px]" : "px-2"
-              )}
-            >
-              <WebsiteView isCollapsed={isCollapsed} />
-            </div>
-            <Separator />
-            <Nav
-              isCollapsed={isCollapsed}
-              links={[
-                {
-                  title: "Home",
-                  label: "",
-                  icon: Home,
-                  variant: "default",
-                  link: "/home",
-                },
-              ]}
-            />
-            <Separator />
-            <div
-              className={cn(
-                " mt-auto justify-center flex px-2",
-                !isCollapsed && "justify-start "
-              )}
-            >
-              <Account isCollapsed={isCollapsed} />
-            </div>
-          </ResizablePanel>
-          <ResizableHandle withHandle />
-          <ResizablePanel
-            defaultSize={DEFAULT_LAYOUT[1]}
-            minSize={30}
-            className=" max-h-screen h-screen"
+            <WebsiteView isCollapsed={isCollapsed} />
+          </div>
+          <Separator />
+          <Nav
+            isCollapsed={isCollapsed}
+            links={[
+              {
+                title: "Home",
+                label: "",
+                icon: Home,
+                variant: "default",
+                link: "/home",
+              },
+            ]}
+          />
+          <Separator />
+          <div
+            className={cn(
+              " mt-auto justify-center flex px-2",
+              !isCollapsed && "justify-start "
+            )}
           >
-            <div
-              className={cn(
-                " h-[52px] w-full block flex-auto items-center ",
-                isCollapsed ? "h-[52px]" : "",
-                " "
-              )}
-            >
-              <Topbar />
-            </div>
-            <ScrollArea className="h-[calc(100vh-52px)]">
-              {children}
-              <ScrollBar />
-            </ScrollArea>
-          </ResizablePanel>
-        </ResizablePanelGroup>
-      </TooltipProvider>
-    </WebsiteProvider>
+            <Account isCollapsed={isCollapsed} />
+          </div>
+        </ResizablePanel>
+        <ResizableHandle withHandle />
+        <ResizablePanel
+          defaultSize={DEFAULT_LAYOUT[1]}
+          minSize={30}
+          className=" max-h-screen h-screen"
+        >
+          <div
+            className={cn(
+              " h-[52px] w-full block flex-auto items-center ",
+              isCollapsed ? "h-[52px]" : "",
+              " "
+            )}
+          >
+            <Topbar />
+          </div>
+          <ScrollArea className="h-[calc(100vh-52px)]">
+            {children}
+            <ScrollBar />
+          </ScrollArea>
+        </ResizablePanel>
+      </ResizablePanelGroup>
+    </TooltipProvider>
   );
 };
 
