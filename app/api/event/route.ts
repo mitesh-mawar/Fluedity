@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { n: name, d: domain, ...eventData } = body;
+    const { name, domain, ...eventData } = body;
 
     if (!name || !domain) {
         return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
@@ -42,13 +42,18 @@ export async function POST(req: NextRequest) {
     }
 
     try {
-        await db.collection(`Website/${domain}/Event`).add({
+        const eventDocument = {
             name,
             domain,
             ...eventData,
             timestamp: Timestamp.now(),
             ip,
-        });
+        };
+
+        // Remove undefined values
+        Object.keys(eventDocument).forEach(key => eventDocument[key] === undefined && delete eventDocument[key]);
+
+        await db.collection(`Website/${domain}/Event`).add(eventDocument);
 
         return NextResponse.json({ success: true });
     } catch (error) {

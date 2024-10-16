@@ -6,11 +6,11 @@
   const scriptElement = document.currentScript;
   let queuedEvents = [];
 
-  function sendEvent(name, data = {}) {
+  function sendEvent(eventName, eventData = {}) {
     if (isExcludedEnvironment() || isBot()) return;
 
     const payload = {
-      name: name,
+      name: eventName,
       url: location.href,
       domain: domain,
       referrer: document.referrer || null,
@@ -24,11 +24,11 @@
       ...getBrowserInfo(),
       ...getDeviceInfo(),
       ...getNetworkInfo(),
-      ...data,
+      ...eventData,
     };
 
-    if (data.revenue) {
-      payload.revenue = data.revenue;
+    if (eventData.revenue) {
+      payload.revenue = eventData.revenue;
     }
 
     const request = new XMLHttpRequest();
@@ -36,10 +36,10 @@
     request.setRequestHeader("Content-Type", "application/json");
     request.send(JSON.stringify(payload));
 
-    if (data.callback) {
+    if (eventData.callback) {
       request.onreadystatechange = function () {
         if (request.readyState === 4) {
-          data.callback({ status: request.status });
+          eventData.callback({ status: request.status });
         }
       };
     }
@@ -104,33 +104,25 @@
     const windowsPlatforms = ["Win32", "Win64", "Windows", "WinCE"];
     const iosPlatforms = ["iPhone", "iPad", "iPod"];
 
-    if (macosPlatforms.indexOf(platform) !== -1) {
-      return "Mac OS";
-    } else if (iosPlatforms.indexOf(platform) !== -1) {
-      return "iOS";
-    } else if (windowsPlatforms.indexOf(platform) !== -1) {
-      return "Windows";
-    } else if (/Android/.test(userAgent)) {
-      return "Android";
-    } else if (/Linux/.test(platform)) {
-      return "Linux";
-    }
+    if (macosPlatforms.indexOf(platform) !== -1) return "Mac OS";
+    if (iosPlatforms.indexOf(platform) !== -1) return "iOS";
+    if (windowsPlatforms.indexOf(platform) !== -1) return "Windows";
+    if (/Android/.test(userAgent)) return "Android";
+    if (/Linux/.test(platform)) return "Linux";
 
     return "Unknown";
   }
 
   function getDeviceType() {
     const ua = navigator.userAgent;
-    if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+    if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua))
       return "tablet";
-    }
     if (
       /Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(
         ua
       )
-    ) {
+    )
       return "mobile";
-    }
     return "desktop";
   }
 
@@ -146,13 +138,9 @@
         const fileDownload = isFileDownload(target);
 
         if (outboundLink) {
-          sendEvent("Outbound Link: Click", {
-            props: { url: target.href },
-          });
+          sendEvent("Outbound Link: Click", { props: { url: target.href } });
         } else if (fileDownload) {
-          sendEvent("File Download", {
-            props: { url: target.href },
-          });
+          sendEvent("File Download", { props: { url: target.href } });
         }
 
         if ((outboundLink || fileDownload) && isPlainClick(e)) {
