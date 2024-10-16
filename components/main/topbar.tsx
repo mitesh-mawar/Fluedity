@@ -21,10 +21,24 @@ const Topbar = () => {
               <>
                 {" "}
                 <div className="gap-2 cursor-pointer items-center flex">
-                  <div className=" leading-tight flex flex-col">
-                    <span className="md:text-xl font-semibold">
+                  <div className=" leading-tight flex flex-col px-2">
+                    {/* <span className="md:text-xl font-semibold">
                       {liveActiveWebsiteData?.title}
-                    </span>
+                    </span> */}{" "}
+                    Home
+                  </div>
+                </div>
+              </>
+            )}
+            {currentPath.startsWith("/analytic") && (
+              <>
+                {" "}
+                <div className="gap-2 cursor-pointer items-center flex">
+                  <div className=" leading-tight flex flex-col px-2">
+                    {/* <span className="md:text-xl font-semibold">
+                      {liveActiveWebsiteData?.title}
+                    </span> */}{" "}
+                    Analytics
                   </div>
                 </div>
               </>

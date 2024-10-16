@@ -46,6 +46,10 @@ export interface LiveWebsiteDetailsProps {
 }
 
 export interface QuampiWebEvent {
+
+  // Time details
+  timestamp: Timestamp;
+
   // Basic event information
   name: string;
   url: string;
