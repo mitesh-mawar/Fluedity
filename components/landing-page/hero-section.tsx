@@ -44,7 +44,7 @@ const HeroSection = () => {
           </div>
           <div className="text-center py-3 justify-center flex">
             <p className=" text-sm md:max-w-[700px] max-w-[300px] md:text-base text-muted-foreground">
-              Fluedity's Cognition Intelligence let's you use AI features with
+              Fluedity&apos;s Cognition Intelligence let&apos;s you use AI features with
               realtime motion trackin.{" "}
               <span className=" font-bold">
                 {" "}
