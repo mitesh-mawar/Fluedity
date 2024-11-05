@@ -71,10 +71,10 @@ const LandingPageNavbar = () => {
                     >
                       <Image
                         width={32}
+                        alt="Fluedity"
                         height={32}
-                        className="rounded-full w-8 h-8"
-                        src="/quampi/logo.png"
-                        alt="Quampi logo"
+                        className="rounded-full w-8 h-8 object-cover"
+                        src="/app/logo.png"
                       />
                       <h1 className="text-lg md:text-xl font-medium">
                         Fluedity
@@ -108,7 +108,19 @@ const LandingPageNavbar = () => {
                     >
                       About
                     </span>
-                    <div className="flex gap-3 w-full mb-2">
+                    <div className="flex gap-3 w-full my-2 ">
+                      {user && (
+                        <>
+                          <Button
+                            className="h-8 flex flex-auto rounded-full"
+                            onClick={async () => {
+                              await signOut(auth);
+                            }}
+                          >
+                            Log out
+                          </Button>
+                        </>
+                      )}
                       {!user && (
                         <>
                           {" "}
@@ -210,28 +222,14 @@ const LandingPageNavbar = () => {
                 )}
                 {user && (
                   <>
-                    {currentPath.startsWith("/add-website") && (
-                      <>
-                        <Button
-                          className="h-8 font-light rounded-full"
-                          onClick={async () => {
-                            await signOut(auth);
-                          }}
-                        >
-                          Log out
-                        </Button>
-                      </>
-                    )}
-                    <>
-                      <Button
-                        className="h-8  rounded-full"
-                        onClick={async () => {
-                          await signOut(auth);
-                        }}
-                      >
-                        Log out
-                      </Button>
-                    </>
+                    <Button
+                      className="h-8  rounded-full"
+                      onClick={async () => {
+                        await signOut(auth);
+                      }}
+                    >
+                      Log out
+                    </Button>
                   </>
                 )}
               </div>

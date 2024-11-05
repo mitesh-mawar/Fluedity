@@ -123,7 +123,7 @@ const WaitingList = () => {
   return (
     <div className="mt-5 flex flex-col items-center  rounded-lg">
       <form onSubmit={handleSubmit} className="w-full max-w-md">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center  gap-2">
           <Input
             type="email"
             value={email}
@@ -135,7 +135,7 @@ const WaitingList = () => {
             type="submit"
             disabled={isLoading}
             variant={"secondary"}
-            className=" h-10"
+            className=" h-10 "
           >
             {isLoading ? "Joining..." : "Join Waitlist"}
           </Button>

@@ -38,16 +38,14 @@ const HeroSection = () => {
           Fluedity
         </span>
         <div className="">
-          <div className=" text-center flex flex-col justify-center items-center">
-            <h1 className="text-4xl lg:text-7xl font-semibold ">
-              All new powerful
-            </h1>
-            <p className="text-4xl  lg:text-7xl font-semibold">
+          <div className=" text-center flex text-3xl lg:text-4xl flex-col justify-center items-center">
+            <h1 className="lg:text-7xl font-semibold ">All new powerful</h1>
+            <p className="  lg:text-7xl font-semibold">
               Cognition Intelligence
             </p>
           </div>
           <div className="text-center py-3 justify-center flex">
-            <p className=" text-sm md:max-w-[700px] max-w-[300px] md:text-base text-muted-foreground">
+            <p className=" text-[12px] md:max-w-[700px] max-w-[300px]  md:text-base text-muted-foreground">
               Fluedity&apos;s Cognition Intelligence let&apos;s you use AI
               features with realtime motion tracking.
               <br />
@@ -60,20 +58,20 @@ const HeroSection = () => {
             <WaitingList />
           </div>
         </div>
-        <div className="bg-black transition-all ease-in-out justify-between flex duration-300 hover:scale-[101%]  items-center relative rounded-full">
+        <div className="bg-black transition-all ease-in-out justify-between w-full  flex duration-300 hover:scale-[101%]  items-center relative rounded-full">
           <video
             autoPlay
             muted
             controls={false}
             loop
-            className="w-40 cursor-pointer transition-all ease-in-out duration-300 hover:translate-x-[-5px]    h-40 object-cover rounded-full"
+            className="lg:w-40 md:w-28  cursor-pointer transition-all ease-in-out duration-300 hover:translate-x-[-5px]  w-12 h-12 md:h-28 lg:h-40 object-cover rounded-full"
             src="https://cdn.dribbble.com/userupload/15363755/file/original-33c8fceaa8f1f12da02deb9ef182cafd.mp4"
           />
-          <div className="relative gap-2 flex flex-col text-center  max-w-[500px]">
-            <h1 className="text-white text-4xl font-semibold ">
+          <div className="relative gap-2 flex flex-col text-center  md:max-w-[500px]">
+            <h1 className="text-white text-xl md:text-3xl lg:text-4xl font-semibold ">
               {"Pending task!"}
             </h1>
-            <span className="text-[#86868B] font-medium  text-ellipsis overflow-hidden">
+            <span className="text-[#86868B] md:block hidden max-w-[230px] md:max-w-[400px] lg:max-w-none  font-medium text-[12px] md:text-sm lg:text-base  text-ellipsis overflow-hidden">
               <span className=" capitalize">
                 {user && <>{user.displayName},</>}{" "}
               </span>
@@ -81,10 +79,10 @@ const HeroSection = () => {
               allowed in today&apos;s class.
             </span>
           </div>{" "}
-          <div className=" bg-black cursor-pointer transition-all hover:translate-x-[5px] rounded-full w-40 h-40 items-center justify-center ease-in-out duration-300 flex relative px-10">
+          <div className=" bg-black cursor-pointer transition-all hover:translate-x-[5px] rounded-full md:h-28 md:w-28 lg:w-40 w-12 h-12 lg:h-40 items-center justify-center ease-in-out duration-300 flex relative  lg:px-10">
             <ListTodo
-              strokeWidth={1.5}
-              className="transition-all  w-20 h-20  ring-4 text-white bg-[#FF1111]/50 ring-[#FF1111] p-4 ease-in-out duration-300 object-cover rounded-full"
+              strokeWidth={1.2}
+              className="transition-all  w-7 p-[6px] h-7 md:w-14 md:h-14 lg:w-20 lg:h-20 md:p-3  ring-1 md:ring-2  lg:ring-4 text-white bg-[#FF1111]/50 ring-[#FF1111]  lg:p-4 ease-in-out duration-300 object-cover rounded-full"
               // src="https://cdn.dribbble.com/users/2066397/screenshots/4881747/1billiontasks_v01.png?resize=800x600&vertical=center"
             />
           </div>
