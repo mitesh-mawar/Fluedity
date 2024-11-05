@@ -32,14 +32,12 @@ const LandingPageNavbar = () => {
               router.push("/");
             }}
           >
-            <video
+            <Image
               width={32}
-              autoPlay
-              controls={false}
-              loop
+              alt="Fluedity"
               height={32}
               className="rounded-full w-8 h-8 object-cover"
-              src="https://cdn.dribbble.com/userupload/15363755/file/original-33c8fceaa8f1f12da02deb9ef182cafd.mp4"
+              src="/app/logo.png"
             />
             <h1 className="text-lg md:text-xl font-medium">Fluedity</h1>
           </div>
