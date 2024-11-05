@@ -5,6 +5,7 @@ import WaitingList from "./waiting-list";
 import { BiGift } from "react-icons/bi";
 import Image from "next/image";
 import { ListTodo } from "lucide-react";
+import { useUser } from "@/context/authentication";
 
 interface DataPoint {
   revenue: number;
@@ -27,6 +28,9 @@ const data: DataPoint[] = [
 ];
 
 const HeroSection = () => {
+  // ! Use Context
+  const { user } = useUser();
+
   return (
     <div className="flex flex-col items-center h-screen flex-auto w-full justify-center">
       <div className="my-auto gap-10 flex flex-col items-center">
@@ -44,10 +48,10 @@ const HeroSection = () => {
           </div>
           <div className="text-center py-3 justify-center flex">
             <p className=" text-sm md:max-w-[700px] max-w-[300px] md:text-base text-muted-foreground">
-              Fluedity&apos;s Cognition Intelligence let&apos;s you use AI features with
-              realtime motion trackin.{" "}
+              Fluedity&apos;s Cognition Intelligence let&apos;s you use AI
+              features with realtime motion tracking.
+              <br />
               <span className=" font-bold">
-                {" "}
                 Ultimately making you a wizard.
               </span>
             </p>
@@ -66,10 +70,13 @@ const HeroSection = () => {
             src="https://cdn.dribbble.com/userupload/15363755/file/original-33c8fceaa8f1f12da02deb9ef182cafd.mp4"
           />
           <div className="relative gap-2 flex flex-col text-center  max-w-[500px]">
-            <h1 className="text-white text-4xl font-medium ">
+            <h1 className="text-white text-4xl font-semibold ">
               {"Pending task!"}
             </h1>
             <span className="text-[#86868B] font-medium  text-ellipsis overflow-hidden">
+              <span className=" capitalize">
+                {user && <>{user.displayName},</>}{" "}
+              </span>
               Submit your assigment before 3:00 PM or else you will not be
               allowed in today&apos;s class.
             </span>

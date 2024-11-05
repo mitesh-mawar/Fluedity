@@ -15,7 +15,7 @@ const OnboardingLayout = ({ children }: { children: React.ReactNode }) => {
   }
 
   if (!user && !loading) {
-    return router.push("/sign-up");
+    return router.push("/");
   }
 
   return <>{children}</>;

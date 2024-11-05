@@ -13,12 +13,14 @@ import { signOut } from "firebase/auth";
 import { auth } from "@/config/firebase-config";
 import { ChevronRight, House } from "lucide-react";
 import { BsFillHouseAddFill, BsHouse } from "react-icons/bs";
+import { useUser } from "@/context/authentication";
 
 const LandingPageNavbar = () => {
   // ! Use Context
   const router = useRouter();
   const { isMobile } = useUtilities();
   const currentPath = usePathname();
+  const { user } = useUser();
 
   return (
     <header className="fixed top-0 z-50 w-full backdrop-blur-md">
@@ -76,7 +78,9 @@ const LandingPageNavbar = () => {
                         src="/quampi/logo.png"
                         alt="Quampi logo"
                       />
-                      <h1 className="text-lg md:text-xl font-medium">Quampi</h1>
+                      <h1 className="text-lg md:text-xl font-medium">
+                        Fluedity
+                      </h1>
                     </div>
                     <div className=" ml-auto flex gap-3">
                       {/* <ThemeToggle
@@ -107,28 +111,33 @@ const LandingPageNavbar = () => {
                       About
                     </span>
                     <div className="flex gap-3 w-full mb-2">
-                      {!currentPath.startsWith("/sign-in") &&
-                        !currentPath.startsWith("/add-website") && (
-                          <Button
-                            onClick={() => {
-                              router.push("/sign-in");
-                            }}
-                            className="h-10 font-light rounded-md flex flex-auto"
-                          >
-                            Sign in
-                          </Button>
-                        )}
-                      {!currentPath.startsWith("/sign-up") &&
-                        !currentPath.startsWith("/add-website") && (
-                          <Button
-                            onClick={() => {
-                              router.push("/sign-up");
-                            }}
-                            className="h-10 font-light  rounded-md flex flex-auto"
-                          >
-                            Sign up
-                          </Button>
-                        )}
+                      {!user && (
+                        <>
+                          {" "}
+                          {!currentPath.startsWith("/sign-in") &&
+                            !currentPath.startsWith("/add-website") && (
+                              <Button
+                                onClick={() => {
+                                  router.push("/sign-in");
+                                }}
+                                className="h-10 font-light rounded-md flex flex-auto"
+                              >
+                                Sign in
+                              </Button>
+                            )}
+                          {!currentPath.startsWith("/sign-up") &&
+                            !currentPath.startsWith("/add-website") && (
+                              <Button
+                                onClick={() => {
+                                  router.push("/sign-up");
+                                }}
+                                className="h-10 font-light  rounded-md flex flex-auto"
+                              >
+                                Sign up
+                              </Button>
+                            )}
+                        </>
+                      )}
                     </div>
                   </div>
                 </SheetContent>
@@ -172,40 +181,59 @@ const LandingPageNavbar = () => {
                   </>
                 )}
                 {/* <ThemeToggle variant="default" className="h-8 w-8" /> */}
-                {!currentPath.startsWith("/sign-in") &&
-                  !currentPath.startsWith("/add-website") && (
-                    <Button
-                      onClick={() => {
-                        router.push("/sign-in");
-                      }}
-                      variant={"transparent_blue"}
-                      className="h-8 rounded-full items-center group"
-                    >
-                      Sign in{" "}
-                      <ChevronRight className=" w-4 h-4 ml-1 group-hover:translate-x-[2px] transition-all ease-in-out " />
-                    </Button>
-                  )}
-                {!currentPath.startsWith("/sign-up") &&
-                  !currentPath.startsWith("/add-website") && (
-                    <Button
-                      onClick={() => {
-                        router.push("/sign-up");
-                      }}
-                      className="h-8  rounded-full"
-                    >
-                      Sign up
-                    </Button>
-                  )}
-                {currentPath.startsWith("/add-website") && (
+                {!user && (
                   <>
-                    <Button
-                      className="h-8 font-light rounded-full"
-                      onClick={async () => {
-                        await signOut(auth);
-                      }}
-                    >
-                      Log out
-                    </Button>
+                    {" "}
+                    {!currentPath.startsWith("/sign-in") &&
+                      !currentPath.startsWith("/add-website") && (
+                        <Button
+                          onClick={() => {
+                            router.push("/sign-in");
+                          }}
+                          variant={"transparent_blue"}
+                          className="h-8 rounded-full items-center group"
+                        >
+                          Sign in{" "}
+                          <ChevronRight className=" w-4 h-4 ml-1 group-hover:translate-x-[2px] transition-all ease-in-out " />
+                        </Button>
+                      )}
+                    {!currentPath.startsWith("/sign-up") &&
+                      !currentPath.startsWith("/add-website") && (
+                        <Button
+                          onClick={() => {
+                            router.push("/sign-up");
+                          }}
+                          className="h-8  rounded-full"
+                        >
+                          Sign up
+                        </Button>
+                      )}
+                  </>
+                )}
+                {user && (
+                  <>
+                    {currentPath.startsWith("/add-website") && (
+                      <>
+                        <Button
+                          className="h-8 font-light rounded-full"
+                          onClick={async () => {
+                            await signOut(auth);
+                          }}
+                        >
+                          Log out
+                        </Button>
+                      </>
+                    )}
+                    <>
+                      <Button
+                        className="h-8  rounded-full"
+                        onClick={async () => {
+                          await signOut(auth);
+                        }}
+                      >
+                        Log out
+                      </Button>
+                    </>
                   </>
                 )}
               </div>

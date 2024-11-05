@@ -15,7 +15,7 @@ const AuthenticationLayout = ({ children }: { children: React.ReactNode }) => {
   }
 
   if (user && !loading) {
-    return router.push("/home");
+    return router.push("/");
   }
 
   return <>{children}</>;

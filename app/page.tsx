@@ -17,10 +17,6 @@ const Welcome = () => {
     return <LoadingScreen />;
   }
 
-  if (user && !loading) {
-    return router.push("/home");
-  }
-
   return (
     <div className="min-h-screen flex flex-col items-center">
       {/* Navbar */}
