@@ -1,4 +1,4 @@
-import { PROJECT_NAME } from "@/data/quampi/metadata";
+import { PROJECT_NAME } from "@/data/app/metadata";
 import Image from "next/image";
 import React from "react";
 

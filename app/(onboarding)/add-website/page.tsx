@@ -2,7 +2,7 @@
 
 import { CircleIcon } from "@radix-ui/react-icons";
 import React, { useState } from "react";
-import { PROJECT_NAME, PROJECT_SUPPORT_EMAIL } from "@/data/quampi/metadata";
+import { PROJECT_NAME, PROJECT_SUPPORT_EMAIL } from "@/data/app/metadata";
 import LandingPageNavbar from "@/components/landing-page/navbar";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";

@@ -12,7 +12,7 @@ import {
 } from "firebase/auth";
 import { auth } from "@/config/firebase-config";
 import { toast } from "sonner";
-import { PROJECT_NAME, PROJECT_SUPPORT_EMAIL } from "@/data/quampi/metadata";
+import { PROJECT_NAME, PROJECT_SUPPORT_EMAIL } from "@/data/app/metadata";
 import LandingPageNavbar from "@/components/landing-page/navbar";
 
 const SignUp = () => {

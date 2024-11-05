@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import React from "react";
 import { Button } from "../ui/button";
@@ -9,7 +11,7 @@ import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
 import { ArrowLeftIcon, Cross1Icon } from "@radix-ui/react-icons";
 import { signOut } from "firebase/auth";
 import { auth } from "@/config/firebase-config";
-import { House } from "lucide-react";
+import { ChevronRight, House } from "lucide-react";
 import { BsFillHouseAddFill, BsHouse } from "react-icons/bs";
 
 const LandingPageNavbar = () => {
@@ -28,14 +30,16 @@ const LandingPageNavbar = () => {
               router.push("/");
             }}
           >
-            <Image
+            <video
               width={32}
+              autoPlay
+              controls={false}
+              loop
               height={32}
-              className="rounded-full w-8 h-8"
-              src="/quampi/logo.png"
-              alt="Quampi logo"
+              className="rounded-full w-8 h-8 object-cover"
+              src="https://cdn.dribbble.com/userupload/15363755/file/original-33c8fceaa8f1f12da02deb9ef182cafd.mp4"
             />
-            <h1 className="text-lg md:text-xl font-medium">Quampi</h1>
+            <h1 className="text-lg md:text-xl font-medium">Fluedity</h1>
           </div>
           {isMobile ? (
             <>
@@ -75,10 +79,10 @@ const LandingPageNavbar = () => {
                       <h1 className="text-lg md:text-xl font-medium">Quampi</h1>
                     </div>
                     <div className=" ml-auto flex gap-3">
-                      <ThemeToggle
+                      {/* <ThemeToggle
                         variant="default"
                         className="h-8 w-8 rounded-md flex "
-                      />
+                      /> */}
                       <SheetClose className="items-center flex ">
                         <Cross1Icon className=" w-5 h-5" />
                       </SheetClose>{" "}
@@ -86,17 +90,17 @@ const LandingPageNavbar = () => {
                   </div>
 
                   <div className="py-4 px-5 flex flex-col gap-4">
-                    <span
+                    {/* <span
                       onClick={() => {
                         router.push("/pricing");
                       }}
                       className=" text-[15px] border-b pb-3 font-medium"
                     >
                       Pricing
-                    </span>
+                    </span> */}
                     <span
                       onClick={() => {
-                        router.push("/pricing");
+                        router.push("/about");
                       }}
                       className=" text-[15px] pb-3 border-b font-medium"
                     >
@@ -132,7 +136,7 @@ const LandingPageNavbar = () => {
             </>
           ) : (
             <>
-              <div className=" mr-auto ml-10 flex gap-2 items-center">
+              {/* <div className=" mr-auto ml-10 flex gap-2 items-center">
                 <Button
                   onClick={() => {
                     router.push("/pricing");
@@ -142,7 +146,7 @@ const LandingPageNavbar = () => {
                 >
                   Pricing
                 </Button>
-              </div>
+              </div> */}
               <div className="flex items-center gap-2">
                 {currentPath.startsWith("/add-website-domain") && (
                   <Button
@@ -167,16 +171,18 @@ const LandingPageNavbar = () => {
                     </Button>
                   </>
                 )}
-                <ThemeToggle variant="default" className="h-8 w-8" />
+                {/* <ThemeToggle variant="default" className="h-8 w-8" /> */}
                 {!currentPath.startsWith("/sign-in") &&
                   !currentPath.startsWith("/add-website") && (
                     <Button
                       onClick={() => {
                         router.push("/sign-in");
                       }}
-                      className="h-8 font-light rounded-full"
+                      variant={"transparent_blue"}
+                      className="h-8 rounded-full items-center group"
                     >
-                      Sign in
+                      Sign in{" "}
+                      <ChevronRight className=" w-4 h-4 ml-1 group-hover:translate-x-[2px] transition-all ease-in-out " />
                     </Button>
                   )}
                 {!currentPath.startsWith("/sign-up") &&
@@ -185,7 +191,7 @@ const LandingPageNavbar = () => {
                       onClick={() => {
                         router.push("/sign-up");
                       }}
-                      className="h-8 font-light rounded-full"
+                      className="h-8  rounded-full"
                     >
                       Sign up
                     </Button>

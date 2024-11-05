@@ -6,7 +6,7 @@ import LandingPageNavbar from "@/components/landing-page/navbar";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { PROJECT_URL } from "@/data/quampi/metadata";
+import { PROJECT_URL } from "@/data/app/metadata";
 import { BiCircleThreeQuarter, BiLoader, BiLoaderCircle } from "react-icons/bi";
 import {
   BsExclamation,

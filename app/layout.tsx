@@ -13,7 +13,7 @@ import {
   PROJECT_KEYWORDS,
   PROJECT_NAME,
   PROJECT_URL,
-} from "@/data/quampi/metadata";
+} from "@/data/app/metadata";
 import { ThemeProvider } from "@/context/theme";
 import Script from "next/script";
 import { WebsiteProvider } from "@/context/website-data";
@@ -151,42 +151,13 @@ export default function RootLayout({
           "w-full overflow-x-hidden flex flex-auto justify-center"
         )}
       >
-        {" "}
-        <Script
-          id="json-ld"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-        <Script
-          async
-          defer
-          data-domain="quampi.vercel.app"
-          src="https://quampi.vercel.app/quampi.js"
-        ></Script>
-        <Script
-          strategy="afterInteractive"
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-        />
-        <Script
-          id="gtag-init"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${GA_MEASUREMENT_ID}', {
-              page_path: window.location.pathname,
-            });
-          `,
-          }}
-        />
         <Analytics />
         <AuthProvider>
           <WebsiteProvider>
             <ThemeProvider
               attribute="class"
               defaultTheme="light"
+              themes={["light"]}
               enableSystem
               disableTransitionOnChange
               storageKey={PROJECT_NAME || "theme"}
