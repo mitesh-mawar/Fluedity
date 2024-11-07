@@ -11,7 +11,7 @@ import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
 import { ArrowLeftIcon, Cross1Icon } from "@radix-ui/react-icons";
 import { signOut } from "firebase/auth";
 import { auth } from "@/config/firebase-config";
-import { ChevronRight, House } from "lucide-react";
+import { ChevronRight, House, LogOut } from "lucide-react";
 import { BsFillHouseAddFill, BsHouse } from "react-icons/bs";
 import { useUser } from "@/context/authentication";
 
@@ -43,18 +43,6 @@ const LandingPageNavbar = () => {
           </div>
           {isMobile ? (
             <>
-              {currentPath.startsWith("/add-website-domain") && (
-                <div
-                  className="ml-auto mr-3"
-                  onClick={() => {
-                    router.push("/add-website");
-                  }}
-                >
-                  <span className="text-[12px]  transition-all ease-in-out duration-300 text-muted-foreground hover:text-foreground cursor-pointer">
-                    <ArrowLeftIcon className="w-5 h-5" />
-                  </span>
-                </div>
-              )}
               <Sheet>
                 <SheetTrigger>
                   <div className="ml-auto items-center">
@@ -81,10 +69,6 @@ const LandingPageNavbar = () => {
                       </h1>
                     </div>
                     <div className=" ml-auto flex gap-3">
-                      {/* <ThemeToggle
-                        variant="default"
-                        className="h-8 w-8 rounded-md flex "
-                      /> */}
                       <SheetClose className="items-center flex ">
                         <Cross1Icon className=" w-5 h-5" />
                       </SheetClose>{" "}
@@ -92,22 +76,7 @@ const LandingPageNavbar = () => {
                   </div>
 
                   <div className="py-4 px-5 flex flex-col gap-4">
-                    {/* <span
-                      onClick={() => {
-                        router.push("/pricing");
-                      }}
-                      className=" text-[15px] border-b pb-3 font-medium"
-                    >
-                      Pricing
-                    </span> */}
-                    <span
-                      onClick={() => {
-                        router.push("/about");
-                      }}
-                      className=" text-[15px] pb-3 border-b font-medium"
-                    >
-                      About
-                    </span>
+                    <NavigationLink title="Talent" link="/talent" />
                     <div className="flex gap-3 w-full my-2 ">
                       {user && (
                         <>
@@ -124,28 +93,26 @@ const LandingPageNavbar = () => {
                       {!user && (
                         <>
                           {" "}
-                          {!currentPath.startsWith("/sign-in") &&
-                            !currentPath.startsWith("/add-website") && (
-                              <Button
-                                onClick={() => {
-                                  router.push("/sign-in");
-                                }}
-                                className="h-10 font-light rounded-md flex flex-auto"
-                              >
-                                Sign in
-                              </Button>
-                            )}
-                          {!currentPath.startsWith("/sign-up") &&
-                            !currentPath.startsWith("/add-website") && (
-                              <Button
-                                onClick={() => {
-                                  router.push("/sign-up");
-                                }}
-                                className="h-10 font-light  rounded-md flex flex-auto"
-                              >
-                                Sign up
-                              </Button>
-                            )}
+                          {!currentPath.startsWith("/sign-in") && (
+                            <Button
+                              onClick={() => {
+                                router.push("/sign-in");
+                              }}
+                              className="h-10  rounded-md flex flex-auto"
+                            >
+                              Sign in
+                            </Button>
+                          )}
+                          {!currentPath.startsWith("/sign-up") && (
+                            <Button
+                              onClick={() => {
+                                router.push("/sign-up");
+                              }}
+                              className="h-10 rounded-md flex flex-auto"
+                            >
+                              Sign up
+                            </Button>
+                          )}
                         </>
                       )}
                     </div>
@@ -155,80 +122,48 @@ const LandingPageNavbar = () => {
             </>
           ) : (
             <>
-              {/* <div className=" mr-auto ml-10 flex gap-2 items-center">
-                <Button
-                  onClick={() => {
-                    router.push("/pricing");
-                  }}
-                  variant={"link"}
-                  className="font-light text-muted-foreground hover:text-foreground  hover:no-underline "
-                >
-                  Pricing
-                </Button>
-              </div> */}
+              <div className="flex mr-auto  ml-10">
+                <NavigationLink title="Talent" link="/talent" />
+              </div>
               <div className="flex items-center gap-2">
-                {currentPath.startsWith("/add-website-domain") && (
-                  <Button
-                    onClick={() => {
-                      router.push("/add-website");
-                    }}
-                    variant={"secondary"}
-                    className="text-[12px] aspect-square h-8 rounded-full "
-                  >
-                    <ArrowLeftIcon className="aspect-square " />
-                  </Button>
-                )}
-                {currentPath.startsWith("/add-website") && (
-                  <>
-                    <Button
-                      className="h-8 w-8 p-0 font-light rounded-full"
-                      onClick={async () => {
-                        await router.push("/home");
-                      }}
-                    >
-                      <BsHouse />
-                    </Button>
-                  </>
-                )}
-                {/* <ThemeToggle variant="default" className="h-8 w-8" /> */}
                 {!user && (
                   <>
                     {" "}
-                    {!currentPath.startsWith("/sign-in") &&
-                      !currentPath.startsWith("/add-website") && (
-                        <Button
-                          onClick={() => {
-                            router.push("/sign-in");
-                          }}
-                          variant={"transparent_blue"}
-                          className="h-8 rounded-full items-center group"
-                        >
-                          Sign in{" "}
-                          <ChevronRight className=" w-4 h-4 ml-1 group-hover:translate-x-[2px] transition-all ease-in-out " />
-                        </Button>
-                      )}
-                    {!currentPath.startsWith("/sign-up") &&
-                      !currentPath.startsWith("/add-website") && (
-                        <Button
-                          onClick={() => {
-                            router.push("/sign-up");
-                          }}
-                          className="h-8  rounded-full"
-                        >
-                          Sign up
-                        </Button>
-                      )}
+                    {!currentPath.startsWith("/sign-in") && (
+                      <Button
+                        onClick={() => {
+                          router.push("/sign-in");
+                        }}
+                        variant={"transparent_blue"}
+                        className="h-8 rounded-full items-center group"
+                      >
+                        Sign in{" "}
+                        <ChevronRight className=" w-4 h-4 ml-1 group-hover:translate-x-[2px] transition-all ease-in-out " />
+                      </Button>
+                    )}
+                    {!currentPath.startsWith("/sign-up") && (
+                      <Button
+                        onClick={() => {
+                          router.push("/sign-up");
+                        }}
+                        className="h-8  rounded-full"
+                      >
+                        Sign up
+                      </Button>
+                    )}
                   </>
                 )}
                 {user && (
                   <>
                     <Button
-                      className="h-8  rounded-full"
                       onClick={async () => {
                         await signOut(auth);
                       }}
+                      variant={"transparent_blue"}
+                      className="h-8 rounded-full items-center group"
                     >
-                      Log out
+                      Sign out{" "}
+                      <LogOut className="ml-3 w-4 h-4  group-hover:translate-x-[2px] transition-all ease-in-out " />
                     </Button>
                   </>
                 )}
@@ -242,3 +177,52 @@ const LandingPageNavbar = () => {
 };
 
 export default LandingPageNavbar;
+
+const NavigationLink = ({
+  title,
+  link,
+  icon,
+}: {
+  title: string;
+  link: string;
+  icon?: React.ReactElement;
+}) => {
+  // ! Use Context
+  const currentPath = usePathname();
+  const router = useRouter();
+  const { isMobile } = useUtilities();
+
+  if (currentPath != link) {
+    return (
+      <>
+        {isMobile ? (
+          <>
+            <span
+              onClick={() => {
+                router.push(link);
+              }}
+              className=" text-[15px] pb-3 border-b font-medium"
+            >
+              {title}
+            </span>
+          </>
+        ) : (
+          <>
+            <div className=" flex h-8 items-center ">
+              <Button
+                onClick={() => {
+                  router.push(link);
+                }}
+                variant={"transparent_link"}
+                className=" font-normal"
+              >
+                {title}
+                {icon}
+              </Button>
+            </div>
+          </>
+        )}
+      </>
+    );
+  }
+};
