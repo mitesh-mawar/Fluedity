@@ -8,6 +8,9 @@ const nextConfig = {
       "images.unsplash.com",
       "assets.aceternity.com",
       "media.licdn.com",
+      "www.apple.com",
+      "pngimg.com",
+      "png.pngtree.com",
     ],
   },
 };

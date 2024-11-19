@@ -65,7 +65,7 @@ const HeroSection = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.7, delay: 0.5, ease: "easeInOut" }}
-              className="text-center py-3 justify-center flex"
+              className="text-center  py-3 justify-center flex"
             >
               <p className=" text-[12px] md:max-w-[700px] max-w-[300px]  md:text-base text-muted-foreground">
                 Fluedity&apos;s Cognition Intelligence let&apos;s you use AI

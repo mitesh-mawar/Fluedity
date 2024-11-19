@@ -142,6 +142,7 @@ export default function RootLayout({
 }>) {
   // ! Variables
   const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENTID;
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body

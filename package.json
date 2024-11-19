@@ -36,6 +36,7 @@
     "firebase-admin": "^12.6.0",
     "framer-motion": "^11.11.11",
     "jotai": "^2.10.0",
+    "lenis": "^1.1.16",
     "lodash": "^4.17.21",
     "lodash.template": "^4.5.0",
     "lucide-react": "^0.452.0",

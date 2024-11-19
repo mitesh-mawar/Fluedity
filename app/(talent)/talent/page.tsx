@@ -11,7 +11,7 @@ const Talent = () => {
 
   return (
     <div className="flex flex-auto w-full items-center justify-center">
-      <motion.div className="flex items-center justify-center relative flex-auto w-full h-[calc(100vh-60px)]">
+      <motion.div className="flex items-center justify-center relative flex-auto w-full h-[calc(100vh-60px)] ">
         <Carousel items={cards} />
       </motion.div>
     </div>
