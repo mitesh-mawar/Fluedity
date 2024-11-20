@@ -120,7 +120,7 @@ const FourSectionPage = () => {
                   height={9999999}
                   className=" rounded-r-[25px] md:rounded-r-[50px] w-32 md:w-[250px] lg:w-[400px] scale-110"
                   src="https://firebasestorage.googleapis.com/v0/b/fluedity.firebasestorage.app/o/Previews%2FImages%2Fbulbs.png?alt=media&token=af46cb2c-b8e2-47a6-85cf-3d7d5ac6f9e5"
-                />
+                />{" "}
               </div>
             </div>
           </div>
