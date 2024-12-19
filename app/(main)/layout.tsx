@@ -1,20 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  ChartArea,
-  ChartBar,
-  CircleUser,
-  DollarSign,
-  FolderOpen,
-  GitGraph,
-  Grid,
-  HandCoins,
-  HeartHandshake,
-  Home,
-  Landmark,
-  UserCheck,
-} from "lucide-react";
+import { ChartBar, Home } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import {
@@ -25,15 +12,14 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { useUser } from "@/context/authentication";
+import { useUser } from "@/context/User-Data/authentication";
 import { useRouter } from "next/navigation";
-import { useUtilities } from "@/context/utility";
-import LoadingScreen from "@/components/loading-screens/main-loading-screen";
+import { useUtilities } from "@/context/Utilities/utility";
+import LoadingScreen from "@/components/loading-screens/Page-Loading-Screen/main-loading-screen";
 import { Account } from "@/components/main/account";
 import Topbar from "@/components/main/topbar";
 import { Nav } from "@/components/main/sidebar-nav";
 import WebsiteView from "@/components/main/website-view";
-import { useWebsiteData, WebsiteProvider } from "@/context/website-data";
 
 const MainLayout = ({
   children,

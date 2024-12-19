@@ -13,7 +13,7 @@ import {
 import { auth } from "@/config/firebase-config";
 import { toast } from "sonner";
 import { PROJECT_NAME, PROJECT_SUPPORT_EMAIL } from "@/data/app/metadata";
-import LandingPageNavbar from "@/components/landing-page/navbar";
+import LandingPageNavbar from "@/components/landing-page/Navbar/navbar";
 
 const SignIn = () => {
   // ! Use States

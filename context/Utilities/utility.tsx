@@ -1,16 +1,15 @@
 "use client";
 
+import { LandingPageNavbarDataProps } from "@/types/Utilities/Navbar/navbar";
 import React, { ReactNode, createContext, useContext, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 
 interface UtilityContextType {
-  login: boolean;
-  signup: boolean;
-  setLogin: React.Dispatch<React.SetStateAction<boolean>>;
-  setSignup: React.Dispatch<React.SetStateAction<boolean>>;
-  navbarRef: HTMLDivElement | null;
   isMobile: boolean;
-  setNavbarRef: React.Dispatch<React.SetStateAction<HTMLDivElement | null>>;
+  landingPageNavbarData: LandingPageNavbarDataProps | undefined;
+  setLandingPageNavbarData: React.Dispatch<
+    React.SetStateAction<LandingPageNavbarDataProps | undefined>
+  >;
 }
 
 interface UtilityContextProps {
@@ -23,21 +22,17 @@ export const UtilityContextProvider: React.FC<UtilityContextProps> = ({
   children,
 }) => {
   // ! Use States
-  const [login, setLogin] = useState<boolean>(false);
-  const [signup, setSignup] = useState<boolean>(false);
-  const [navbarRef, setNavbarRef] = useState<HTMLDivElement | null>(null);
+  const [landingPageNavbarData, setLandingPageNavbarData] = useState<
+    LandingPageNavbarDataProps | undefined
+  >(undefined);
 
   // ! Use Contexts
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   const value = {
     isMobile,
-    navbarRef,
-    setNavbarRef,
-    login,
-    signup,
-    setSignup,
-    setLogin,
+    landingPageNavbarData,
+    setLandingPageNavbarData,
   };
 
   return (

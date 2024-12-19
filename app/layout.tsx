@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Inter, Poppins } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
-import { UtilityContextProvider } from "@/context/utility";
-import { AuthProvider } from "@/context/authentication";
+import { UtilityContextProvider } from "@/context/Utilities/utility";
+import { AuthProvider } from "@/context/User-Data/authentication";
 import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from "sonner";
 import { cn } from "@/lib/utils";
@@ -14,12 +14,10 @@ import {
   PROJECT_NAME,
   PROJECT_URL,
 } from "@/data/app/metadata";
-import { ThemeProvider } from "@/context/theme";
-import Script from "next/script";
-import { WebsiteProvider } from "@/context/website-data";
+import { ThemeProvider } from "@/context/Other/theme";
 
 // ! Fonts
-const poppinss = Inter({
+const Interr = Inter({
   subsets: ["latin"],
   variable: "--font-poppins-sans",
   weight: ["500", "400", "300", "200", "600", "700", "900"],
@@ -148,29 +146,27 @@ export default function RootLayout({
       <body
         suppressHydrationWarning
         className={cn(
-          poppinss.className,
+          Interr.className,
           "w-full overflow-x-hidden flex flex-auto justify-center"
         )}
       >
         <Analytics />
         <AuthProvider>
-          <WebsiteProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="light"
-              themes={["light"]}
-              enableSystem
-              disableTransitionOnChange
-              storageKey={PROJECT_NAME || "theme"}
-            >
-              <Toaster position="bottom-center" />
-              <UtilityContextProvider>
-                <TooltipProvider>
-                  <div className="max-w-screen w-screen">{children}</div>
-                </TooltipProvider>
-              </UtilityContextProvider>
-            </ThemeProvider>
-          </WebsiteProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            themes={["light"]}
+            enableSystem
+            disableTransitionOnChange
+            storageKey={PROJECT_NAME || "theme"}
+          >
+            <Toaster position="bottom-center" />
+            <UtilityContextProvider>
+              <TooltipProvider>
+                <div className="max-w-screen w-screen">{children}</div>
+              </TooltipProvider>
+            </UtilityContextProvider>
+          </ThemeProvider>
         </AuthProvider>
       </body>
     </html>

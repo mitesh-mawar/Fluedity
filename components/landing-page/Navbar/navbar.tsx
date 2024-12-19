@@ -1,19 +1,30 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
-import { Button } from "../ui/button";
-import ThemeToggle from "../ui/theme-toggle";
+import React, { useEffect, useRef } from "react";
+import { Button } from "@/components/ui/button";
 import { usePathname, useRouter } from "next/navigation";
-import { useUtilities } from "@/context/utility";
+import { useUtilities } from "@/context/Utilities/utility";
 import { BiMenu } from "react-icons/bi";
-import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
-import { ArrowLeftIcon, Cross1Icon } from "@radix-ui/react-icons";
+import { SheetClose, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Cross1Icon } from "@radix-ui/react-icons";
 import { signOut } from "firebase/auth";
 import { auth } from "@/config/firebase-config";
-import { ChevronRight, House, LogOut } from "lucide-react";
-import { BsFillHouseAddFill, BsHouse } from "react-icons/bs";
-import { useUser } from "@/context/authentication";
+import { ChevronRight, LogOut } from "lucide-react";
+import { useUser } from "@/context/User-Data/authentication";
+import { Sheet } from "@/components/ui/sheet";
+import { LandingPageNavbarDataProps } from "@/types/Utilities/Navbar/navbar";
+
+export const NavbarPages: { title: string; href: string }[] = [
+  {
+    title: "Talent",
+    href: "/talent",
+  },
+  {
+    title: "Aim",
+    href: "/aim",
+  },
+];
 
 const LandingPageNavbar = () => {
   // ! Use Context
@@ -21,10 +32,37 @@ const LandingPageNavbar = () => {
   const { isMobile } = useUtilities();
   const currentPath = usePathname();
   const { user } = useUser();
+  const { landingPageNavbarData, setLandingPageNavbarData } = useUtilities();
+
+  // ! Use Refs
+  // ** Navbar ref for taking details
+  const navbarRef = useRef<HTMLDivElement>(null);
+
+  // ! Use Effects
+  useEffect(() => {
+    if (navbarRef.current) {
+      const background_color = navbarRef.current.style.backgroundColor;
+      const data: LandingPageNavbarDataProps | undefined =
+        landingPageNavbarData;
+
+      if (background_color != data?.bg_color) {
+        data?.bg_color == background_color;
+      }
+
+      if (data != landingPageNavbarData) {
+        setLandingPageNavbarData(data);
+      }
+    } else {
+      setLandingPageNavbarData(undefined);
+    }
+  }, [navbarRef]);
 
   return (
-    <header className="fixed top-0 z-50 w-full backdrop-blur-md">
-      <nav className="max-w-[1500px] mx-auto px-4 py-3">
+    <header
+      ref={navbarRef}
+      className="fixed top-0 z-[99999] w-full backdrop-blur-md bg-white/65"
+    >
+      <nav className="max-w-[1180px] mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           <div
             className="flex items-center z-[100] cursor-pointer gap-2"
@@ -32,14 +70,16 @@ const LandingPageNavbar = () => {
               router.push("/");
             }}
           >
-            <Image
-              width={32}
-              alt="Fluedity"
-              height={32}
-              className="rounded-full w-8 h-8 object-cover"
-              src="/app/logo.png"
-            />
-            <h1 className="text-lg md:text-xl font-medium">Fluedity</h1>
+            <div className="flex relative w-8 h-8 flex-col rounded-xl items-center">
+              <Image
+                layout="fill"
+                objectFit="cover"
+                alt="Fluedity"
+                className="rounded-full aspect-square object-cover"
+                src={"/app/Logo/fluedity-logo.png"}
+              />
+            </div>
+            <h1 className="text-lg md:text-xl font-semibold">Fluedity</h1>
           </div>
           {isMobile ? (
             <>
@@ -62,7 +102,7 @@ const LandingPageNavbar = () => {
                         alt="Fluedity"
                         height={32}
                         className="rounded-full w-8 h-8 object-cover"
-                        src="/app/logo.png"
+                        src={"/app/Logo/fluedity-logo.png"}
                       />
                       <h1 className="text-lg md:text-xl font-medium">
                         Fluedity
@@ -76,42 +116,25 @@ const LandingPageNavbar = () => {
                   </div>
 
                   <div className="py-4 px-5 flex flex-col gap-4">
-                    <NavigationLink title="Talent" link="/talent" />
+                    {NavbarPages.map((page, index) => (
+                      <div key={index}>
+                        <NavigationLink title={page.title} link={page.href} />
+                      </div>
+                    ))}
                     <div className="flex gap-3 w-full my-2 ">
                       {user && (
                         <>
-                          <Button
-                            className="h-8 flex flex-auto rounded-full"
-                            onClick={async () => {
-                              await signOut(auth);
-                            }}
-                          >
-                            Log out
-                          </Button>
+                          <LogOutButton />
                         </>
                       )}
                       {!user && (
                         <>
                           {" "}
                           {!currentPath.startsWith("/sign-in") && (
-                            <Button
-                              onClick={() => {
-                                router.push("/sign-in");
-                              }}
-                              className="h-10  rounded-md flex flex-auto"
-                            >
-                              Sign in
-                            </Button>
+                            <SignInButton />
                           )}
                           {!currentPath.startsWith("/sign-up") && (
-                            <Button
-                              onClick={() => {
-                                router.push("/sign-up");
-                              }}
-                              className="h-10 rounded-md flex flex-auto"
-                            >
-                              Sign up
-                            </Button>
+                            <SignUpButton />
                           )}
                         </>
                       )}
@@ -123,7 +146,11 @@ const LandingPageNavbar = () => {
           ) : (
             <>
               <div className="flex mr-auto  ml-10">
-                <NavigationLink title="Talent" link="/talent" />
+                {NavbarPages.map((page, index) => (
+                  <div key={index}>
+                    <NavigationLink title={page.title} link={page.href} />
+                  </div>
+                ))}
               </div>
               <div className="flex items-center gap-2">
                 {!user && (
@@ -177,6 +204,49 @@ const LandingPageNavbar = () => {
 };
 
 export default LandingPageNavbar;
+
+export const SignUpButton = () => {
+  // ! Use Context
+  const router = useRouter();
+  return (
+    <Button
+      onClick={() => {
+        router.push("/sign-up");
+      }}
+      className="h-10 rounded-md flex items-center flex-auto"
+    >
+      Sign up
+    </Button>
+  );
+};
+
+export const SignInButton = () => {
+  // ! Use Context
+  const router = useRouter();
+  return (
+    <Button
+      onClick={() => {
+        router.push("/sign-in");
+      }}
+      className="h-10  rounded-md flex flex-auto"
+    >
+      Sign in
+    </Button>
+  );
+};
+
+export const LogOutButton = () => {
+  return (
+    <Button
+      className="h-8 flex flex-auto rounded-full"
+      onClick={async () => {
+        await signOut(auth);
+      }}
+    >
+      Log out
+    </Button>
+  );
+};
 
 const NavigationLink = ({
   title,

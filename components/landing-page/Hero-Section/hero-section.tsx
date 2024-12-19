@@ -1,11 +1,8 @@
-import React, { useState } from "react";
-import { Line, LineChart, ResponsiveContainer } from "recharts";
-import AnalyticalWindow from "../ui/mac-window";
-import WaitingList from "./waiting-list";
+import React from "react";
+import WaitingList from "../Waitlist/waiting-list";
 import { motion, AnimatePresence } from "framer-motion";
 import { ListTodo } from "lucide-react";
-import { useUser } from "@/context/authentication";
-import { cn } from "@/lib/utils";
+import { useUser } from "@/context/User-Data/authentication";
 
 interface DataPoint {
   revenue: number;

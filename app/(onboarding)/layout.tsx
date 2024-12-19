@@ -1,7 +1,7 @@
 "use client";
 
-import LoadingScreen from "@/components/loading-screens/main-loading-screen";
-import { useUser } from "@/context/authentication";
+import LoadingScreen from "@/components/loading-screens/Page-Loading-Screen/main-loading-screen";
+import { useUser } from "@/context/User-Data/authentication";
 import { useRouter } from "next/navigation";
 import React from "react";
 

@@ -1,18 +1,17 @@
 "use client";
 
 import React from "react";
-import HeroSection from "@/components/landing-page/hero-section";
+import HeroSection from "@/components/landing-page/Hero-Section/hero-section";
 import { useRouter } from "next/navigation";
-import LandingPageNavbar from "@/components/landing-page/navbar";
-import { useUser } from "@/context/authentication";
-import LoadingScreen from "@/components/loading-screens/main-loading-screen";
+import LandingPageNavbar from "@/components/landing-page/Navbar/navbar";
+import { useUser } from "@/context/User-Data/authentication";
+import LoadingScreen from "@/components/loading-screens/Page-Loading-Screen/main-loading-screen";
 import { easeInOut, motion } from "framer-motion";
 // import ParagraphSection from "@/components/landing-page/paragraph-section";
 
 const Welcome = () => {
   // ! Use Context
   const { user, loading } = useUser();
-  const router = useRouter();
 
   if (loading) {
     return <LoadingScreen />;

@@ -1,8 +1,7 @@
 "use client";
 
-import LandingPageNavbar from "@/components/landing-page/navbar";
-import LoadingScreen from "@/components/loading-screens/main-loading-screen";
-import { useUser } from "@/context/authentication";
+import LandingPageNavbar from "@/components/landing-page/Navbar/navbar";
+import { useUser } from "@/context/User-Data/authentication";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import Lenis from "lenis";

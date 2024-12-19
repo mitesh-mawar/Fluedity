@@ -18,7 +18,7 @@ import {
   LifeBuoy,
   User,
 } from "lucide-react";
-import { useUser } from "@/context/authentication";
+import { useUser } from "@/context/User-Data/authentication";
 import { signOut } from "firebase/auth";
 import { auth } from "@/config/firebase-config";
 import { useRouter } from "next/navigation";
