@@ -5,7 +5,7 @@ export const Spacer = ({ y, x }: { y?: number; x?: number }) => {
   return (
     <div
       className={cn(y && " flex w-full ")}
-      style={{ height: y && y, width: x && x }}
+      style={{ height: y && `${y}px`, width: x && `${x}px` }}
     />
   );
 };

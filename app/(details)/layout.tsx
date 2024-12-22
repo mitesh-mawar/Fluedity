@@ -28,7 +28,7 @@ const OnboardingLayout = ({ children }: { children: React.ReactNode }) => {
         <LandingPageNavbar />
         <div className="h-14 flex" />
         {/* Main content */}
-        <main className="flex-grow w-full px-4">{children}</main>
+        <main className="flex-grow w-full ">{children}</main>
       </div>
     </>
   );
