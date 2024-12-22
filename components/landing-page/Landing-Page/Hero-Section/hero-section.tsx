@@ -1,8 +1,8 @@
 import React from "react";
-import WaitingList from "../Waitlist/waiting-list";
 import { motion, AnimatePresence } from "framer-motion";
 import { ListTodo } from "lucide-react";
 import { useUser } from "@/context/User-Data/authentication";
+import WaitingList from "../../ui/Waitlist/waiting-list";
 
 interface DataPoint {
   revenue: number;

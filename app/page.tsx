@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import HeroSection from "@/components/landing-page/Hero-Section/hero-section";
 import { useRouter } from "next/navigation";
-import LandingPageNavbar from "@/components/landing-page/Navbar/navbar";
+import LandingPageNavbar from "@/components/landing-page/ui/Navbar/navbar";
 import { useUser } from "@/context/User-Data/authentication";
 import LoadingScreen from "@/components/loading-screens/Page-Loading-Screen/main-loading-screen";
 import { easeInOut, motion } from "framer-motion";
+import HeroSection from "@/components/landing-page/Landing-Page/Hero-Section/hero-section";
 // import ParagraphSection from "@/components/landing-page/paragraph-section";
 
 const Welcome = () => {

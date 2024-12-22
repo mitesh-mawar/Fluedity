@@ -1,6 +1,6 @@
 "use client";
 
-import LandingPageNavbar from "@/components/landing-page/Navbar/navbar";
+import LandingPageNavbar from "@/components/landing-page/ui/Navbar/navbar";
 import { useUser } from "@/context/User-Data/authentication";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
@@ -23,14 +23,12 @@ const OnboardingLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <>
-      <div className="min-h-screen flex flex-col items-center">
+      <div className="min-h-screen flex flex-col overflow-x-hidden items-center">
         {/* Navbar */}
         <LandingPageNavbar />
         <div className="h-14 flex" />
         {/* Main content */}
-        <main className="flex-grow w-full max-w-[1100px] px-4 ">
-          {children}
-        </main>
+        <main className="flex-grow w-full px-4">{children}</main>
       </div>
     </>
   );

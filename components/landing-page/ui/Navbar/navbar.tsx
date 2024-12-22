@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { usePathname, useRouter } from "next/navigation";
 import { useUtilities } from "@/context/Utilities/utility";
@@ -14,6 +14,7 @@ import { ChevronRight, LogOut } from "lucide-react";
 import { useUser } from "@/context/User-Data/authentication";
 import { Sheet } from "@/components/ui/sheet";
 import { LandingPageNavbarDataProps } from "@/types/Utilities/Navbar/navbar";
+import { cn } from "@/lib/utils";
 
 export const NavbarPages: { title: string; href: string }[] = [
   {
@@ -27,6 +28,9 @@ export const NavbarPages: { title: string; href: string }[] = [
 ];
 
 const LandingPageNavbar = () => {
+  // ! Use States
+  const [isAtTop, setIsAtTop] = useState<boolean>(true);
+
   // ! Use Context
   const router = useRouter();
   const { isMobile } = useUtilities();
@@ -57,12 +61,30 @@ const LandingPageNavbar = () => {
     }
   }, [navbarRef]);
 
+  // ** Checking if navbar is at the top
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsAtTop(window.scrollY === 0);
+    };
+
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [window]);
+
   return (
     <header
       ref={navbarRef}
-      className="fixed top-0 z-[99999] w-full backdrop-blur-md bg-white/65"
+      className={cn(
+        "fixed top-0 z-[99999] w-full backdrop-blur-md bg-white/65 transition-all ease-in-out duration-300",
+        !isAtTop ? "border-[#D1CDD0]  border-b-2" : " border-0"
+      )}
     >
-      <nav className="max-w-[1180px] mx-auto px-4 py-3">
+      <nav className="max-w-[1000px] mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           <div
             className="flex items-center z-[100] cursor-pointer gap-2"
