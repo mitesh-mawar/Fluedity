@@ -86,11 +86,13 @@ export const TalentSection3 = () => {
                     opacity: 0,
                     x: getInitialX(
                       index,
-                      window?.innerWidth >= 1024
-                        ? 4
-                        : window?.innerWidth >= 768
-                        ? 2
-                        : 1
+                      typeof window != "undefined"
+                        ? window?.innerWidth >= 1024
+                          ? 4
+                          : window?.innerWidth >= 768
+                          ? 2
+                          : 1
+                        : 0
                     ),
                   }}
                   whileInView={{
