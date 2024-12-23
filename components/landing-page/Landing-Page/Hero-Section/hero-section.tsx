@@ -86,9 +86,15 @@ const HeroSection = () => {
         </AnimatePresence>
         <motion.div
           onClick={(element) => shakeElement(element)}
-          initial={{ y: 0, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.7, delay: 0.8, ease: "easeInOut" }}
+          initial={{ y: 40, scale: 0.7, opacity: 0 }}
+          animate={{ y: 0, opacity: 1, scale: 1 }}
+          transition={{
+            duration: 1.2,
+            delay: 0.8,
+            type: "spring",
+            bounce: 1,
+            ease : "ease",
+          }}
           className="bg-black jiggle transition-all ease-in-out justify-between w-full  flex duration-300 hover:scale-[101%]  items-center relative rounded-full"
         >
           <video
