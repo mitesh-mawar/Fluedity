@@ -43,11 +43,6 @@ export const metadata: Metadata = {
     icon: "/quampi/logo.png",
     apple: "/quampi/logo.png",
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-  },
   robots: {
     index: true,
     follow: true,

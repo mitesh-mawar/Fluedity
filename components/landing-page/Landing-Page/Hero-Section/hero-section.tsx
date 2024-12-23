@@ -36,7 +36,7 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, ease: "easeInOut" }}
         >
-          <span className="text-xl italic   text-[#01DA58] px-7 py-2 font-semibold ">
+          <span className="text-xl italic text-[#01DA58] px-7 py-2 font-semibold ">
             Fluedity
           </span>
         </motion.div>
@@ -87,7 +87,7 @@ const HeroSection = () => {
           initial={{ y: 0, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.7, delay: 0.8, ease: "easeInOut" }}
-          className="bg-black cursor-pointer transition-all ease-in-out justify-between w-full  flex duration-300 hover:scale-[101%]  items-center relative rounded-full"
+          className="bg-black jiggle cursor-pointer transition-all ease-in-out justify-between w-full  flex duration-300 hover:scale-[101%]  items-center relative rounded-full"
         >
           <video
             autoPlay
