@@ -13,6 +13,7 @@ const nextConfig = {
       "png.pngtree.com",
       "mir-s3-cdn-cf.behance.net",
       "www.behance.net",
+      "cdn.pixabay.com", "www.ordinaryfolk.co"
     ],
   },
 };

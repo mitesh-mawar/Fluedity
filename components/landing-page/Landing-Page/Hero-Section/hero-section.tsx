@@ -91,9 +91,7 @@ const HeroSection = () => {
           transition={{
             duration: 1.2,
             delay: 0.8,
-            type: "spring",
-            bounce: 1,
-            ease : "ease",
+            ease: "easeInOut",
           }}
           className="bg-black jiggle transition-all ease-in-out justify-between w-full  flex duration-300 hover:scale-[101%]  items-center relative rounded-full"
         >

@@ -15,13 +15,14 @@ import { ArrowLeft, ArrowRight, X } from "lucide-react";
 interface CarouselProps {
   items: JSX.Element[];
   initialScroll?: number;
+  need_dialog?: boolean;
 }
 
-type Card = {
+export type Card = {
   src: string;
   title: string;
   category: string;
-  content: React.ReactNode;
+  content?: React.ReactNode;
 };
 
 export const CarouselContext = createContext<{
@@ -32,7 +33,11 @@ export const CarouselContext = createContext<{
   currentIndex: 0,
 });
 
-export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
+export const Carousel = ({
+  items,
+  initialScroll = 0,
+  need_dialog = false,
+}: CarouselProps) => {
   const carouselRef = React.useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
   const [canScrollRight, setCanScrollRight] = React.useState(true);
@@ -67,7 +72,7 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
 
   const handleCardClose = (index: number) => {
     if (carouselRef.current) {
-      const cardWidth = isMobile() ? 230 : 384; 
+      const cardWidth = isMobile() ? 230 : 384;
       const gap = isMobile() ? 4 : 8;
       const scrollPosition = (cardWidth + gap) * (index + 1);
       carouselRef.current.scrollTo({
@@ -153,10 +158,12 @@ export const Card = ({
   card,
   index,
   layout = false,
+  need_dialog,
 }: {
   card: Card;
   index: number;
   layout?: boolean;
+  need_dialog?: boolean;
 }) => {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -182,7 +189,9 @@ export const Card = ({
   useOutsideClick(containerRef, () => handleClose());
 
   const handleOpen = () => {
-    setOpen(true);
+    if (need_dialog) {
+      setOpen(true);
+    }
   };
 
   const handleClose = () => {

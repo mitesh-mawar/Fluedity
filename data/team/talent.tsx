@@ -56,7 +56,7 @@ const TalentProfile = ({
 export interface CompanyOfficialsProps {
   title: string;
   src: string;
-  content: React.ReactNode;
+  content?: React.ReactNode;
   category: string;
 }
 

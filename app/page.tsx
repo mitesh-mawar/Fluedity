@@ -9,6 +9,7 @@ import { easeInOut, motion } from "framer-motion";
 import HeroSection from "@/components/landing-page/Landing-Page/Hero-Section/hero-section";
 import LPSection1 from "@/components/landing-page/Landing-Page/Section-1/cognition-intelligence";
 import { Spacer } from "@/components/ui/spacer";
+import LPSection2 from "@/components/landing-page/Landing-Page/Section-2/features";
 // import ParagraphSection from "@/components/landing-page/paragraph-section";
 
 const Welcome = () => {
@@ -32,9 +33,10 @@ const Welcome = () => {
       <div className="flex-grow w-full max-w-[1100px] px-[22px] lg:px-0 ">
         <HeroSection />
       </div>
-      <Spacer y={50} />
-      <div className="flex flex-auto w-full">
+      <Spacer y={150} />
+      <div className="flex flex-auto flex-col items-center w-full">
         <LPSection1 />
+        <LPSection2 />
       </div>
     </div>
   );
