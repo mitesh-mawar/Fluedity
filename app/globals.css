@@ -117,3 +117,159 @@ body {
 .ci-glow.ci-glow-2::after {
   border: 8px solid rgba(0, 0, 0, 0);
 }
+
+/* Section Logics */
+
+.section-design {
+  margin-left: auto;
+  margin-right: auto;
+  width: 87.5%;
+}
+
+/* Section Headline */
+
+.typography-overview-section-headline {
+  font-size: 96px;
+  line-height: 1.0416666667;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.typography-overview-section-headline:lang(ar) {
+  letter-spacing: 0em;
+}
+
+.typography-overview-section-headline:lang(ja) {
+  letter-spacing: 0em;
+}
+
+.typography-overview-section-headline:lang(ko) {
+  line-height: 1.1461533333;
+  letter-spacing: 0em;
+}
+
+.typography-overview-section-headline:lang(zh) {
+  letter-spacing: 0em;
+}
+
+.typography-overview-section-headline:lang(th) {
+  line-height: 1.34375;
+}
+
+@media only screen and (max-width: 1068px) {
+  .typography-overview-section-headline {
+    font-size: 72px;
+    line-height: 1.0555555556;
+    font-weight: 700;
+    letter-spacing: -0.012em;
+  }
+
+  .typography-overview-section-headline:lang(ar) {
+    letter-spacing: 0em;
+  }
+
+  .typography-overview-section-headline:lang(ja) {
+    line-height: 1.0973822222;
+    letter-spacing: 0em;
+  }
+
+  .typography-overview-section-headline:lang(ko) {
+    line-height: 1.1527777778;
+    letter-spacing: 0em;
+  }
+
+  .typography-overview-section-headline:lang(zh) {
+    letter-spacing: 0em;
+  }
+
+  .typography-overview-section-headline:lang(th) {
+    line-height: 1.3473822222;
+  }
+}
+
+@media only screen and (max-width: 734px) {
+  .typography-overview-section-headline {
+    font-size: 48px;
+    line-height: 1.0834933333;
+    font-weight: 700;
+    letter-spacing: -0.003em;
+  }
+
+  .typography-overview-section-headline:lang(ar) {
+    letter-spacing: 0em;
+  }
+
+  .typography-overview-section-headline:lang(ja) {
+    line-height: 1.1459933333;
+    letter-spacing: 0em;
+  }
+
+  .typography-overview-section-headline:lang(ko) {
+    line-height: 1.1875;
+    letter-spacing: 0em;
+  }
+
+  .typography-overview-section-headline:lang(zh) {
+    letter-spacing: 0em;
+  }
+
+  .typography-overview-section-headline:lang(th) {
+    line-height: 1.3334933333;
+  }
+}
+
+/* Section Sub Heading */
+
+.typography-overview-section-copy {
+  color: #86868b;
+}
+
+.typography-overview-section-copy strong {
+  color: #000;
+}
+
+html.text-zoom .typography-overview-section-copy {
+  margin-bottom: 50px;
+}
+
+.typography-overview-section-copy {
+  font-size: 21px;
+  line-height: 1.381002381;
+  font-weight: 600;
+  letter-spacing: 0.011em;
+}
+
+.typography-overview-section-copy:lang(ko) {
+  line-height: 1.5238095238;
+}
+
+.typography-overview-section-copy:lang(th) {
+  line-height: 1.381002381;
+}
+
+.text-black-shadow {
+  text-shadow: 2px 2px 40px #000000; /* Black shadow with blur */
+}
+
+.absolute-center {
+  position: absolute; /* Equivalent to 'absolute' */
+  top: 50%; /* Equivalent to 'top-1/2' */
+  left: 50%; /* Equivalent to 'left-1/2' */
+  transform: translate(
+    -50%,
+    -50%
+  ); /* Combines both translate-y and translate-x */
+}
+
+/* Footer */
+
+.footer-padding {
+  padding-top: 70px;
+  padding-bottom: 70px;
+}
+
+/* Transition */
+
+.transition {
+  transition: all 0.3s ease-in-out; /* Combines all properties with duration and timing function */
+}

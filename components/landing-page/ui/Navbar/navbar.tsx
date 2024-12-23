@@ -15,6 +15,7 @@ import { useUser } from "@/context/User-Data/authentication";
 import { Sheet } from "@/components/ui/sheet";
 import { LandingPageNavbarDataProps } from "@/types/Utilities/Navbar/navbar";
 import { cn } from "@/lib/utils";
+import { FLUEDITY_LOGO } from "@/data/app/metadata";
 
 export const NavbarPages: { title: string; href: string }[] = [
   {
@@ -63,18 +64,20 @@ const LandingPageNavbar = () => {
 
   // ** Checking if navbar is at the top
   useEffect(() => {
-    const handleScroll = () => {
-      setIsAtTop(window.scrollY === 0);
-    };
+    if (typeof window != "undefined") {
+      const handleScroll = () => {
+        setIsAtTop(window.scrollY === 0);
+      };
 
-    handleScroll();
+      handleScroll();
 
-    window.addEventListener("scroll", handleScroll);
+      window.addEventListener("scroll", handleScroll);
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [window]);
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }
+  }, []);
 
   return (
     <header
@@ -84,7 +87,7 @@ const LandingPageNavbar = () => {
         !isAtTop ? "border-[#D1CDD0]  border-b-2" : " border-0"
       )}
     >
-      <nav className="max-w-[1000px] mx-auto px-4 py-3">
+      <nav className="max-w-[1100px] mx-auto lg:px-0 px-[22px] py-3">
         <div className="flex items-center justify-between">
           <div
             className="flex items-center z-[100] cursor-pointer gap-2"
@@ -98,7 +101,7 @@ const LandingPageNavbar = () => {
                 objectFit="cover"
                 alt="Fluedity"
                 className="rounded-full aspect-square object-cover"
-                src={"/app/Logo/fluedity-logo.png"}
+                src={FLUEDITY_LOGO}
               />
             </div>
             <h1 className="text-lg md:text-xl font-semibold">Fluedity</h1>
@@ -124,7 +127,7 @@ const LandingPageNavbar = () => {
                         alt="Fluedity"
                         height={32}
                         className="rounded-full w-8 h-8 object-cover"
-                        src={"/app/Logo/fluedity-logo.png"}
+                        src={FLUEDITY_LOGO}
                       />
                       <h1 className="text-lg md:text-xl font-medium">
                         Fluedity

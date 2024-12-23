@@ -10,5 +10,7 @@ export const PROJECT_KEYWORDS = ["analytics",];
 
 export const PROJECT_URL = 'https://fluedity.vercel.app'
 
+export const FLUEDITY_LOGO = '/app/Logo/fluedity-logo.png'
+
 export const WAITING_LIST =
     process.env.NODE_ENV == "development" ? false : false

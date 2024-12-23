@@ -70,7 +70,12 @@ const FeatureCard = ({
         )}
       >
         <div
-          className={cn("relative h-full", isMobile ? "w-full translate-x-[60%]  right-0 absolute top-0 h-full" : "md:w-[39%]")}
+          className={cn(
+            "relative h-full",
+            isMobile
+              ? "w-full translate-x-[60%]  right-0 absolute top-0 h-full"
+              : "md:w-[39%]"
+          )}
         >
           <Image
             src={feature.image}
@@ -88,7 +93,9 @@ const FeatureCard = ({
           <h1 className="text-[22px] lg:text-4xl font-semibold mb-2">
             {feature.heading}
           </h1>
-          <span className="text-sm md:text-base text-[#6E6E73]">{feature.subHeading}</span>
+          <span className="text-sm md:text-base text-[#6E6E73]">
+            {feature.subHeading}
+          </span>
           {feature.bottomElement}
         </div>
       </motion.div>

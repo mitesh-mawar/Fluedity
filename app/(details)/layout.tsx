@@ -5,6 +5,7 @@ import { useUser } from "@/context/User-Data/authentication";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import Lenis from "lenis";
+import Footer from "@/components/landing-page/ui/Footer/footer";
 
 const OnboardingLayout = ({ children }: { children: React.ReactNode }) => {
   // ! Use Context
@@ -29,6 +30,7 @@ const OnboardingLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="h-14 flex" />
         {/* Main content */}
         <main className="flex-grow w-full ">{children}</main>
+        <Footer />
       </div>
     </>
   );

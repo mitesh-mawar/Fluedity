@@ -11,7 +11,7 @@ export const SubHeading = ({
   return (
     <h1
       className={cn(
-        "text-[19px] px-1 max-w-[700px] text-start text-[#6E6E73] md:text-[22px] font-bold",
+        "typography-overview-section-copy", "lg:max-w-[700px]",
         className
       )}
     >

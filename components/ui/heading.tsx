@@ -11,7 +11,7 @@ export const Heading = ({
   return (
     <h1
       className={cn(
-        "text-[40px] md:text-[50px] lg:text-[70px] font-bold text-center",
+        "typography-overview-section-headline",
         className
       )}
     >
