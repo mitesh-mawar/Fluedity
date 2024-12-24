@@ -42,7 +42,7 @@ export const TalentSection3 = () => {
       ref={sectionRef}
       className="flex flex-auto w-full overflow-hidden flex-col gap-8 relative min-h-screen pb-20"
     >
-      <div className="w-full px-[25px] flex justify-center">
+      <div className="w-full padding-axe flex justify-center">
         <div className="w-full max-w-[1100px] flex-col md:items-center flex flex-auto justify-start">
           <div className="md:text-center relative flex typography-overview-section-headline items-center flex-wrap justify-center">
             Our

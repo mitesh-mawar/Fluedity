@@ -87,7 +87,7 @@ const LandingPageNavbar = () => {
         !isAtTop ? "border-[#D1CDD0]  border-b-2" : " border-0"
       )}
     >
-      <nav className="max-w-[1100px] mx-auto lg:px-0 px-[22px] py-3">
+      <nav className="max-w-[1100px] mx-auto padding-axe py-3">
         <div className="flex items-center justify-between">
           <div
             className="flex items-center z-[100] cursor-pointer gap-2"

@@ -10,6 +10,7 @@ import HeroSection from "@/components/landing-page/Landing-Page/Hero-Section/her
 import LPSection1 from "@/components/landing-page/Landing-Page/Section-1/cognition-intelligence";
 import { Spacer } from "@/components/ui/spacer";
 import LPSection2 from "@/components/landing-page/Landing-Page/Section-2/features";
+import LPSection3 from "@/components/landing-page/Landing-Page/Section-3/video-showcase";
 // import ParagraphSection from "@/components/landing-page/paragraph-section";
 
 const Welcome = () => {
@@ -37,6 +38,7 @@ const Welcome = () => {
       <div className="flex flex-auto flex-col items-center w-full">
         <LPSection1 />
         <LPSection2 />
+        <LPSection3 />
       </div>
     </div>
   );

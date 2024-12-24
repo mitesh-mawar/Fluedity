@@ -4,6 +4,8 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { InfiniteRunningLogos } from "@/components/ui/infinite-running-logos";
 import Image from "next/image";
 import { Card, Carousel } from "@/components/ui/card-carousel";
+import { cn } from "@/lib/utils";
+import { useUtilities } from "@/context/Utilities/utility";
 
 const features = [
   {
@@ -34,9 +36,20 @@ const features = [
     src: "https://mir-s3-cdn-cf.behance.net/project_modules/fs/88da8e209221345.6706376a7eac4.png",
     category: "Tasks automation.",
   },
+  {
+    title: "Manage your AI work at one simple place.",
+    description:
+      "Organise your AI queries and leverage multiple features to increase productivity.",
+    src: "https://mir-s3-cdn-cf.behance.net/project_modules/fs/536cfd209221345.67053fd6c547c.png",
+    category: "Tasks automation.",
+  },
 ];
 
 const LPSection2 = () => {
+  // ! Use Context
+  const { isMobile } = useUtilities();
+
+  // ! Use Ref
   const sectionRef = useRef<HTMLDivElement | null>(null);
 
   const { scrollYProgress } = useScroll({
@@ -54,7 +67,7 @@ const LPSection2 = () => {
       ref={sectionRef}
       className="relative  w-full flex flex-auto flex-col items-center"
     >
-      <motion.div className="max-w-[1100px] px-[22px] lg:px-0 w-full">
+      <motion.div className="max-w-[1100px] padding-axe w-full">
         <div className="flex flex-auto w-full justify-start overflow-hidden">
           <motion.div className="flex flex-col  w-full">
             <motion.h1
@@ -93,7 +106,58 @@ const LPSection2 = () => {
       <div className="flex flex-auto w-full justify-start items-center">
         <Carousel need_dialog={false} items={cards} />
       </div>
-      <Spacer y={200} />
+      <div className=" md:flex hidden">
+        <Spacer y={100} />
+      </div>
+      <div className=" md:hidden flex">
+        <Spacer y={50} />
+      </div>
+      <motion.div
+        initial={{ y: 40, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        transition={{
+          duration: 1.2,
+          type: "spring",
+          ease: "easeInOut",
+        }}
+        className="w-full flex flex-auto justify-center"
+      >
+        <div
+          className={cn(
+            " max-w-[1100px]  gap-5 typography-overview-section-copy-reduced  padding-axe grid grid-rows-3 md:grid-cols-3 w-full",
+            isMobile && "text-[18px]"
+          )}
+        >
+          <div className=" text-center justify-center flex flex-auto md:justify-start">
+            <div className=" max-w-[450px] md:max-w-[300px]  md:pb-0 pb-5 border-b-2 border-[#D1CDD0] md:border-b-0">
+              <span className=" font-semibold bg-gradient-to-r from-[#cb2d3e] to-[#ef473a] text-transparent bg-clip-text">
+                Collaborative Tools
+              </span>{" "}
+              facilitates teamwork with real-time document and idea sharing.
+            </div>
+          </div>
+          <div className="text-center justify-center flex flex-auto border-[#D1CDD0] md:border-x-2 md:justify-center">
+            <div className=" max-w-[450px] md:max-w-[300px]  md:pb-0 pb-5 border-b-2 md:border-b-0  border-[#D1CDD0]">
+              <span className=" font-semibold bg-gradient-to-r from-[#cb2d3e] to-[#ef473a] text-transparent bg-clip-text">
+                Emotion Detection
+              </span>{" "}
+              understands the user&apos;s tone and mood for empathetic
+              interactions.
+            </div>
+          </div>
+          <div className="text-center justify-center flex flex-auto md:justify-end">
+            <div className=" max-w-[450px] md:max-w-[300px] md:pb-0 pb-5 border-b-2 md:border-b-0 border-[#D1CDD0] ">
+              <span className="font-semibold bg-gradient-to-r from-[#cb2d3e] to-[#ef473a] text-transparent bg-clip-text">
+                Knowledge Database
+              </span>{" "}
+              let you access to a vast library of domain-specific information.
+            </div>
+          </div>
+        </div>
+      </motion.div>
+      <div className=" md:hidden flex">
+        <Spacer y={100} />
+      </div>
     </motion.div>
   );
 };

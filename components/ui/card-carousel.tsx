@@ -106,7 +106,7 @@ export const Carousel = ({
           <div
             className={cn(
               "flex flex-row justify-start gap-4 pl-4",
-              "max-w-7xl mx-auto" // remove max-w-4xl if you want the carousel to span the full width of its container
+              "max-w-7xl md:mx-[5%]" // remove max-w-4xl if you want the carousel to span the full width of its container
             )}
           >
             {items.map((item, index) => (
@@ -126,28 +126,30 @@ export const Carousel = ({
                   },
                 }}
                 key={"card" + index}
-                className="last:pr-[5%] md:last:pr-[33%]  rounded-3xl"
+                className="last:pr-[22px] -md:last:pr-[10%]  rounded-3xl"
               >
                 {item}
               </motion.div>
             ))}
           </div>
         </div>
-        <div className="flex justify-end gap-2 mr-10">
-          <button
-            className="relative z-40 h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center disabled:opacity-50"
-            onClick={scrollLeft}
-            disabled={!canScrollLeft}
-          >
-            <ArrowLeft className="h-6 w-6 text-gray-500" />
-          </button>
-          <button
-            className="relative z-40 h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center disabled:opacity-50"
-            onClick={scrollRight}
-            disabled={!canScrollRight}
-          >
-            <ArrowRight className="h-6 w-6 text-gray-500" />
-          </button>
+        <div className="flex flex-auto w-full justify-center ">
+          <div className="flex justify-start flex-auto w-full max-w-[1100px] padding-axe gap-2 ml-10">
+            <button
+              className="relative z-40 lg:h-14 lg:w-14 h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center disabled:opacity-50"
+              onClick={scrollLeft}
+              disabled={!canScrollLeft}
+            >
+              <ArrowLeft className="h-6 w-6 text-gray-500" />
+            </button>
+            <button
+              className="relative z-40 h-10 w-10 lg:h-14 lg:w-14 rounded-full bg-gray-100 flex items-center justify-center disabled:opacity-50"
+              onClick={scrollRight}
+              disabled={!canScrollRight}
+            >
+              <ArrowRight className="h-6 w-6 text-gray-500" />
+            </button>
+          </div>
         </div>
       </div>
     </CarouselContext.Provider>
@@ -265,7 +267,11 @@ export const Card = ({
           src={card.src}
           alt={card.title}
           fill
-          className="object-cover absolute z-10 inset-0"
+          style={{ mixBlendMode: index == 4 ? "inherit" : "darken" }}
+          className={cn(
+            "object-cover absolute z-10 inset-0",
+            index == 4 && "bg-[#9DDFE4]"
+          )}
         />
       </motion.button>
     </>
@@ -292,6 +298,7 @@ export const BlurImage = ({
       src={src}
       width={width}
       height={height}
+      style={{ userSelect: "none" }}
       loading="lazy"
       decoding="async"
       blurDataURL={typeof src === "string" ? src : undefined}

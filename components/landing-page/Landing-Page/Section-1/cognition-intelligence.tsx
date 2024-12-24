@@ -28,13 +28,26 @@ const LPSection1 = () => {
   const fciTextOpacity = useTransform(scrollYProgress, [0.5, 0.52], [1, 0]);
   const QSCOpacity = useTransform(scrollYProgress, [0.52, 0.54], [0, 1]);
   const QSCScale = useTransform(scrollYProgress, [0.52, 0.54], [0.8, 1]);
+  const textYTranslate = useTransform(scrollYProgress, [0.54, 0.8], [0, -100]);
+  // Transform scroll progress (0 to 1) to RGB values (255 to 0)
+  const bottomBackgroundColor = useTransform(
+    scrollYProgress,
+    [0.54, 0.8],
+    ["rgb(255, 255, 255)", "rgb(0, 0, 0)"]
+  );
+  // Text color changes from black to white for better contrast
+  const bottomTextColor = useTransform(
+    scrollYProgress,
+    [0.54, 0.8],
+    ["rgb(0, 0, 0)", "rgb(255, 0, 0)"]
+  );
 
   return (
     <motion.div
       ref={sectionRef}
-      className="relative gap-10 w-full flex flex-auto flex-col items-center"
+      className="relative gap-10 w-full flex  flex-auto flex-col items-center"
     >
-      <motion.div className="max-w-[1100px] px-[22px] lg:px-0 w-full">
+      <motion.div className="max-w-[1100px] padding-axe w-full">
         <div className="flex flex-auto w-full justify-center overflow-hidden">
           <motion.div className="flex flex-col md:items-center w-full">
             <motion.h1
@@ -45,7 +58,7 @@ const LPSection1 = () => {
                 type: "spring",
                 ease: "easeInOut",
               }}
-              className="typography-custom-section-headline md:text-center"
+              className="typography-custom-section-headline md:text-center gradient-text"
             >
               The Next <br />
               Generation of AI
@@ -96,7 +109,7 @@ const LPSection1 = () => {
             </span>
           </motion.div>
           <motion.div
-            className="absolute inset-0 bg-black"
+            className="absolute inset-0 bg-black "
             style={{ borderRadius: isMobile ? 0 : imageCornerRadius }}
           />
           <motion.img
@@ -110,13 +123,25 @@ const LPSection1 = () => {
           />
         </motion.div>
       </motion.div>
-      <div className="md:text-center mt-7 lg:px-0 px-[22px] typography-overview-section-copy ">
+      <motion.div
+        style={{
+          y: !isMobile ? textYTranslate : 0,
+        }}
+        className="md:text-center w-full flex flex-auto justify-center md:translate-y-[-100px] mt-7  padding-axe typography-overview-section-copy "
+      >
         <h1 className=" max-w-[700px]">
-          An integrated, user based system in which the replies are personalised
-          and upfront from the
-          <span className="text-black"> Cogntiion Intelligence </span>{" "}
+          <motion.span
+            style={{ color: !isMobile ? bottomTextColor : "black" }}
+            className="text-black"
+          >
+            {" "}
+            Cognition Intelligence{" "}
+          </motion.span>
+          is a versatile AI system designed for universal productivity. From
+          daily tasks to complex projects, our AI adapts to enhance your
+          workflow and well-being.
         </h1>
-      </div>
+      </motion.div>
       <Spacer y={100} />
     </motion.div>
   );

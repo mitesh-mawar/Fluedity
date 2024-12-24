@@ -29,7 +29,7 @@ export const TalentSection2 = () => {
       transition={{ ease: "easeInOut", duration: 0.5, type: "spring" }}
       className="flex flex-auto w-full flex-col gap-8 relative min-h-screen"
     >
-      <div className="w-full px-[25px] flex justify-center">
+      <div className="w-full padding-axe flex justify-center">
         <div className="w-full max-w-[1100px] flex-col md:items-center flex flex-auto justify-start">
           <div className="md:text-center typography-overview-section-headline">
             Why Fluedity?
