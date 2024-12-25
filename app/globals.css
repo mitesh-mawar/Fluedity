@@ -154,7 +154,306 @@ body {
   width: 87.5%;
 }
 
-/* Section Headline */
+/* Typography */
+
+.typography-product-stories-headline {
+  font-size: 80px;
+  line-height: 1.05;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.typography-product-stories-headline:lang(ar) {
+  letter-spacing: 0em;
+}
+
+.typography-product-stories-headline:lang(ja) {
+  line-height: 1.0875;
+  letter-spacing: 0em;
+}
+
+.typography-product-stories-headline:lang(ko) {
+  line-height: 1.15;
+  letter-spacing: 0em;
+}
+
+.typography-product-stories-headline:lang(zh) {
+  line-height: 1.0875;
+  letter-spacing: 0em;
+}
+
+.typography-product-stories-headline:lang(th) {
+  line-height: 1.35;
+}
+
+@media (max-width: 1068px) {
+  .typography-product-stories-headline {
+    font-size: 64px;
+    line-height: 1.0625;
+    font-weight: 600;
+    letter-spacing: -0.009em;
+  }
+
+  .typography-product-stories-headline:lang(ar) {
+    letter-spacing: 0em;
+  }
+
+  .typography-product-stories-headline:lang(ja) {
+    line-height: 1.109375;
+    letter-spacing: 0em;
+  }
+
+  .typography-product-stories-headline:lang(ko) {
+    line-height: 1.171875;
+    letter-spacing: 0em;
+  }
+
+  .typography-product-stories-headline:lang(zh) {
+    line-height: 1.09375;
+    letter-spacing: 0em;
+  }
+
+  .typography-product-stories-headline:lang(th) {
+    line-height: 1.34375;
+  }
+}
+
+@media (max-width: 734px) {
+  .typography-product-stories-headline {
+    font-size: 40px;
+    line-height: 1.1;
+    font-weight: 600;
+    letter-spacing: 0em;
+  }
+
+  .typography-product-stories-headline:lang(ja) {
+    line-height: 1.175;
+  }
+
+  .typography-product-stories-headline:lang(ko) {
+    line-height: 1.2;
+  }
+
+  .typography-product-stories-headline:lang(th) {
+    line-height: 1.35;
+  }
+}
+
+.typography-product-stories-copy {
+  font-size: 21px;
+  line-height: 1.381002381;
+  font-weight: 600;
+  letter-spacing: 0.011em;
+}
+
+.typography-product-stories-copy:lang(ja) {
+  line-height: 1.3334033333;
+}
+
+.typography-product-stories-copy:lang(ko) {
+  line-height: 1.5238095238;
+}
+
+.typography-product-stories-copy:lang(th) {
+  line-height: 1.381002381;
+}
+
+@media (max-width: 734px) {
+  .typography-product-stories-copy {
+    font-size: 17px;
+    line-height: 1.2353641176;
+    font-weight: 600;
+    letter-spacing: -0.022em;
+  }
+
+  .typography-product-stories-copy:lang(ar) {
+    letter-spacing: 0em;
+  }
+
+  .typography-product-stories-copy:lang(ja) {
+    line-height: 1.2353641176;
+    letter-spacing: 0em;
+  }
+
+  .typography-product-stories-copy:lang(ko) {
+    line-height: 1.2353641176;
+    letter-spacing: 0em;
+  }
+
+  .typography-product-stories-copy:lang(zh) {
+    letter-spacing: 0em;
+  }
+
+  .typography-product-stories-copy:lang(th) {
+    line-height: 1.2353641176;
+    letter-spacing: 0em;
+  }
+}
+
+.typography-product-stories-link {
+  font-size: 21px;
+  line-height: 1.1904761905;
+  font-weight: 400;
+  letter-spacing: 0.011em;
+}
+
+.typography-product-stories-link:lang(ja) {
+  line-height: 1.2380952381;
+}
+
+.typography-product-stories-link:lang(ko) {
+  line-height: 1.2858042857;
+}
+
+.typography-product-stories-link:lang(th) {
+  line-height: 1.381002381;
+}
+
+.typography-product-stories-link:lang(zh) {
+  line-height: 1.3334033333;
+}
+
+@media (max-width: 734px) {
+  .typography-product-stories-link {
+    font-size: 17px;
+    line-height: 1.2353641176;
+    font-weight: 400;
+    letter-spacing: -0.022em;
+  }
+
+  .typography-product-stories-link:lang(ar) {
+    letter-spacing: 0em;
+  }
+
+  .typography-product-stories-link:lang(ja) {
+    letter-spacing: 0em;
+  }
+
+  .typography-product-stories-link:lang(ko),
+  .typography-product-stories-link:lang(th),
+  .typography-product-stories-link:lang(zh) {
+    line-height: 1.3529611765;
+    letter-spacing: 0em;
+  }
+}
+
+.typography-product-stories-bento-copy {
+  font-size: 17px;
+  line-height: 1.2353641176;
+  font-weight: 600;
+  letter-spacing: -0.022em;
+}
+
+.typography-product-stories-bento-copy:lang(ar) {
+  letter-spacing: 0em;
+}
+
+.typography-product-stories-bento-copy:lang(ja) {
+  line-height: 1.2353641176;
+  letter-spacing: 0em;
+}
+
+.typography-product-stories-bento-copy:lang(ko) {
+  line-height: 1.2353641176;
+  letter-spacing: 0em;
+}
+
+.typography-product-stories-bento-copy:lang(zh) {
+  letter-spacing: 0em;
+}
+
+.typography-product-stories-bento-copy:lang(th) {
+  line-height: 1.2353641176;
+  letter-spacing: 0em;
+}
+
+@media (max-width: 734px) {
+  .typography-product-stories-bento-copy {
+    font-size: 14px;
+    line-height: 1.2857742857;
+    font-weight: 600;
+    letter-spacing: -0.016em;
+  }
+
+  .typography-product-stories-bento-copy:lang(ar) {
+    letter-spacing: 0em;
+  }
+
+  .typography-product-stories-bento-copy:lang(ja) {
+    line-height: 1.3571828571;
+    letter-spacing: 0em;
+  }
+
+  .typography-product-stories-bento-copy:lang(ko) {
+    line-height: 1.4285914286;
+    letter-spacing: 0em;
+  }
+
+  .typography-product-stories-bento-copy:lang(zh) {
+    line-height: 1.3571828571;
+    letter-spacing: 0em;
+  }
+
+  .typography-product-stories-bento-copy:lang(th) {
+    line-height: 1.3571828571;
+    letter-spacing: 0em;
+  }
+}
+
+.typography-product-stories-modal-copy {
+  font-size: 19px;
+  line-height: 1.2105263158;
+  font-weight: 600;
+  letter-spacing: 0.012em;
+}
+
+.typography-product-stories-modal-copy:lang(ja) {
+  line-height: 1.2631578947;
+}
+
+.typography-product-stories-modal-copy:lang(ko) {
+  line-height: 1.3157894737;
+}
+
+.typography-product-stories-modal-copy:lang(th) {
+  line-height: 1.3684410526;
+}
+
+.typography-product-stories-modal-copy:lang(zh) {
+  line-height: 1.3684410526;
+}
+
+@media (max-width: 1068px) {
+  .typography-product-stories-modal-copy {
+    font-size: 17px;
+    line-height: 1.2353641176;
+    font-weight: 600;
+    letter-spacing: -0.022em;
+  }
+
+  .typography-product-stories-modal-copy:lang(ar) {
+    letter-spacing: 0em;
+  }
+
+  .typography-product-stories-modal-copy:lang(ja) {
+    line-height: 1.2353641176;
+    letter-spacing: 0em;
+  }
+
+  .typography-product-stories-modal-copy:lang(ko) {
+    line-height: 1.2353641176;
+    letter-spacing: 0em;
+  }
+
+  .typography-product-stories-modal-copy:lang(zh) {
+    letter-spacing: 0em;
+  }
+
+  .typography-product-stories-modal-copy:lang(th) {
+    line-height: 1.2353641176;
+    letter-spacing: 0em;
+  }
+}
 
 .typography-overview-section-headline {
   font-size: 96px;
@@ -320,6 +619,8 @@ body {
     padding-inline: 0px;
   }
 }
+
+/* Divsion */
 
 .main-center-div {
   max-width: 1100px;

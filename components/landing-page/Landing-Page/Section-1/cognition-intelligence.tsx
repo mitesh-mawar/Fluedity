@@ -51,21 +51,24 @@ const LPSection1 = () => {
         <div className="flex flex-auto w-full justify-center overflow-hidden">
           <motion.div className="flex flex-col md:items-center w-full">
             <motion.h1
-              initial={{ y: 40, scale: 0.7, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1, scale: 1 }}
+              initial={{ y: 40, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
               transition={{
                 duration: 1.2,
                 type: "spring",
                 ease: "easeInOut",
               }}
-              className="typography-custom-section-headline md:text-center gradient-text"
+              className="typography-product-stories-headline md:text-center 
+              bg-clip-text text-transparent bg-gradient-to-b 
+              from-black to-[#1F1C18]
+              "
             >
               The Next <br />
               Generation of AI
             </motion.h1>
             <motion.p
               initial={{ y: 40, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1, scale: 1 }}
+              animate={{ y: 0, opacity: 1, scale: 1 }}
               transition={{
                 duration: 1.2,
                 type: "spring",

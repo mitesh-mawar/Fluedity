@@ -78,10 +78,11 @@ const LPSection2 = () => {
                 type: "spring",
                 ease: "easeInOut",
               }}
-              className="typography-custom-section-headline "
+              className="typography-custom-section-headline
+               text-transparent bg-clip-text bg-gradient-to-b from-[#000000] to-[#434343]"
             >
-              The Next <br />
-              Generation of AI
+              A Machine. <br />
+              Works like a human.
             </motion.h1>
             <motion.p
               initial={{ y: 40, opacity: 0 }}
@@ -124,7 +125,7 @@ const LPSection2 = () => {
       >
         <div
           className={cn(
-            " max-w-[1100px]  gap-5 typography-overview-section-copy-reduced  padding-axe grid grid-rows-3 md:grid-cols-3 w-full",
+            " max-w-[1100px]  gap-5 typography-product-stories-bento-copy   padding-axe grid grid-rows-3 md:grid-cols-3 w-full",
             isMobile && "text-[18px]"
           )}
         >

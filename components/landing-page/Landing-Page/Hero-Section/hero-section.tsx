@@ -32,38 +32,27 @@ const HeroSection = () => {
   return (
     <div className="flex flex-col items-center h-screen flex-auto w-full justify-center">
       <div className="my-auto gap-10 flex flex-col items-center">
-        <motion.div
-          initial={{ opacity: 0, y: -25 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, ease: "easeInOut" }}
-        >
-          <span className="text-xl italic text-[#01DA58] px-7 py-2 font-semibold ">
-            Fluedity
-          </span>
-        </motion.div>
         <AnimatePresence>
           <motion.div
             initial={{ y: -15, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -15, opacity: 0 }}
+            exit={{ y: -15, opacity: 0 }} className=" mt-10"
             transition={{ duration: 0.7, ease: "easeInOut" }}
           >
             <motion.div
               initial={{ y: -15, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.7, ease: "easeInOut" }}
-              className=" text-center flex text-3xl lg:text-4xl flex-col justify-center items-center"
+              className=" text-center flex typography-custom-section-headline flex-col justify-center items-center"
             >
-              <h1 className="lg:text-7xl font-semibold ">All new powerful</h1>
-              <p className="  lg:text-7xl font-semibold">
-                Cognition Intelligence
-              </p>
+              <h1 className=" font-semibold ">All new powerful</h1>
+              <p className="  font-semibold">Cognition Intelligence</p>
             </motion.div>
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.7, delay: 0.5, ease: "easeInOut" }}
-              className="text-center  py-3 justify-center flex"
+              className="text-center md:mt-2 py-3 justify-center flex"
             >
               <p className=" text-[12px] md:max-w-[700px] max-w-[300px]  md:text-base text-muted-foreground">
                 Fluedity&apos;s Cognition Intelligence let&apos;s you use AI
