@@ -58,7 +58,7 @@ const LPSection5 = () => {
       </motion.div>
       <Spacer y={isMobile ? 50 : 80} />
       <div
-        className={` graphic-center-div grid gap-5 grid-cols-2 w-full relative ${
+        className={` graphic-center-div grid gap-5 md:grid-cols-2 w-full relative ${
           isMobile ? " " : " "
         }`}
       >
