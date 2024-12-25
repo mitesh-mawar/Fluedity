@@ -16,6 +16,7 @@ const nextConfig = {
       "cdn.pixabay.com",
       "www.ordinaryfolk.co",
       "vimeo.com",
+      "dribbble.com",
     ],
   },
 };

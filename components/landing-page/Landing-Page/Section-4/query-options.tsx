@@ -58,7 +58,7 @@ const LPSection4 = () => {
         <div className="flex flex-auto w-full justify-center overflow-hidden">
           <motion.div className="flex flex-col w-full md:items-center">
             <motion.h1 className="typography-product-stories-headline pb-2 md:text-center">
-              Query, <br /> And see the rest.
+              Query, <br /> Anyway. Anything.
             </motion.h1>
             <span className="max-w-[700px] md:text-center mt-3 text-black typography-overview-section-copy">
               Intelligent text, image and video search can get you the most
@@ -66,8 +66,8 @@ const LPSection4 = () => {
             </span>
           </motion.div>
         </div>
-      </motion.div>
-      <Spacer y={isMobile ? 50 : 120} />
+      </motion.div>{" "}
+      <Spacer y={isMobile ? 50 : 80} />
       <div
         className={`flex graphic-center-div flex-auto w-full relative ${
           isMobile
@@ -168,7 +168,7 @@ const LPSection4 = () => {
           </div>
         </motion.div>
       </div>
-      <Spacer y={100} />
+      <Spacer y={isMobile ? 100 : 200} />
     </motion.div>
   );
 };

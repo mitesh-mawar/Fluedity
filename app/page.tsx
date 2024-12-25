@@ -11,7 +11,8 @@ import LPSection1 from "@/components/landing-page/Landing-Page/Section-1/cogniti
 import { Spacer } from "@/components/ui/spacer";
 import LPSection2 from "@/components/landing-page/Landing-Page/Section-2/features";
 import LPSection3 from "@/components/landing-page/Landing-Page/Section-3/video-showcase";
-import LPSection4 from "@/components/landing-page/Landing-Page/Section-4/unique";
+import LPSection4 from "@/components/landing-page/Landing-Page/Section-4/query-options";
+import LPSection5 from "@/components/landing-page/Landing-Page/Section-5/how-it-works";
 // import ParagraphSection from "@/components/landing-page/paragraph-section";
 
 const Welcome = () => {
@@ -41,6 +42,7 @@ const Welcome = () => {
         <LPSection2 />
         <LPSection3 />
         <LPSection4 />
+        <LPSection5 />
       </div>
     </div>
   );

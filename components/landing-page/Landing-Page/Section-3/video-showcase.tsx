@@ -69,8 +69,7 @@ const LPSection3 = () => {
                     z-10 -translate-x-1/2  cursor-pointer px-10 py-3 bottom-0
                      my-10 rounded-full lg:text-xl
                 ${ShowStem ? "bg-primary" : "bg-primary/90"}`,
-                  isMobile &&
-                    "my-0 w-full translate-y-[10px] scale-50 flex flex-auto px-5 text-[14px]"
+                  isMobile && "my-0 w-full  flex flex-auto px-5 text-[14px]"
                 )}
                 onClick={() => setShowStem(!ShowStem)}
                 animate={{
@@ -123,8 +122,7 @@ const LPSection3 = () => {
                     z-10 -translate-x-1/2  cursor-pointer px-7 py-2 bottom-0
                      my-5 rounded-full lg:text-lg
                 ${ShowDesign ? "bg-primary" : "bg-primary/90"}`,
-                  isMobile &&
-                    "my-0 w-full translate-y-[10px] scale-50 flex flex-auto px-5 text-[14px]"
+                  isMobile && "my-0 w-full flex flex-auto px-5 text-[14px]"
                 )}
                 onClick={() => setShowDesign(!ShowDesign)}
                 animate={{
@@ -174,8 +172,7 @@ const LPSection3 = () => {
                     z-10 -translate-x-1/2  cursor-pointer px-7 py-2 bottom-0
                      my-5 rounded-full lg:text-lg
                 ${ShowOffice ? "bg-primary" : "bg-primary/90"}`,
-                  isMobile &&
-                    "my-0 w-full translate-y-[10px] scale-50 flex flex-auto px-5 text-[14px]"
+                  isMobile && "my-0 w-full flex flex-auto px-5 text-[14px]"
                 )}
                 onClick={() => setShowOffice(!ShowOffice)}
                 animate={{
@@ -227,8 +224,8 @@ const LPSection3 = () => {
           Enables users worldwide to work on shared projects with synchronized
           AI-powered inputs.
         </div>
-      </div>
-      <Spacer y={200} />
+      </div>{" "}
+      <Spacer y={isMobile ? 100 : 200} />
     </motion.div>
   );
 };
