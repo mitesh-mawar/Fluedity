@@ -1,6 +1,11 @@
 import { nextui } from '@nextui-org/theme';
 import type { Config } from "tailwindcss";
 
+const colors = require("tailwindcss/colors");
+const {
+	default: flattenColorPalette,
+} = require("tailwindcss/lib/util/flattenColorPalette");
+
 const config: Config = {
 	darkMode: ["class"],
 	content: [
@@ -11,6 +16,17 @@ const config: Config = {
 	],
 	theme: {
 		extend: {
+			animation: {
+				scroll:
+					"scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite",
+			},
+			keyframes: {
+				scroll: {
+					to: {
+						transform: "translate(calc(-50% - 0.5rem))",
+					},
+				},
+			},
 			colors: {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
@@ -60,6 +76,18 @@ const config: Config = {
 			}
 		}
 	},
-	plugins: [require(`tailwindcss-animate`), nextui()],
+	plugins: [require(`tailwindcss-animate`), nextui(), addVariablesForColors],
 };
+
+function addVariablesForColors({ addBase, theme }: any) {
+	let allColors = flattenColorPalette(theme("colors"));
+	let newVars = Object.fromEntries(
+		Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+	);
+
+	addBase({
+		":root": newVars,
+	});
+}
+
 export default config;

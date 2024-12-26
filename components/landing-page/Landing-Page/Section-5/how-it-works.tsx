@@ -23,6 +23,34 @@ const LPSection5 = () => {
       },
     },
   };
+  const waveVariants2 = {
+    animate: {
+      borderRadius: [
+        "80% 80% 30% 50%/80% 30% 40% 70%",
+        "30% 60% 70% 40%/50% 60% 40% 60%",
+        "80% 80% 30% 50%/80% 30% 40% 70%",
+      ],
+      transition: {
+        duration: 8,
+        repeat: Infinity,
+        ease: "easeInOut",
+      },
+    },
+  };
+  const waveVariants3 = {
+    animate: {
+      borderRadius: [
+        "30% 60% 70% 40%/50% 60% 40% 60%",
+        "80% 80% 30% 50%/80% 30% 40% 70%",
+        "30% 60% 70% 40%/50% 60% 40% 60%",
+      ],
+      transition: {
+        duration: 8,
+        repeat: Infinity,
+        ease: "easeInOut",
+      },
+    },
+  };
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -143,7 +171,7 @@ const LPSection5 = () => {
             className="relative gap-5 flex flex-col my-10 w-full h-full "
           >
             <motion.div
-              variants={waveVariants1}
+              variants={waveVariants2}
               className="w-[150px] transition cursor-pointer hover:scale-105 absolute top-1/2 left-[10%] aspect-square flex justify-center items-center bg-[#F2A942]/50 rounded-t-full"
             >
               <h1
@@ -152,7 +180,7 @@ const LPSection5 = () => {
               >{`</>`}</h1>
             </motion.div>
             <motion.div
-              variants={waveVariants1}
+              variants={waveVariants3}
               className="w-[150px] transition cursor-pointer hover:scale-105  absolute top-10 right-1/2  aspect-square flex justify-center items-center bg-[#F2A942]/50 rounded-t-full"
             >
               <h1
@@ -161,7 +189,7 @@ const LPSection5 = () => {
               >{`.img`}</h1>
             </motion.div>
             <motion.div
-              variants={waveVariants1}
+              variants={waveVariants2}
               className="w-[150px] transition cursor-pointer hover:scale-105  absolute bottom-0 right-1/4  aspect-square flex justify-center items-center bg-[#F2A942]/50 rounded-t-full"
             >
               <h1

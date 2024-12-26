@@ -13,6 +13,7 @@ import LPSection2 from "@/components/landing-page/Landing-Page/Section-2/feature
 import LPSection3 from "@/components/landing-page/Landing-Page/Section-3/video-showcase";
 import LPSection4 from "@/components/landing-page/Landing-Page/Section-4/query-options";
 import LPSection5 from "@/components/landing-page/Landing-Page/Section-5/how-it-works";
+import LPSection6 from "@/components/landing-page/Landing-Page/Section-6/task";
 // import ParagraphSection from "@/components/landing-page/paragraph-section";
 
 const Welcome = () => {
@@ -43,6 +44,7 @@ const Welcome = () => {
         <LPSection3 />
         <LPSection4 />
         <LPSection5 />
+        <LPSection6 />
       </div>
     </div>
   );
