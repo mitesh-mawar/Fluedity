@@ -116,48 +116,48 @@ const LPSection5 = () => {
             </motion.div>
             <motion.div
               animate="animate"
-              className="ml-2 mt-16 bg-[#E25C20]/50 w-[50%] flex rounded-full  h-6"
+              className="md:ml-2 mt-10 md:mt-16 bg-[#E25C20]/50 w-[50%] flex rounded-full  h-6"
             />
             <motion.div
               animate="animate"
-              className=" ml-2  bg-[#E25C20]/50 w-[70%] flex rounded-full  h-6"
+              className=" md:ml-2  bg-[#E25C20]/50 w-[70%] flex rounded-full  h-6"
             />
             <motion.div
               animate="animate"
-              className=" ml-2  bg-[#E25C20]/50 w-[80%] flex rounded-full  h-6"
+              className=" md:ml-2  bg-[#E25C20]/50 w-[80%] flex rounded-full  h-6"
             />
             <motion.div
               animate="animate"
-              className=" ml-2  bg-[#E25C20]/50 w-[55%] flex rounded-full  h-6"
+              className=" md:ml-2  bg-[#E25C20]/50 w-[55%] flex rounded-full  h-6"
             />
             <motion.div
               animate="animate"
-              className="  ml-2 bg-[#E25C20]/50 w-[40%] flex rounded-full  h-6"
+              className=" md:flex hidden md:ml-2 bg-[#E25C20]/50 w-[40%]  rounded-full  h-6"
             />
             <motion.div
               animate="animate"
-              className="  ml-2 bg-[#E25C20]/50 w-[60%] flex rounded-full  h-6"
+              className="  md:ml-2 bg-[#E25C20]/50 w-[60%]  md:flex hidden  rounded-full  h-6"
             />
             <motion.div
               animate="animate"
-              className="  ml-2 bg-[#E25C20]/50 w-[90%] flex rounded-full  h-6"
+              className="  md:ml-2 bg-[#E25C20]/50 w-[90%]  md:flex hidden  rounded-full  h-6"
             />
             <motion.div
               animate="animate"
-              className="  ml-2 bg-[#E25C20]/50 w-[90%] flex rounded-full  h-6"
+              className="  md:ml-2 bg-[#E25C20]/50 w-[90%]  md:flex hidden  rounded-full  h-6"
             />
             <motion.div
               animate="animate"
-              className="  ml-2 bg-[#E25C20]/50 w-[40%] flex rounded-full  h-6"
+              className="  md:ml-2 bg-[#E25C20]/50 w-[40%]  md:flex hidden  rounded-full  h-6"
             />
             <motion.div
               animate="animate"
-              className="  ml-2 bg-[#E25C20]/50 w-[30%] flex rounded-full  h-6"
+              className="  md:ml-2 bg-[#E25C20]/50 w-[30%] flex rounded-full  h-6"
             />
           </motion.div>
         </motion.div>
-        <motion.div className="p-5 md:p-10 relative flex-col overflow-hidden card tile-rounded bg-[#FCF9E6] w-full flex flex-auto aspect-[9/11]">
-          <motion.div animate="animate" className="z-10  ">
+        <motion.div className=" md:p-10 relative flex-col overflow-hidden card tile-rounded bg-[#FCF9E6] w-full flex flex-auto aspect-[9/11]">
+          <motion.div animate="animate" className="z-10  p-5">
             <h1
               className=" typography-custom-section-headline"
               style={{ color: "#F2A942" }}
@@ -181,7 +181,7 @@ const LPSection5 = () => {
             </motion.div>
             <motion.div
               variants={waveVariants3}
-              className="w-[150px] transition cursor-pointer hover:scale-105  absolute top-10 right-1/2  aspect-square flex justify-center items-center bg-[#F2A942]/50 rounded-t-full"
+              className="w-[150px] transition cursor-pointer hover:scale-105  absolute top-[-13%] md:top-10 right-1/2  aspect-square flex justify-center items-center bg-[#F2A942]/50 rounded-t-full"
             >
               <h1
                 className="text-3xl md:text-5xl font-bold"
@@ -190,7 +190,7 @@ const LPSection5 = () => {
             </motion.div>
             <motion.div
               variants={waveVariants2}
-              className="w-[150px] transition cursor-pointer hover:scale-105  absolute bottom-0 right-1/4  aspect-square flex justify-center items-center bg-[#F2A942]/50 rounded-t-full"
+              className="w-[150px] transition cursor-pointer hover:scale-105  absolute bottom-0 right-[8%] md:right-1/4  aspect-square flex justify-center items-center bg-[#F2A942]/50 rounded-t-full"
             >
               <h1
                 className="text-3xl md:text-5xl font-bold"
@@ -199,7 +199,7 @@ const LPSection5 = () => {
             </motion.div>
             <motion.div
               variants={waveVariants1}
-              className="w-[150px] transition cursor-pointer hover:scale-105  absolute top-1/2 translate-y-[-60%] right-[10%]  aspect-square flex justify-center items-center bg-[#F2A942]/50 rounded-t-full"
+              className="w-[150px] transition cursor-pointer hover:scale-105  absolute top-[10%] md:top-1/2 translate-y-[-60%] right-[10%]  aspect-square flex justify-center items-center bg-[#F2A942]/50 rounded-t-full"
             >
               <h1
                 className="text-3xl md:text-5xl font-bold"
