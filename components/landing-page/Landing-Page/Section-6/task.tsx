@@ -6,6 +6,7 @@ import {
   BiAlarm,
   BiConversation,
   BiDesktop,
+  BiMath,
   BiSignal5,
   BiTable,
   BiText,
@@ -43,7 +44,10 @@ const commands_example = [
             <Users2 className="w-10 m-1 lg:w-[60px] card tile-rounded text-[#716AD1] border-[#716AD1] p-2  lg:p-3 border boder-4 ml-auto lg:h-[60px] h-10" />
           </div>
           <span className=" typography-overview-section-copy  mt-2   font-normal">
-            Collaborate with teams, on any project. Secure. Realtime. Automated.
+            Seamlessly unite teams with secure, real-time collaboration.
+            AI-powered workflows automate routine tasks while military-grade
+            encryption protects your innovations. Create, collaborate, and
+            achieve together.
           </span>
         </span>
       </div>
@@ -76,8 +80,10 @@ const commands_example = [
             <Home className="w-10 m-1 lg:w-[60px] card tile-rounded text-[#3D925B] border-[#3D925B] p-2  lg:p-3 border boder-4 ml-auto lg:h-[60px] h-10" />
           </div>
           <span className=" typography-overview-section-copy  mt-2   font-normal">
-            Integrated system for home automation to level up your living
-            experience.
+            Experience a home that anticipates your needs. Our smart automation
+            platform learns preferences, orchestrating perfect moments through
+            intelligent control of lighting, climate, security, and
+            entertainment.
           </span>
         </span>
       </div>
@@ -110,8 +116,10 @@ const commands_example = [
             <Code className="w-10 m-1 lg:w-[60px] card tile-rounded text-[#547DAB] border-[#547DAB] p-2  lg:p-3 border boder-4 ml-auto lg:h-[60px] h-10" />
           </div>
           <span className=" typography-overview-section-copy mt-2  font-normal">
-            Smart programming abilities to tackle your heavy programming loads
-            and provide optimised and best solutions.
+            Code smarter with AI-powered assistance that understands context,
+            suggests optimizations, and automates debugging. Deliver exceptional
+            solutions with intelligent code completion and real-time performance
+            analytics.
           </span>
         </span>
       </div>
@@ -147,8 +155,46 @@ const commands_example = [
             />
           </div>
           <span className=" typography-overview-section-copy mt-2  font-normal">
-            With best models, you can consult and ask daily life health advices.
-            FCI treats you to be more healthier.
+            Your AI health companion delivers custom insights and evidence-based
+            guidance. From nutrition to fitness, make informed decisions for
+            your wellbeing. Expert health models ensure personalized
+            recommendations when you need them.
+          </span>
+        </span>
+      </div>
+    </div>
+  </motion.li>,
+  <motion.li
+    animate={"animate"}
+    className="w-[450px] overflow-hidden relative  flex 
+    flex-auto flex-col md:w-[550px]"
+    key={"4"}
+  >
+    <div className=" relative card bg-[#FAFAFA] p-4 border tile-rounded overflow-hidden flex flex-auto w-full h-[400px] card tile-rounded">
+      <Image
+        className="card tile-rounded "
+        alt="1"
+        src={
+          "https://mir-s3-cdn-cf.behance.net/project_modules/1400/339eee207129751.66d848009f2e2.jpg"
+        }
+        layout="fill"
+        objectFit="cover"
+      />
+    </div>
+    <div>
+      <div className="relative z-20 mt-5 md:mt-6    flex flex-row items-center">
+        <span className="flex flex-col gap-1">
+          <div className="flex flex-auto w-full items-center ">
+            <span className=" typography-custom-section-headline-reduced  font-normal">
+              Academics
+            </span>
+            <BiMath className="w-10 m-1 lg:w-[60px] card tile-rounded text-[#0E95F4] border-[#0E95F4] p-2  lg:p-3 border boder-4 ml-auto lg:h-[60px] h-10" />
+          </div>
+          <span className=" typography-overview-section-copy mt-2  font-normal">
+            Transform learning with AI-powered flashcards, adaptive tests, and
+            instant summaries. Our knowledge engine personalizes your journey,
+            making complex topics accessible and retention effortless. Master
+            any subject with confidence.
           </span>
         </span>
       </div>
@@ -159,11 +205,6 @@ const commands_example = [
 const LPSection6 = () => {
   const { isMobile } = useUtilities();
   const sectionRef = useRef<HTMLDivElement | null>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
 
   return (
     <motion.div
@@ -193,7 +234,7 @@ const LPSection6 = () => {
         </div>
       </motion.div>
       <Spacer y={isMobile ? 20 : 70} />
-      <motion.div className="flex gap-5 flex-auto w-full justify-center">
+      <motion.div className="flex gap-6 flex-auto md:flex-row flex-col padding-axe my-5 md:my-0 w-full justify-center">
         <motion.div className="flex gap-3 items-center">
           <BiUserVoice
             style={{ color: "#F92A79" }}
