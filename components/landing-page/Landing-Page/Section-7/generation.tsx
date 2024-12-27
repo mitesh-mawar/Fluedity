@@ -153,7 +153,7 @@ const LPSection7 = () => {
           </p>
         </motion.div>{" "}
       </motion.div>
-      <Spacer y={isMobile ? 20 : 130} />
+      <Spacer y={isMobile ? 20 : 70} />
       <div className="container mx-auto px-[7%]">
         <motion.div className="grid  grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16 py-8">
           <div className="relative aspect-square">

@@ -15,6 +15,7 @@ import LPSection4 from "@/components/landing-page/Landing-Page/Section-4/query-o
 import LPSection5 from "@/components/landing-page/Landing-Page/Section-5/how-it-works";
 import LPSection6 from "@/components/landing-page/Landing-Page/Section-6/task";
 import LPSection7 from "@/components/landing-page/Landing-Page/Section-7/generation";
+import LPSection8 from "@/components/landing-page/Landing-Page/Section-8/companion";
 // import ParagraphSection from "@/components/landing-page/paragraph-section";
 
 const Welcome = () => {
@@ -47,6 +48,7 @@ const Welcome = () => {
         <LPSection5 />
         <LPSection6 />
         <LPSection7 />
+        <LPSection8 />
       </div>
     </div>
   );
