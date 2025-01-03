@@ -35,7 +35,7 @@ function PlayAIButton() {
   const [isConnected, setIsConnected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const agentControllerRef = useRef<AgentConnectionController | null>(null);
-  const AGENT_ID = 'Human-like-Mach--BQMnFsmif6AVjDoYkmZw';
+  const AGENT_ID = 'Fluedity-Cognit-94oo5Q1V15D0NRSiicKHh';
 
 
   const createFirestoreTask = async (conversationId: string) => {
@@ -79,7 +79,7 @@ function PlayAIButton() {
           onError: (error) => {
             console.error('PlayAI Error:', error);
             setIsConnected(false);
-          }
+          },
         }
       });
 
