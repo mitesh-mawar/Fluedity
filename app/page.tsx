@@ -16,6 +16,7 @@ import LPSection5 from "@/components/landing-page/Landing-Page/Section-5/how-it-
 import LPSection6 from "@/components/landing-page/Landing-Page/Section-6/task";
 import LPSection7 from "@/components/landing-page/Landing-Page/Section-7/generation";
 import LPSection8 from "@/components/landing-page/Landing-Page/Section-8/companion";
+import Script from "next/script";
 // import ParagraphSection from "@/components/landing-page/paragraph-section";
 
 const Welcome = () => {
@@ -28,7 +29,17 @@ const Welcome = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center">
-      {/* Navbar */}
+      {/* Navbar */}<Script
+        src="https://unpkg.com/@play-ai/agent-web-sdk"
+        strategy="afterInteractive"
+      />
+      <Script id="play-ai-init" strategy="afterInteractive">
+        {`
+        addEventListener("load", () => {
+          PlayAI.open('6WSEAxku9B3qesesk0lTA');
+        });
+      `}
+      </Script>
       <motion.div
         className="flex w-full"
         transition={{ duration: 0.4, ease: "linear" }}
