@@ -38,7 +38,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     return () => {
       unsubscribe();
-    };
+    }; 
   }, [theUser]);
 
   const value = { user, loading };

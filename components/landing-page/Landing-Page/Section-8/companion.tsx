@@ -1,74 +1,170 @@
-import { Spacer } from "@/components/ui/spacer";
-import React, { useRef } from "react";
-import { color, motion, useScroll } from "framer-motion";
+import React from "react";
+import { motion } from "framer-motion";
 import { useUtilities } from "@/context/Utilities/utility";
-import { BiBrain } from "react-icons/bi";
-import {
-  Code,
-  Code2,
-  Folder,
-  Home,
-  ImageIcon,
-  Plus,
-  Users2,
-  Video,
-} from "lucide-react";
-import Image from "next/image";
+import { Spacer } from "@/components/ui/spacer";
 import { cn } from "@/lib/utils";
 
-const waveVariants3 = {
-  animate: {
-    borderRadius: [
-      "30% 60% 70% 40%/50% 60% 40% 60%",
-      "30% 60% 70% 40%/50% 60% 40% 60%",
-      "80% 80% 30% 50%/80% 30% 40% 70%",
-      "30% 60% 70% 40%/50% 60% 40% 60%",
-    ],
-    transition: {
-      duration: 8,
-      repeat: Infinity,
-      ease: "easeInOut",
-    },
+interface ColorScheme {
+  primary: string;
+  secondary: string;
+  opacity: string;
+}
+
+interface FolderColors {
+  [key: string]: ColorScheme;
+}
+
+interface CardData {
+  title: string;
+  position: string;
+}
+
+interface FolderData {
+  type: "conversations" | "business";
+  title: string;
+  cards: CardData[];
+}
+
+interface CardProps extends CardData {
+  colorScheme: ColorScheme;
+  index: number;
+}
+
+interface FolderProps extends FolderData {
+  colorScheme: ColorScheme;
+}
+
+const FOLDER_COLORS: FolderColors = {
+  conversations: {
+    primary: "#FF5778",
+    secondary: "#FF2C55",
+    opacity: "30",
+  },
+  business: {
+    primary: "#FFAA33",
+    secondary: "#FF9501",
+    opacity: "30",
   },
 };
 
-const waveVariants1 = {
-  animate: {
-    borderRadius: [
-      "80% 80% 30% 50%/80% 30% 40% 70%",
-      "30% 60% 70% 40%/50% 60% 40% 60%",
-      "80% 80% 30% 50%/80% 30% 40% 70%",
-      "40% 50% 60% 80%/40% 50% 70% 50%",
-      "80% 80% 30% 50%/80% 30% 40% 70%",
+const FOLDER_DATA: FolderData[] = [
+  {
+    type: "conversations",
+    title: "Conversations",
+    cards: [
+      { title: "Quantum physics lectures links.", position: "-10%" },
+      { title: "Fluedity is best!", position: "30%" },
+      { title: "Who is Mitesh Mawar?", position: "5%" },
     ],
-    transition: {
-      duration: 8,
-      repeat: Infinity,
-      ease: "easeInOut",
-    },
   },
+  {
+    type: "business",
+    title: "Business",
+    cards: [
+      { title: "You remember the invoice?", position: "-10%" },
+      { title: "How is my real estate doing?", position: "30%" },
+      { title: "Bitcoin today?", position: "5%" },
+    ],
+  },
+];
+
+const Card: React.FC<CardProps> = ({ title, position, colorScheme, index }) => (
+  <div
+    className={`absolute transition hover:translate-y-[-2px] ${
+      index === 2 ? "bottom-[15%]" : "bottom-0"
+    } ml-[${position}] w-full ${
+      index === 0 ? "rotate-[-10deg]" : index === 1 ? "rotate-[10deg]" : ""
+    }`}
+  >
+    <motion.div
+      initial={{ y: 20 }}
+      whileInView={{ y: 0 }}
+      transition={{
+        duration: 0.8,
+        delay: 0.1 + index * 0.2,
+        type: "spring",
+        ease: "easeOut",
+      }}
+      className="absolute left-[20%] w-[280px] rotate-45 rounded-[30px] px-7 py-10 h-[350px] bottom-0 bg-white"
+    >
+      <motion.div
+        className={`h-3 w-full rounded-full bg-[${colorScheme.secondary}]/${colorScheme.opacity}`}
+      />
+      <motion.div
+        className={`w-full text-[${colorScheme.secondary}] mt-4 text-2xl font-semibold`}
+      >
+        {title}
+      </motion.div>
+      {[...Array(8)].map((_, i) => (
+        <div key={i} className="w-full flex gap-3">
+          {[...Array(Math.floor(Math.random() * 3) + 1)].map((_, j) => (
+            <motion.div
+              key={j}
+              className={`h-3 w-[${
+                Math.floor(Math.random() * 40) + 10
+              }%] rounded-full bg-[${colorScheme.secondary}]/${
+                colorScheme.opacity
+              } mt-3`}
+            />
+          ))}
+        </div>
+      ))}
+    </motion.div>
+  </div>
+);
+
+const Folder: React.FC<FolderProps> = ({ type, title, cards, colorScheme }) => {
+  return (
+    <div className="relative w-full max-w-4xl transform scale-80 md:scale-100">
+      <div className="relative flex flex-col items-start overflow-hidden">
+        <motion.div
+          className={cn(
+            "relative md:flex hidden",
+            "w-[180px] sm:w-[220px] md:w-[350px]",
+            "h-[100px] sm:h-[120px] md:h-[90px]",
+            "rounded-tl-[40px] md:rounded-tl-[70px]",
+            "lg:rounded-tr-[100px] lg:rounded-tl-[100px]",
+            "transform origin-bottom z-0"
+          )}
+          style={{ backgroundColor: colorScheme.primary }}
+        />
+        <motion.div
+          className={cn(
+            "relative w-full",
+            "h-[300px] sm:h-[400px] md:h-[450px]",
+            "rounded-[40px] md:rounded-[70px] lg:rounded-[100px]",
+            "lg:rounded-tl-none md:rounded-tl-none",
+            "transform origin-top flex items-center justify-center"
+          )}
+          style={{ backgroundColor: colorScheme.primary }}
+        />
+
+        {cards.map((card, index) => (
+          <Card key={index} {...card} colorScheme={colorScheme} index={index} />
+        ))}
+
+        <motion.div
+          className="absolute w-full z-10 rounded-b-[40px] 
+                    md:rounded-b-[70px] lg:rounded-b-[100px] flex
+                    flex-auto h-[30%] bottom-0"
+          style={{ backgroundColor: colorScheme.primary }}
+        >
+          <span
+            className={cn(
+              "font-normal h-full w-full lg:p-10 p-5 items-center",
+              "text-4xl md:text-6xl font-semibold mt-2 text-white"
+            )}
+          >
+            {title}
+          </span>
+        </motion.div>
+      </div>
+    </div>
+  );
 };
 
-const waveVariants2 = {
-  animate: {
-    borderRadius: [
-      "30% 60% 70% 40%/50% 60% 40% 60%",
-      "80% 80% 30% 50%/80% 30% 40% 70%",
-      "40% 50% 60% 80%/40% 50% 70% 50%",
-      "80% 80% 30% 50%/80% 30% 40% 70%",
-      "30% 60% 70% 40%/50% 60% 40% 60%",
-    ],
-    transition: {
-      duration: 8,
-      repeat: Infinity,
-      ease: "easeInOut",
-    },
-  },
-};
-
-const LPSection8 = () => {
+const LPSection8: React.FC = () => {
   const { isMobile } = useUtilities();
-  const sectionRef = useRef<HTMLDivElement | null>(null);
 
   return (
     <motion.div
@@ -79,13 +175,14 @@ const LPSection8 = () => {
         type: "spring",
         ease: "easeInOut",
       }}
-      className="relative w-full min-h-screen flex flex-col items-center justify-center bg-white p-4"
+      className="relative w-full min-h-screen flex flex-col items-center justify-center bg-white"
     >
-      <motion.div className="max-w-[1100px] padding-axe w-full">
+      <motion.div className="max-w-[1100px] px-4 md:px-6 lg:px-8 w-full">
         <div className="flex flex-auto w-full justify-center overflow-hidden">
           <motion.div className="flex flex-col w-full md:items-center">
             <motion.h1 className="typography-product-stories-headline pb-2 md:text-center">
-              Chat, <br /> Code. Create. Organised.
+              Chat. Code.
+              <br /> Create. Organised.
             </motion.h1>
             <span className="max-w-[720px] md:text-center mt-3 text-black typography-overview-section-copy">
               FCI redefines language interactions with the most advanced chat
@@ -100,780 +197,14 @@ const LPSection8 = () => {
         </div>
       </motion.div>
       <Spacer y={isMobile ? 20 : 90} />
-      <motion.div className="graphic-center-div grid w-full gap-5 md:gap-10 md:grid-cols-2">
-        <div className="relative w-full max-w-4xl">
-          {/* Container for positioning */}
-          <div className="relative flex flex-col items-start overflow-hidden">
-            {/* Folder Tab - Now aligned to left */}
-            <motion.div
-              className="relative w-[180px] sm:w-[220px] md:w-[350px] 
-                     h-[100px] sm:h-[120px] md:h-[90px] 
-                     bg-[#FF5778] rounded-tl-[40px] md:rounded-tl-[70px] 
-                     lg:rounded-tr-[100px] lg:rounded-tl-[100px]
-                     transform origin-bottom z-0 mb-1"
-            />
-            {/* Folder Body - Full width */}
-            <motion.div
-              className="relative w-full h-[300px] sm:h-[400px] md:h-[450px] 
-                     bg-[#FF5778] rounded-[40px] md:rounded-[70px] lg:rounded-[100px]
-                     lg:rounded-tl-none md:rounded-tl-none 
-                       transform origin-top -mt-1
-                     flex items-center justify-center"
-            ></motion.div>
-            <div className="absolute ml-[-10%] bottom-0 w-full rotate-[-10deg]">
-              <motion.div
-                initial={{ y: 20 }}
-                whileInView={{ y: 0 }}
-                transition={{
-                  duration: 0.8,
-                  delay: 0.5,
-                  type: "spring",
-                  ease: "easeOut",
-                }}
-                className="absolute left-[20%] w-[280px] rotate-45 rounded-[30px] px-7 py-10 h-[350px]   bottom-0 bg-white "
-              >
-                <motion.div className="h-3 w-full rounded-full bg-[#FF2C55]/30" />
-                <motion.div className="w-full text-[#FF2C55] mt-4 text-2xl font-semibold">
-                  Quantum physics lectures links.
-                </motion.div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                </div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[50%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                </div>
-                <motion.div className="h-3 w-full rounded-full bg-[#FF2C55]/30 mt-3" />
-                <motion.div className="h-3 w-full rounded-full bg-[#FF2C55]/30 mt-3" />
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                </div>{" "}
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                </div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                  <motion.div className="h-3 w-[20%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                  <motion.div className="h-3 w-[18%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                </div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[18%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                </div>
-              </motion.div>
-            </div>
-            <div className="absolute ml-[30%] bottom-0 w-full rotate-[10deg]">
-              <motion.div
-                initial={{ y: 20 }}
-                whileInView={{ y: 0 }}
-                transition={{
-                  duration: 0.8,
-                  delay: 0.3,
-                  type: "spring",
-                  ease: "easeOut",
-                }}
-                className="absolute left-[20%] w-[280px] rotate-45 rounded-[30px] px-7 py-10 h-[350px]   bottom-0 bg-white "
-              >
-                <motion.div className="h-3 w-full rounded-full bg-[#FF2C55]/30" />
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                </div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[50%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                </div>
-                <motion.div className="h-3 w-full rounded-full bg-[#FF2C55]/30 mt-3" />
-                <motion.div className="w-full text-[#FF2C55]  mt-4 text-2xl font-semibold">
-                  Fluedity is best!
-                </motion.div>
-                <motion.div className="h-3 w-full rounded-full bg-[#FF2C55]/30 mt-3" />
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                </div>{" "}
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                </div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                  <motion.div className="h-3 w-[20%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                  <motion.div className="h-3 w-[18%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                </div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[18%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                </div>
-              </motion.div>
-            </div>
-            <div className="absolute  bottom-[15%]  ml-[5%] w-full  ">
-              <motion.div
-                initial={{ y: 20 }}
-                whileInView={{ y: 0 }}
-                transition={{
-                  duration: 0.8,
-                  delay: 0.1,
-                  type: "spring",
-                  ease: "easeOut",
-                }}
-                className="absolute left-[20%] w-[280px] border rotate-45 rounded-[30px] px-7 py-10 h-[350px]   bottom-0 bg-white "
-              >
-                <motion.div className="h-3 w-full rounded-full bg-[#FF2C55]/30" />
-                <motion.div className="w-full text-[#FF2C55] mt-4 text-2xl font-semibold">
-                  Who is Mitesh Mawar?
-                </motion.div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                </div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[50%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                </div>
-                <motion.div className="h-3 w-full rounded-full bg-[#FF2C55]/30 mt-3" />
-                <motion.div className="h-3 w-full rounded-full bg-[#FF2C55]/30 mt-3" />
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                </div>{" "}
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                </div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                  <motion.div className="h-3 w-[20%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                  <motion.div className="h-3 w-[18%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                </div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[18%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#FF2C55]/30 mt-3" />
-                </div>
-              </motion.div>
-            </div>
-            <motion.div
-              transition={{
-                duration: 0.8,
-                delay: 0.3,
-                type: "spring",
-                ease: "easeOut",
-              }}
-              className="absolute w-full z-10 rounded-b-[40px] 
-              md:rounded-b-[70px] lg:rounded-b-[100px] flex
-               flex-auto h-[30%] bottom-0 bg-[#FF2C55] "
-            >
-              <span
-                className={cn(
-                  "font-normal h-full w-full lg:p-10 items-center ",
-                  !isMobile
-                    ? " text-6xl font-semibold mt-2 "
-                    : "text-3xl font-semibold"
-                )}
-                style={{ color: "white" }}
-              >
-                Conversations
-              </span>
-            </motion.div>
-          </div>
-        </div>
-        <div className="relative w-full max-w-4xl">
-          {/* Container for positioning */}
-          <div className="relative flex flex-col items-start overflow-hidden">
-            {/* Folder Tab - Now aligned to left */}
-            <motion.div
-              transition={{
-                duration: 0.8,
-                type: "spring",
-                ease: "easeOut",
-              }}
-              className="relative w-[180px] sm:w-[220px] md:w-[350px] 
-                     h-[100px] sm:h-[120px] md:h-[90px] 
-                     bg-[#FFAA33] rounded-tl-[40px] md:rounded-tl-[70px] 
-                     lg:rounded-tr-[100px] lg:rounded-tl-[100px]
-                     transform origin-bottom z-0 mb-1"
-            />
-            {/* Folder Body - Full width */}
-            <motion.div
-              transition={{
-                duration: 0.8,
-                delay: 0.5,
-                type: "spring",
-                ease: "easeOut",
-              }}
-              className="relative w-full h-[300px] sm:h-[400px] md:h-[450px] 
-                     bg-[#FFAA33] rounded-[40px] md:rounded-[70px] lg:rounded-[100px]
-                     lg:rounded-tl-none md:rounded-tl-none 
-                       transform origin-top -mt-1
-                     flex items-center justify-center"
-            ></motion.div>
-            <div className="absolute ml-[-10%] bottom-0 w-full rotate-[-10deg]">
-              <motion.div
-                initial={{ y: 20 }}
-                whileInView={{ y: 0 }}
-                transition={{
-                  duration: 0.8,
-                  delay: 0.6,
-                  type: "spring",
-                  ease: "easeOut",
-                }}
-                className="absolute left-[20%] w-[280px] rotate-45 rounded-[30px] px-7 py-10 h-[350px]   bottom-0 bg-white "
-              >
-                <motion.div className="h-3 w-full rounded-full bg-[#FF9501]/30" />
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#FF9501]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#FF9501]/30 mt-3" />
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#FF9501]/30 mt-3" />
-                </div>
-                <motion.div className="w-full text-[#FF9501]  mt-4 text-2xl font-semibold">
-                  You remember the invoice?
-                </motion.div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[50%] rounded-full bg-[#FF9501]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#FF9501]/30 mt-3" />
-                </div>
-                <motion.div className="h-3 w-full rounded-full bg-[#FF9501]/30 mt-3" />
-                <motion.div className="h-3 w-full rounded-full bg-[#FF9501]/30 mt-3" />
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#FF9501]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#FF9501]/30 mt-3" />
-                </div>{" "}
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#FF9501]/30 mt-3" />
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#FF9501]/30 mt-3" />
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#FF9501]/30 mt-3" />
-                </div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#FF9501]/30 mt-3" />
-                  <motion.div className="h-3 w-[20%] rounded-full bg-[#FF9501]/30 mt-3" />
-                  <motion.div className="h-3 w-[18%] rounded-full bg-[#FF9501]/30 mt-3" />
-                </div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[18%] rounded-full bg-[#FF9501]/30 mt-3" />
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#FF9501]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#FF9501]/30 mt-3" />
-                </div>
-              </motion.div>
-            </div>
-            <div className="absolute ml-[30%] bottom-0 w-full rotate-[10deg]">
-              <motion.div
-                initial={{ y: 20 }}
-                whileInView={{ y: 0 }}
-                transition={{
-                  duration: 0.8,
-                  delay: 0.5,
-                  type: "spring",
-                  ease: "easeOut",
-                }}
-                className="absolute left-[20%] w-[280px] rotate-45 rounded-[30px] px-7 py-10 h-[350px]   bottom-0 bg-white "
-              >
-                <motion.div className="h-3 w-full rounded-full bg-[#FF9501]/30" />
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#FF9501]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#FF9501]/30 mt-3" />
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#FF9501]/30 mt-3" />
-                </div>
-                <motion.div className="w-full text-[#FF9501]  mt-4 text-2xl font-semibold">
-                  How is my real estate doing?
-                </motion.div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[50%] rounded-full bg-[#FF9501]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#FF9501]/30 mt-3" />
-                </div>
-                <motion.div className="h-3 w-full rounded-full bg-[#FF9501]/30 mt-3" />
-                <motion.div className="h-3 w-full rounded-full bg-[#FF9501]/30 mt-3" />
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#FF9501]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#FF9501]/30 mt-3" />
-                </div>{" "}
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#FF9501]/30 mt-3" />
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#FF9501]/30 mt-3" />
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#FF9501]/30 mt-3" />
-                </div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#FF9501]/30 mt-3" />
-                  <motion.div className="h-3 w-[20%] rounded-full bg-[#FF9501]/30 mt-3" />
-                  <motion.div className="h-3 w-[18%] rounded-full bg-[#FF9501]/30 mt-3" />
-                </div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[18%] rounded-full bg-[#FF9501]/30 mt-3" />
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#FF9501]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#FF9501]/30 mt-3" />
-                </div>
-              </motion.div>
-            </div>
-            <div className="absolute  bottom-[15%]  ml-[5%] w-full  ">
-              <motion.div
-                initial={{ y: 20 }}
-                whileInView={{ y: 0 }}
-                transition={{
-                  duration: 0.8,
-                  delay: 0.4,
-                  type: "spring",
-                  ease: "easeOut",
-                }}
-                className="absolute left-[20%] w-[280px] border rotate-45 rounded-[30px] px-7 py-10 h-[350px]   bottom-0 bg-white "
-              >
-                <motion.div className="h-3 w-full rounded-full bg-[#FF9501]/30" />
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#FF9501]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#FF9501]/30 mt-3" />
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#FF9501]/30 mt-3" />
-                </div>
-                <motion.div className="w-full text-[#FF9501]  mt-4 text-2xl font-semibold">
-                  Bitcoin today?
-                </motion.div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[50%] rounded-full bg-[#FF9501]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#FF9501]/30 mt-3" />
-                </div>
-                <motion.div className="h-3 w-full rounded-full bg-[#FF9501]/30 mt-3" />
-                <motion.div className="h-3 w-full rounded-full bg-[#FF9501]/30 mt-3" />
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#FF9501]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#FF9501]/30 mt-3" />
-                </div>{" "}
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#FF9501]/30 mt-3" />
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#FF9501]/30 mt-3" />
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#FF9501]/30 mt-3" />
-                </div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#FF9501]/30 mt-3" />
-                  <motion.div className="h-3 w-[20%] rounded-full bg-[#FF9501]/30 mt-3" />
-                  <motion.div className="h-3 w-[18%] rounded-full bg-[#FF9501]/30 mt-3" />
-                </div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[18%] rounded-full bg-[#FF9501]/30 mt-3" />
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#FF9501]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#FF9501]/30 mt-3" />
-                </div>
-              </motion.div>
-            </div>
-            <motion.div
-              transition={{
-                duration: 0.8,
-                type: "spring",
-                ease: "easeOut",
-              }}
-              className="absolute w-full z-10 rounded-b-[40px] 
-              md:rounded-b-[70px] lg:rounded-b-[100px] flex
-               flex-auto h-[30%] bottom-0 bg-[#FF9501] "
-            >
-              {" "}
-              <span
-                className={cn(
-                  "font-normal h-full w-full lg:p-10 items-center ",
-                  !isMobile
-                    ? " text-6xl font-semibold mt-2 "
-                    : "text-3xl font-semibold"
-                )}
-                style={{ color: "white" }}
-              >
-                Business
-              </span>
-            </motion.div>
-          </div>
-        </div>
-        <div className="relative w-full max-w-4xl">
-          {/* Container for positioning */}
-          <div className="relative flex flex-col items-start overflow-hidden">
-            {/* Folder Tab - Now aligned to left */}
-            <motion.div
-              initial={{ scaleY: 0.9 }}
-              whileInView={{ scaleY: 1 }}
-              transition={{
-                duration: 0.8,
-                type: "spring",
-                ease: "easeOut",
-              }}
-              className="relative w-[180px] sm:w-[220px] md:w-[350px] 
-                     h-[100px] sm:h-[120px] md:h-[90px] 
-                     bg-[#631495]/60 rounded-tl-[40px] md:rounded-tl-[70px] 
-                     lg:rounded-tr-[100px] lg:rounded-tl-[100px]
-                     transform origin-bottom z-0 mb-1"
-            />
-            {/* Folder Body - Full width */}
-            <motion.div
-              transition={{
-                duration: 0.8,
-                delay: 0.7,
-                type: "spring",
-                ease: "easeOut",
-              }}
-              className="relative w-full h-[300px] sm:h-[400px] md:h-[450px] 
-                     bg-[#631495]/60 rounded-[40px] md:rounded-[70px] lg:rounded-[100px]
-                     lg:rounded-tl-none md:rounded-tl-none 
-                       transform origin-top -mt-1
-                     flex items-center justify-center"
-            ></motion.div>
-            <div className="absolute ml-[-10%] bottom-0 w-full rotate-[-10deg]">
-              <motion.div
-                initial={{ y: 20 }}
-                whileInView={{ y: 0 }}
-                transition={{
-                  duration: 0.8,
-                  delay: 0.3,
-                  type: "spring",
-                  ease: "easeOut",
-                }}
-                className="absolute left-[20%] w-[280px] rotate-45 rounded-[30px] px-7 py-10 h-[350px]   bottom-0 bg-white "
-              >
-                <motion.div className="h-3 w-full rounded-full bg-[#631495]/30" />
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#631495]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#631495]/30 mt-3" />
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#631495]/30 mt-3" />
-                </div>
-                <motion.div className="w-full text-[#631495]  mt-4 text-2xl font-semibold">
-                  Create a website.
-                </motion.div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[50%] rounded-full bg-[#631495]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#631495]/30 mt-3" />
-                </div>
-                <motion.div className="h-3 w-full rounded-full bg-[#631495]/30 mt-3" />
-                <motion.div className="h-3 w-full rounded-full bg-[#631495]/30 mt-3" />
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#631495]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#631495]/30 mt-3" />
-                </div>{" "}
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#631495]/30 mt-3" />
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#631495]/30 mt-3" />
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#631495]/30 mt-3" />
-                </div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#631495]/30 mt-3" />
-                  <motion.div className="h-3 w-[20%] rounded-full bg-[#631495]/30 mt-3" />
-                  <motion.div className="h-3 w-[18%] rounded-full bg-[#631495]/30 mt-3" />
-                </div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[18%] rounded-full bg-[#631495]/30 mt-3" />
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#631495]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#631495]/30 mt-3" />
-                </div>
-              </motion.div>
-            </div>
-            <div className="absolute ml-[30%] bottom-0 w-full rotate-[10deg]">
-              <motion.div
-                initial={{ y: 20 }}
-                whileInView={{ y: 0 }}
-                transition={{
-                  duration: 0.8,
-                  delay: 0.5,
-                  type: "spring",
-                  ease: "easeOut",
-                }}
-                className="absolute left-[20%] w-[280px] rotate-45 rounded-[30px] px-7 py-10 h-[350px]   bottom-0 bg-white "
-              >
-                <motion.div className="h-3 w-full rounded-full bg-[#631495]/30" />
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#631495]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#631495]/30 mt-3" />
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#631495]/30 mt-3" />
-                </div>
-                <motion.div className="w-full text-[#631495]  mt-4 text-2xl font-semibold">
-                  Code a game for me.
-                </motion.div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[50%] rounded-full bg-[#631495]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#631495]/30 mt-3" />
-                </div>
-                <motion.div className="h-3 w-full rounded-full bg-[#631495]/30 mt-3" />
-                <motion.div className="h-3 w-full rounded-full bg-[#631495]/30 mt-3" />
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#631495]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#631495]/30 mt-3" />
-                </div>{" "}
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#631495]/30 mt-3" />
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#631495]/30 mt-3" />
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#631495]/30 mt-3" />
-                </div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#631495]/30 mt-3" />
-                  <motion.div className="h-3 w-[20%] rounded-full bg-[#631495]/30 mt-3" />
-                  <motion.div className="h-3 w-[18%] rounded-full bg-[#631495]/30 mt-3" />
-                </div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[18%] rounded-full bg-[#631495]/30 mt-3" />
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#631495]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#631495]/30 mt-3" />
-                </div>
-              </motion.div>
-            </div>
-            <div className="absolute  bottom-[15%]  ml-[5%] w-full  ">
-              <motion.div
-                initial={{ y: 20 }}
-                whileInView={{ y: 0 }}
-                transition={{
-                  duration: 0.8,
-                  delay: 0.7,
-                  type: "spring",
-                  ease: "easeOut",
-                }}
-                className="absolute left-[20%] w-[280px] border rotate-45 rounded-[30px] px-7 py-10 h-[350px]   bottom-0 bg-white "
-              >
-                <motion.div className="h-3 w-full rounded-full bg-[#631495]/30" />
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#631495]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#631495]/30 mt-3" />
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#631495]/30 mt-3" />
-                </div>
-                <motion.div className="w-full text-[#631495]  mt-4 text-2xl font-semibold">
-                  Fix this program please. <Code2 className="mt-2" />
-                </motion.div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[50%] rounded-full bg-[#631495]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#631495]/30 mt-3" />
-                </div>
-                <motion.div className="h-3 w-full rounded-full bg-[#631495]/30 mt-3" />
-                <motion.div className="h-3 w-full rounded-full bg-[#631495]/30 mt-3" />
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#631495]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#631495]/30 mt-3" />
-                </div>{" "}
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#631495]/30 mt-3" />
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#631495]/30 mt-3" />
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#631495]/30 mt-3" />
-                </div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#631495]/30 mt-3" />
-                  <motion.div className="h-3 w-[20%] rounded-full bg-[#631495]/30 mt-3" />
-                  <motion.div className="h-3 w-[18%] rounded-full bg-[#631495]/30 mt-3" />
-                </div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[18%] rounded-full bg-[#631495]/30 mt-3" />
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#631495]/30 mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#631495]/30 mt-3" />
-                </div>
-              </motion.div>
-            </div>
-            <motion.div
-              className="absolute w-full z-10 rounded-b-[40px] 
-              md:rounded-b-[70px] lg:rounded-b-[100px] flex
-               flex-auto h-[30%] bottom-0 bg-[#631495] "
-            >
-              {" "}
-              <span
-                className={cn(
-                  "font-normal h-full w-full lg:p-10 items-center ",
-                  !isMobile
-                    ? " text-6xl font-semibold mt-2 "
-                    : "text-3xl font-semibold"
-                )}
-                style={{ color: "white" }}
-              >
-                Programming
-              </span>
-            </motion.div>
-          </div>
-        </div>
-        <div className="relative w-full max-w-4xl">
-          {/* Container for positioning */}
-          <div className="relative flex flex-col items-start overflow-hidden">
-            {/* Folder Tab - Now aligned to left */}
-            <motion.div
-              initial={{ scaleY: 0.9 }}
-              whileInView={{ scaleY: 1 }}
-              transition={{
-                duration: 0.8,
-                type: "spring",
-                ease: "easeOut",
-              }}
-              className="relative w-[180px] sm:w-[220px] md:w-[350px] 
-                     h-[100px] sm:h-[120px] md:h-[90px] 
-                     bg-[#FFAA33] rounded-tl-[40px] md:rounded-tl-[70px] 
-                     lg:rounded-tr-[100px] lg:rounded-tl-[100px]
-                     transform origin-bottom z-0 mb-1"
-            />
-            {/* Folder Body - Full width */}
-            <motion.div
-              className="relative w-full h-[300px] sm:h-[400px] md:h-[450px] 
-                     bg-[#FFAA33] rounded-[40px] md:rounded-[70px] lg:rounded-[100px]
-                     lg:rounded-tl-none md:rounded-tl-none 
-                       transform origin-top -mt-1
-                     flex items-center justify-center"
-            ></motion.div>
-            <div className="absolute ml-[-10%] bottom-0 w-full rotate-[-10deg]">
-              <motion.div
-                initial={{ y: 20 }}
-                whileInView={{ y: 0 }}
-                transition={{
-                  duration: 0.8,
-                  delay: 0.4,
-                  type: "spring",
-                  ease: "easeOut",
-                }}
-                className="absolute left-[20%] w-[280px] rotate-45 rounded-[30px] px-7 py-10 h-[350px]   bottom-0 bg-white "
-              >
-                <motion.div className="h-3 w-full rounded-full bg-[#F4F4F4]" />
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#F4F4F4] mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#F4F4F4] mt-3" />
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#F4F4F4] mt-3" />
-                </div>
-                <motion.div className="w-full text-black/50  mt-4 text-2xl font-semibold">
-                  You remember the invoice?
-                </motion.div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[50%] rounded-full bg-[#F4F4F4] mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#F4F4F4] mt-3" />
-                </div>
-                <motion.div className="h-3 w-full rounded-full bg-[#F4F4F4] mt-3" />
-                <motion.div className="h-3 w-full rounded-full bg-[#F4F4F4] mt-3" />
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#F4F4F4] mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#F4F4F4] mt-3" />
-                </div>{" "}
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#F4F4F4] mt-3" />
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#F4F4F4] mt-3" />
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#F4F4F4] mt-3" />
-                </div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#F4F4F4] mt-3" />
-                  <motion.div className="h-3 w-[20%] rounded-full bg-[#F4F4F4] mt-3" />
-                  <motion.div className="h-3 w-[18%] rounded-full bg-[#F4F4F4] mt-3" />
-                </div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[18%] rounded-full bg-[#F4F4F4] mt-3" />
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#F4F4F4] mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#F4F4F4] mt-3" />
-                </div>
-              </motion.div>
-            </div>
-            <div className="absolute ml-[30%] bottom-0 w-full rotate-[10deg]">
-              <motion.div
-                initial={{ y: 20 }}
-                whileInView={{ y: 0 }}
-                transition={{
-                  duration: 0.8,
-                  delay: 0.1,
-                  type: "spring",
-                  ease: "easeOut",
-                }}
-                className="absolute left-[20%] w-[280px] rotate-45 rounded-[30px] px-7 py-10 h-[350px]   bottom-0 bg-white "
-              >
-                <motion.div className="h-3 w-full rounded-full bg-[#F4F4F4]" />
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#F4F4F4] mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#F4F4F4] mt-3" />
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#F4F4F4] mt-3" />
-                </div>
-                <motion.div className="w-full text-[#FF9501]  mt-4 text-2xl font-semibold">
-                  How is my real estate doing?
-                </motion.div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[50%] rounded-full bg-[#F4F4F4] mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#F4F4F4] mt-3" />
-                </div>
-                <motion.div className="h-3 w-full rounded-full bg-[#F4F4F4] mt-3" />
-                <motion.div className="h-3 w-full rounded-full bg-[#F4F4F4] mt-3" />
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#F4F4F4] mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#F4F4F4] mt-3" />
-                </div>{" "}
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#F4F4F4] mt-3" />
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#F4F4F4] mt-3" />
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#F4F4F4] mt-3" />
-                </div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#F4F4F4] mt-3" />
-                  <motion.div className="h-3 w-[20%] rounded-full bg-[#F4F4F4] mt-3" />
-                  <motion.div className="h-3 w-[18%] rounded-full bg-[#F4F4F4] mt-3" />
-                </div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[18%] rounded-full bg-[#F4F4F4] mt-3" />
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#F4F4F4] mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#F4F4F4] mt-3" />
-                </div>
-              </motion.div>
-            </div>
-            <div className="absolute  bottom-[15%]  ml-[5%] w-full  ">
-              <motion.div
-                initial={{ y: 20 }}
-                whileInView={{ y: 0 }}
-                transition={{
-                  duration: 0.8,
-                  delay: 0.8,
-                  type: "spring",
-                  ease: "easeOut",
-                }}
-                className="absolute left-[20%] w-[280px] border rotate-45 rounded-[30px] px-7 py-10 h-[350px]   bottom-0 bg-white "
-              >
-                <motion.div className="h-3 w-full rounded-full bg-[#F4F4F4]" />
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#F4F4F4] mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#F4F4F4] mt-3" />
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#F4F4F4] mt-3" />
-                </div>
-                <motion.div className="w-full text-[#FF9501]  mt-4 text-2xl font-semibold">
-                  Bitcoin today?
-                </motion.div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[50%] rounded-full bg-[#F4F4F4] mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#F4F4F4] mt-3" />
-                </div>
-                <motion.div className="h-3 w-full rounded-full bg-[#F4F4F4] mt-3" />
-                <motion.div className="h-3 w-full rounded-full bg-[#F4F4F4] mt-3" />
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#F4F4F4] mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#F4F4F4] mt-3" />
-                </div>{" "}
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#F4F4F4] mt-3" />
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#F4F4F4] mt-3" />
-                  <motion.div className="h-3 w-[10%] rounded-full bg-[#F4F4F4] mt-3" />
-                </div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#F4F4F4] mt-3" />
-                  <motion.div className="h-3 w-[20%] rounded-full bg-[#F4F4F4] mt-3" />
-                  <motion.div className="h-3 w-[18%] rounded-full bg-[#F4F4F4] mt-3" />
-                </div>
-                <div className="w-full flex gap-3">
-                  <motion.div className="h-3 w-[18%] rounded-full bg-[#F4F4F4] mt-3" />
-                  <motion.div className="h-3 w-[40%] rounded-full bg-[#F4F4F4] mt-3" />
-                  <motion.div className="h-3 w-[30%] rounded-full bg-[#F4F4F4] mt-3" />
-                </div>
-              </motion.div>
-            </div>
-            <motion.div
-              className="absolute w-full z-10 rounded-b-[40px] 
-              md:rounded-b-[70px] lg:rounded-b-[100px] flex
-               flex-auto h-[30%] bottom-0 bg-[#FF9501] "
-            >
-              {" "}
-              <span
-                className={cn(
-                  "font-normal h-full w-full lg:p-10 items-center ",
-                  !isMobile
-                    ? " text-6xl font-semibold mt-2 "
-                    : "text-3xl font-semibold"
-                )}
-                style={{ color: "white" }}
-              >
-                Business
-              </span>
-            </motion.div>
-          </div>
-        </div>
+      <motion.div className="graphic-center-div grid w-full gap-5 md:gap-10 grid-cols-1 md:grid-cols-2 px-4 md:px-6 lg:px-8">
+        {FOLDER_DATA.map((folder, index) => (
+          <Folder
+            key={index}
+            {...folder}
+            colorScheme={FOLDER_COLORS[folder.type]}
+          />
+        ))}
       </motion.div>
     </motion.div>
   );
