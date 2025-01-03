@@ -20,6 +20,8 @@ import {
   PROJECT_URL,
 } from "@/data/app/metadata";
 import { ThemeProvider } from "@/context/Other/theme";
+import { arrayUnion, doc, setDoc, Timestamp, updateDoc } from "firebase/firestore";
+import { DB } from "@/config/firebase-config";
 
 const Interr = Inter({
   subsets: ["latin"],
@@ -34,6 +36,28 @@ function PlayAIButton() {
   const [isLoading, setIsLoading] = useState(false);
   const agentControllerRef = useRef<AgentConnectionController | null>(null);
   const AGENT_ID = 'Human-like-Mach--BQMnFsmif6AVjDoYkmZw';
+
+
+  const createFirestoreTask = async (conversationId: string) => {
+    const taskRef = doc(DB, 'Task', 'example');
+    await setDoc(taskRef, {
+      conversationId,
+      startTime: Timestamp.now(),
+      status: 'active',
+      events: []
+    });
+    return taskRef;
+  };
+
+  const addEventToTask = async (taskRef: any, event: any) => {
+    await updateDoc(taskRef, {
+      events: arrayUnion({
+        timestamp: Timestamp.now(),
+        ...event
+      })
+    });
+  };
+
 
   const connect = async () => {
     try {
