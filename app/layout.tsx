@@ -15,6 +15,7 @@ import {
   PROJECT_URL,
 } from "@/data/app/metadata";
 import { ThemeProvider } from "@/context/Other/theme";
+import Script from "next/script";
 
 // ! Fonts
 const Interr = Inter({
@@ -137,7 +138,20 @@ export default function RootLayout({
   const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENTID;
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning> <head>
+      {/* Add PlayAI scripts */}
+      <Script
+        src="https://unpkg.com/@play-ai/agent-web-sdk"
+        strategy="afterInteractive"
+      />
+      <Script id="play-ai-init" strategy="afterInteractive">
+        {`
+        addEventListener("load", () => {
+          PlayAI.open('6WSEAxku9B3qesesk0lTA');
+        });
+      `}
+      </Script>
+    </head>
       <body
         suppressHydrationWarning
         className={cn(
