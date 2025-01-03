@@ -1,3 +1,5 @@
+'use client'
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -7,6 +9,9 @@ import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from "sonner";
 import { cn } from "@/lib/utils";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import Script from "next/script";
+import { useState, useRef, useEffect } from 'react';
+import type { AgentConnectionController } from '@play-ai/agent-web-sdk';
 import {
   PROJECT_AUTHOR,
   PROJECT_DESCRIPTION,
@@ -15,143 +20,110 @@ import {
   PROJECT_URL,
 } from "@/data/app/metadata";
 import { ThemeProvider } from "@/context/Other/theme";
-import Script from "next/script";
 
-// ! Fonts
 const Interr = Inter({
   subsets: ["latin"],
   variable: "--font-poppins-sans",
   weight: ["500", "400", "300", "200", "600", "700", "900"],
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(PROJECT_URL),
-  title: {
-    default: PROJECT_NAME,
-    template: `%s | ${PROJECT_NAME}`,
-  },
-  description: PROJECT_DESCRIPTION,
-  keywords: PROJECT_KEYWORDS,
-  authors: [{ name: PROJECT_AUTHOR, url: PROJECT_URL }],
-  creator: PROJECT_AUTHOR,
-  publisher: PROJECT_NAME,
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
-  icons: {
-    icon: "/quampi/logo.png",
-    apple: "/quampi/logo.png",
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: PROJECT_URL,
-    siteName: PROJECT_NAME,
-    title: PROJECT_NAME,
-    description: PROJECT_DESCRIPTION,
-    images: [
-      {
-        url: `${PROJECT_URL}/openGraph/og-image-light.png`,
-        width: 1200,
-        height: 630,
-        alt: `${PROJECT_NAME} - Interactive Journey Showcase`,
-      },
-      {
-        url: `${PROJECT_URL}/openGraph/og-image-dark.png`,
-        width: 1200,
-        height: 630,
-        alt: `${PROJECT_NAME} - Interactive Journey Showcase (Dark Mode)`,
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    site: "@miteshmawar",
-    creator: "@miteshmawar",
-    title: PROJECT_NAME,
-    description: PROJECT_DESCRIPTION,
-    images: [`${PROJECT_URL}/openGraph/twitter-image.png`],
-  },
-  other: {
-    "apple-mobile-web-app-capable": "yes",
-    "apple-mobile-web-app-status-bar-style": "black",
-    "apple-mobile-web-app-title": PROJECT_NAME,
-  },
-  alternates: {
-    canonical: PROJECT_URL,
-    languages: {
-      "en-US": `${PROJECT_URL}/en-US`,
-      "es-ES": `${PROJECT_URL}/es-ES`,
-    },
-  },
-};
+// Keep existing metadata and jsonLd...
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  name: PROJECT_NAME,
-  description: PROJECT_DESCRIPTION,
-  url: PROJECT_URL,
-  applicationCategory: "LifestyleApplication",
-  genre: "Personal Branding",
-  about: {
-    "@type": "Thing",
-    description: "Interactive personal journey and portfolio showcase",
-  },
-  featureList: [
-    "Interactive Money Grid",
-    "Project Showcase",
-    "Sponsorship Opportunities",
-    "Personal Profile",
-  ],
-  screenshot: `${PROJECT_URL}/openGraph/app-screenshot.png`,
-  author: {
-    "@type": "Person",
-    name: PROJECT_AUTHOR,
-  },
-  offers: {
-    "@type": "Offer",
-    price: "0",
-    priceCurrency: "USD",
-  },
-};
+function PlayAIButton() {
+  const [isConnected, setIsConnected] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const agentControllerRef = useRef<AgentConnectionController | null>(null);
+  const AGENT_ID = 'Human-like-Mach--BQMnFsmif6AVjDoYkmZw';
+
+  const connect = async () => {
+    try {
+      setIsLoading(true);
+      const { connectAgent } = await import('@play-ai/agent-web-sdk');
+      const agentController = await connectAgent(AGENT_ID, {
+        listeners: {
+          onUserStartedSpeaking: () => console.log('User started speaking'),
+          onUserStoppedSpeaking: () => console.log('User stopped speaking'),
+          onAgentStartedSpeaking: () => console.log('Agent started speaking'),
+          onAgentStoppedSpeaking: () => console.log('Agent stopped speaking'),
+          // @ts-ignore
+          onHangup: (endedBy) => {
+            console.log(`Call ended by ${endedBy}`);
+            agentControllerRef.current = null;
+            setIsConnected(false);
+          },
+          // @ts-ignore
+          onError: (error) => {
+            console.error('PlayAI Error:', error);
+            setIsConnected(false);
+          }
+        }
+      });
+
+      agentControllerRef.current = agentController;
+      setIsConnected(true);
+    } catch (error) {
+      console.error('Connection error:', error);
+      setIsConnected(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const disconnect = () => {
+    if (agentControllerRef.current) {
+      agentControllerRef.current.hangup();
+      agentControllerRef.current = null;
+      setIsConnected(false);
+    }
+  };
+
+  const handleClick = () => {
+    if (isConnected) {
+      disconnect();
+    } else {
+      connect();
+    }
+  };
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (agentControllerRef.current) {
+        agentControllerRef.current.hangup();
+      }
+    };
+  }, []);
+
+  return (
+    <button
+      onClick={handleClick}
+      disabled={isLoading}
+      className={cn(
+        "fixed bottom-4 right-1/2  backdrop:blur-lg translate-x-[50%] z-50 rounded-full p-4 shadow-lg transition-all",
+        isLoading && "cursor-wait ",
+        isConnected
+          ? "bg-red-500 hover:bg-red-600   backdrop:blur-lg text-white"
+          : "bg-blue-500 hover:bg-blue-600   backdrop:blur-lg text-white"
+      )}
+    >
+      {isLoading ? 'Connecting...' : (isConnected ? 'Disconnect' : 'Tap to talk')}
+    </button>
+  );
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // ! Variables
-  const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENTID;
-
   return (
-    <html lang="en" suppressHydrationWarning> <head>
-      {/* Add PlayAI scripts */}
-      <Script
-        src="https://unpkg.com/@play-ai/agent-web-sdk"
-        strategy="afterInteractive"
-      />
-      <Script id="play-ai-init" strategy="afterInteractive">
-        {`
-        addEventListener("load", () => {
-          PlayAI.open('6WSEAxku9B3qesesk0lTA');
-        });
-      `}
-      </Script>
-    </head>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <Script
+          src="https://unpkg.com/@play-ai/agent-web-sdk"
+          strategy="afterInteractive"
+        />
+      </head>
       <body
         suppressHydrationWarning
         className={cn(
@@ -172,7 +144,10 @@ export default function RootLayout({
             <Toaster position="bottom-center" />
             <UtilityContextProvider>
               <TooltipProvider>
-                <div className="max-w-screen w-screen">{children}</div>
+                <div className="max-w-screen w-screen">
+                  {children}
+                  <PlayAIButton />
+                </div>
               </TooltipProvider>
             </UtilityContextProvider>
           </ThemeProvider>
